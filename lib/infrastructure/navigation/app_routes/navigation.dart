@@ -1,8 +1,8 @@
+import 'package:dyno_sign/infrastructure/navigation/app_routes/routes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../pages_import.dart';
-import 'routes.dart';
 
 final navigatorKey = GlobalKey<NavigatorState>();
 
@@ -64,27 +64,27 @@ class AppPages {
             child: const SplashView(),
           ),
         );
-            case Routes.LOGIN:
-                return MaterialPageRoute(
-                    builder: (context) => BlocProvider(
-                        create: (context) => LoginBloc(),
-                        child: const LoginView(),
-                    ),
-                );
-            case Routes.SIGNUP:
-                return MaterialPageRoute(
-                    builder: (context) => BlocProvider(
-                        create: (context) => SignupBloc(),
-                        child: const SignupView(),
-                    ),
-                );
-            case Routes.FORGETPASSWORD:
-                return MaterialPageRoute(
-                    builder: (context) => BlocProvider(
-                        create: (context) => ForgetPasswordBloc(),
-                        child: const ForgetPasswordView(),
-                    ),
-                );
+      case Routes.LOGIN:
+        return MaterialPageRoute(
+          builder: (context) => BlocProvider(
+            create: (context) => LoginBloc(),
+            child: const LoginView(),
+          ),
+        );
+      case Routes.SIGNUP:
+        return MaterialPageRoute(
+          builder: (context) => BlocProvider(
+            create: (context) => SignupBloc(),
+            child: const SignupView(),
+          ),
+        );
+      case Routes.FORGETPASSWORD:
+        return MaterialPageRoute(
+          builder: (context) => BlocProvider(
+            create: (context) => ForgetPasswordBloc(),
+            child: const ForgetPasswordView(),
+          ),
+        );
       default:
         return null;
     }
