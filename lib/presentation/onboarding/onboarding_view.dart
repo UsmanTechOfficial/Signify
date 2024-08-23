@@ -8,8 +8,8 @@ import '../../domain/custom_widgets/buttons/custom_rouded_button.dart';
 import 'bloc/onboarding_bloc.dart';
 import 'bloc/onboarding_event.dart';
 import 'bloc/onboarding_state.dart';
-import 'builder/onboarding_page_indicator.dart';
-import 'builder/onboarding_tabs.dart';
+import 'widgets/onboarding_page_indicator.dart';
+import 'widgets/onboarding_tabs.dart';
 
 class OnboardingView extends StatelessWidget {
   const OnboardingView({super.key});
