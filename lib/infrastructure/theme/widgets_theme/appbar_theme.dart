@@ -1,0 +1,32 @@
+import 'package:flutter/material.dart';
+
+import '../theme_library.dart';
+
+AppBarTheme get appBarTheme => AppBarTheme(
+    surfaceTintColor: Colors.transparent,
+    color: Colors.transparent,
+    iconTheme: IconThemeData(
+      size: 28,
+      color: colorSchemeLight.onSurface,
+    ),
+    actionsIconTheme: IconThemeData(color: colorSchemeLight.onPrimary),
+    titleTextStyle: TextStyle(
+      color: colorSchemeLight.onSurface,
+      fontSize: AppFontSize.titleLargeFont,
+    ),
+    toolbarTextStyle: TextStyle(
+      color: colorSchemeLight.onSurface,
+      fontSize: 18.0,
+    ));
+
+AppBarTheme get darkAppBarTheme => AppBarTheme(
+    surfaceTintColor: Colors.transparent,
+    color: Colors.transparent,
+    iconTheme: IconThemeData(color: colorSchemeDark.onSurface),
+    actionsIconTheme: IconThemeData(color: colorSchemeDark.onPrimary),
+    titleTextStyle: TextStyle(
+        color: colorSchemeDark.onSurface, fontSize: AppFontSize.titleLargeFont),
+    toolbarTextStyle: TextStyle(
+      color: colorSchemeDark.onSurface,
+      fontSize: 18.0,
+    ));
