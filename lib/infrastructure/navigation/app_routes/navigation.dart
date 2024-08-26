@@ -1,7 +1,10 @@
 import 'package:dyno_sign/infrastructure/navigation/app_routes/routes.dart';
+import 'package:dyno_sign/presentation/onboarding/view/get_started_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../presentation/auth/signup/bloc/signup_bloc.dart';
+import '../../../presentation/splash/splash_view.dart';
 import '../pages_import.dart';
 
 final navigatorKey = GlobalKey<NavigatorState>();
@@ -47,7 +50,7 @@ class AppPages {
         return MaterialPageRoute(
           builder: (context) => BlocProvider(
             create: (context) => OnboardingBloc(),
-            child: const OnboardingView(),
+            child: const GetStartedView(),
           ),
         );
       case Routes.REQUESTSIGNATURE:

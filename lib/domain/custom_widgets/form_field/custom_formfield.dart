@@ -25,6 +25,7 @@ class CustomTextFormField extends StatelessWidget {
   final int? maxLength;
   final FocusNode? focusNode;
   final void Function()? onTap;
+  final ValueChanged<String>? onFieldSubmitted;
 
   const CustomTextFormField({
     super.key,
@@ -50,6 +51,7 @@ class CustomTextFormField extends StatelessWidget {
     this.textInputAction,
     this.focusNode,
     this.onTap,
+    this.onFieldSubmitted,
   });
 
   @override
@@ -73,6 +75,7 @@ class CustomTextFormField extends StatelessWidget {
         errorBorder: _outlineInputBorder(
             borderRadius, errorBorderColor ?? appColorScheme(context).error),
       ),
+      onFieldSubmitted: onFieldSubmitted,
       keyboardType: keyboardType,
       validator: validator,
       obscureText: obscureText,

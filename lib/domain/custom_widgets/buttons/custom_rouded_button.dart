@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
 class CustomRoundedIconButton extends StatelessWidget {
-  final double height;
-  final double width;
+  final double? height;
+  final double? width;
   final IconData icon;
   final double iconSize;
   final Color iconColor;
@@ -16,8 +16,8 @@ class CustomRoundedIconButton extends StatelessWidget {
     super.key,
     required this.icon,
     required this.onPressed,
-    this.height = 50.0,
-    this.width = 50.0,
+    this.height,
+    this.width,
     this.iconSize = 24.0,
     this.iconColor = Colors.white,
     this.backgroundColor = Colors.blue,
@@ -35,7 +35,7 @@ class CustomRoundedIconButton extends StatelessWidget {
       shape: CircleBorder(
         side: BorderSide(color: borderColor, width: borderWidth),
       ),
-      height: height,
+      height: height ?? 45,
       minWidth: width,
       padding: EdgeInsets.zero,
       child: Transform.rotate(
