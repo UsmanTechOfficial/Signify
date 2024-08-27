@@ -7,20 +7,11 @@ abstract class DashboardEvent extends Equatable {
   List<Object> get props => [];
 }
 
-class PageChanged extends DashboardEvent {
+class DashboardPageChangedEvent extends DashboardEvent {
   final int index;
 
-  const PageChanged(this.index);
+  const DashboardPageChangedEvent(this.index);
 
   @override
   List<Object> get props => [index];
-}
-
-class AddSignRequest extends DashboardEvent {
-  final BuildContext context;
-
-  const AddSignRequest(this.context);
-
-  @override
-  List<Object> get props => [context];
 }

@@ -26,7 +26,7 @@ class Main extends StatelessWidget {
       // themeMode: ThemeMode.system,
       onGenerateRoute: AppPages.onGenerateRoute,
       scaffoldMessengerKey: scaffoldMessengerKey,
-      initialRoute: Routes.ONBOARDING,
+      initialRoute: Routes.DASHBOARD,
       navigatorKey: navigatorKey,
     );
   }

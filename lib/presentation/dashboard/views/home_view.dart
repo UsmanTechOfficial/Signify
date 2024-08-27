@@ -7,148 +7,151 @@ class HomeView extends StatelessWidget {
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
     return Scaffold(
-        // body: Padding(
-        //   padding: EdgeInsets.symmetric(horizontal: mWidth(context) * .05),
-        //   child: RefreshIndicator(
-        //     onRefresh: () async {
-        //       return Future<void>.delayed(const Duration(seconds: 3));
-        //     },
-        //     child: CustomScrollView(
-        //       controller: controller.scrollController,
-        //       key: const PageStorageKey<String>("homeScrollPosition"),
-        //       physics: const AlwaysScrollableScrollPhysics(),
-        //       slivers: [
-        //         const SliverAppBar(
-        //           pinned: false,
-        //           floating: true,
-        //           expandedHeight: 60.0,
-        //           flexibleSpace: FlexibleSpaceBar(
-        //             expandedTitleScale: 1.1,
-        //             collapseMode: CollapseMode.parallax,
-        //             title: CText(
-        //               "Home",
-        //               size: AppFontSize.titleMediumFont,
-        //               weight: FontWeight.w500,
-        //               align: TextAlign.center,
-        //             ),
-        //             centerTitle: true,
-        //           ),
-        //           leading: Icon(Icons.widgets),
-        //         ),
-        //         SliverList(
-        //           delegate: SliverChildBuilderDelegate(
-        //             childCount: 3,
-        //             (context, index) {
-        //               return Obx(
-        //                 () => CategoryTile(
-        //                   isSelected: controller
-        //                       .homeController.selectedTileIndex.value
-        //                       .isEqual(index),
-        //                   title: "Doc",
-        //                   subtitle: "${index + 5}",
-        //                   onTap: () =>
-        //                       controller.homeController.selectedTile(index),
-        //                 ),
-        //               );
-        //             },
-        //           ),
-        //         ),
-        //         SliverToBoxAdapter(
-        //             child: Column(
-        //           crossAxisAlignment: CrossAxisAlignment.start,
-        //           children: [
-        //             const SizedBox(height: 30),
-        //             CText(
-        //               "Select",
-        //               color: colorScheme.onSurface,
-        //               size: AppFontSize.titleSmallFont,
-        //               weight: FontWeight.w600,
-        //             )
-        //           ],
-        //         )),
-        //         SliverGrid(
-        //           gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-        //             crossAxisCount: 3,
-        //             crossAxisSpacing: 2.0,
-        //             childAspectRatio: 1.3,
-        //           ),
-        //           delegate: SliverChildBuilderDelegate(
-        //             childCount: 3,
-        //             (BuildContext context, int index) {
-        //               return Obx(
-        //                 () => CategoryCard(
-        //                   isSelected: controller
-        //                       .homeController.selectedCategoryIndex.value
-        //                       .isEqual(index),
-        //                   title: "Agreements",
-        //                   onTap: () {
-        //                     controller.homeController.selectedCategory(index);
-        //                   },
-        //                 ),
-        //               );
-        //             },
-        //           ),
-        //         ),
-        //         SliverToBoxAdapter(
-        //             child: Column(
-        //           crossAxisAlignment: CrossAxisAlignment.start,
-        //           children: [
-        //             const SizedBox(height: 30),
-        //             Row(
-        //               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        //               children: [
-        //                 CText(
-        //                   "Agreements",
-        //                   color: colorScheme.onSurface,
-        //                   size: AppFontSize.titleSmallFont,
-        //                   weight: FontWeight.w600,
-        //                 ),
-        //                 TextButton(
-        //                   onPressed: () {},
-        //                   child: CText(
-        //                     "See all",
-        //                     color: colorScheme.primary,
-        //                     size: AppFontSize.labelSmallFont,
-        //                     weight: FontWeight.w600,
-        //                   ),
-        //                 ),
-        //               ],
-        //             )
-        //           ],
-        //         )),
-        //         SliverGrid(
-        //           gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-        //               crossAxisCount: 2,
-        //               // 2 items per row
-        //               mainAxisSpacing: 10.0,
-        //               // Spacing between rows
-        //               crossAxisSpacing: 10.0,
-        //               // Spacing between columns
-        //               mainAxisExtent: 180),
-        //           delegate: SliverChildBuilderDelegate(
-        //             (BuildContext context, int index) {
-        //               return Obx(
-        //                 () => DocCard(
-        //                   isSelected: controller
-        //                       .homeController.selectedDocIndex.value
-        //                       .isEqual(index),
-        //                   child: Container(
-        //                     color: Colors.green,
-        //                   ),
-        //                   onTap: () {
-        //                     controller.homeController.selectedDoc(index);
-        //                   },
-        //                 ),
-        //               );
-        //             },
-        //             childCount: 8,
-        //           ),
-        //         )
-        //       ],
-        //     ),
-        //   ),
-        // ),
-        );
+      body: Center(
+        child: Text("Home"),
+      ),
+      // body: Padding(
+      //   padding: EdgeInsets.symmetric(horizontal: mWidth(context) * .05),
+      //   child: RefreshIndicator(
+      //     onRefresh: () async {
+      //       return Future<void>.delayed(const Duration(seconds: 3));
+      //     },
+      //     child: CustomScrollView(
+      //       controller: controller.scrollController,
+      //       key: const PageStorageKey<String>("homeScrollPosition"),
+      //       physics: const AlwaysScrollableScrollPhysics(),
+      //       slivers: [
+      //         const SliverAppBar(
+      //           pinned: false,
+      //           floating: true,
+      //           expandedHeight: 60.0,
+      //           flexibleSpace: FlexibleSpaceBar(
+      //             expandedTitleScale: 1.1,
+      //             collapseMode: CollapseMode.parallax,
+      //             title: CText(
+      //               "Home",
+      //               size: AppFontSize.titleMediumFont,
+      //               weight: FontWeight.w500,
+      //               align: TextAlign.center,
+      //             ),
+      //             centerTitle: true,
+      //           ),
+      //           leading: Icon(Icons.widgets),
+      //         ),
+      //         SliverList(
+      //           delegate: SliverChildBuilderDelegate(
+      //             childCount: 3,
+      //             (context, index) {
+      //               return Obx(
+      //                 () => CategoryTile(
+      //                   isSelected: controller
+      //                       .homeController.selectedTileIndex.value
+      //                       .isEqual(index),
+      //                   title: "Doc",
+      //                   subtitle: "${index + 5}",
+      //                   onTap: () =>
+      //                       controller.homeController.selectedTile(index),
+      //                 ),
+      //               );
+      //             },
+      //           ),
+      //         ),
+      //         SliverToBoxAdapter(
+      //             child: Column(
+      //           crossAxisAlignment: CrossAxisAlignment.start,
+      //           children: [
+      //             const SizedBox(height: 30),
+      //             CText(
+      //               "Select",
+      //               color: colorScheme.onSurface,
+      //               size: AppFontSize.titleSmallFont,
+      //               weight: FontWeight.w600,
+      //             )
+      //           ],
+      //         )),
+      //         SliverGrid(
+      //           gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+      //             crossAxisCount: 3,
+      //             crossAxisSpacing: 2.0,
+      //             childAspectRatio: 1.3,
+      //           ),
+      //           delegate: SliverChildBuilderDelegate(
+      //             childCount: 3,
+      //             (BuildContext context, int index) {
+      //               return Obx(
+      //                 () => CategoryCard(
+      //                   isSelected: controller
+      //                       .homeController.selectedCategoryIndex.value
+      //                       .isEqual(index),
+      //                   title: "Agreements",
+      //                   onTap: () {
+      //                     controller.homeController.selectedCategory(index);
+      //                   },
+      //                 ),
+      //               );
+      //             },
+      //           ),
+      //         ),
+      //         SliverToBoxAdapter(
+      //             child: Column(
+      //           crossAxisAlignment: CrossAxisAlignment.start,
+      //           children: [
+      //             const SizedBox(height: 30),
+      //             Row(
+      //               mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      //               children: [
+      //                 CText(
+      //                   "Agreements",
+      //                   color: colorScheme.onSurface,
+      //                   size: AppFontSize.titleSmallFont,
+      //                   weight: FontWeight.w600,
+      //                 ),
+      //                 TextButton(
+      //                   onPressed: () {},
+      //                   child: CText(
+      //                     "See all",
+      //                     color: colorScheme.primary,
+      //                     size: AppFontSize.labelSmallFont,
+      //                     weight: FontWeight.w600,
+      //                   ),
+      //                 ),
+      //               ],
+      //             )
+      //           ],
+      //         )),
+      //         SliverGrid(
+      //           gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+      //               crossAxisCount: 2,
+      //               // 2 items per row
+      //               mainAxisSpacing: 10.0,
+      //               // Spacing between rows
+      //               crossAxisSpacing: 10.0,
+      //               // Spacing between columns
+      //               mainAxisExtent: 180),
+      //           delegate: SliverChildBuilderDelegate(
+      //             (BuildContext context, int index) {
+      //               return Obx(
+      //                 () => DocCard(
+      //                   isSelected: controller
+      //                       .homeController.selectedDocIndex.value
+      //                       .isEqual(index),
+      //                   child: Container(
+      //                     color: Colors.green,
+      //                   ),
+      //                   onTap: () {
+      //                     controller.homeController.selectedDoc(index);
+      //                   },
+      //                 ),
+      //               );
+      //             },
+      //             childCount: 8,
+      //           ),
+      //         )
+      //       ],
+      //     ),
+      //   ),
+      // ),
+    );
   }
 }
 

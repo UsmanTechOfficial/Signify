@@ -10,8 +10,8 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-
   cupertino_icons: ^1.0.8
+  dot_navigation_bar: any
   flutter_bloc: any
   equatable: any
   get_it: any

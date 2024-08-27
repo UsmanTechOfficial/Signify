@@ -7,12 +7,12 @@ class AgreementsView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('HomeView'),
+        title: const Text('Agreement'),
         centerTitle: true,
       ),
       body: const Center(
         child: Text(
-          'HomeView is working',
+          'Agreement is working',
           style: TextStyle(fontSize: 20),
         ),
       ),

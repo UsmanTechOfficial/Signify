@@ -10,25 +10,15 @@ part 'dashboard_event.dart';
 part 'dashboard_state.dart';
 
 class DashboardBloc extends Bloc<DashboardEvent, DashboardState> {
-  DashboardBloc()
-      : super(const DashboardState(
-          pageList: [
-            HomeView(),
-            TemplatesView(),
-            AgreementsView(),
-            ProfileView(),
-          ],
-        )) {
-    on<PageChanged>((event, emit) {
-      emit(state.copyWith(currentIndex: event.index));
-    });
-
-    on<AddSignRequest>((event, emit) {
-      _showSignRequestSheet(event.context);
-    });
+  DashboardBloc() : super(const DashboardInitialState()) {
+    on<DashboardPageChangedEvent>(
+      (event, emit) {
+        emit(state.copyWith(currentIndex: event.index));
+      },
+    );
   }
 
-  void _showSignRequestSheet(BuildContext context) {
+  void showSignRequestSheet(BuildContext context) {
     // showModalBottomSheet(
     //   context: context,
     //   builder: (BuildContext context) {

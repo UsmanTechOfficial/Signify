@@ -4,6 +4,7 @@ import '../theme_library.dart';
 
 FloatingActionButtonThemeData get floatingActionButtonTheme =>
     FloatingActionButtonThemeData(
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(50)),
       backgroundColor: colorSchemeLight.primary,
       foregroundColor: colorSchemeLight.onPrimary,
       hoverColor: colorSchemeLight.primaryContainer.withOpacity(0.1),
@@ -14,6 +15,7 @@ FloatingActionButtonThemeData get floatingActionButtonTheme =>
 
 FloatingActionButtonThemeData get darkFloatingActionButtonTheme =>
     FloatingActionButtonThemeData(
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(50)),
       backgroundColor: colorSchemeDark.primary,
       foregroundColor: colorSchemeDark.onPrimary,
       hoverColor: colorSchemeDark.primaryContainer.withOpacity(0.1),

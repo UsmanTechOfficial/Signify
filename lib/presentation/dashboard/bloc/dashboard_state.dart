@@ -1,23 +1,37 @@
 part of 'dashboard_bloc.dart';
 
-class DashboardState extends Equatable {
+sealed class DashboardState extends Equatable {
   final int currentIndex;
-  final List<Widget> pageList;
+  final List<Widget> pages;
 
-  const DashboardState({
-    this.currentIndex = 0,
-    required this.pageList,
-  });
+  const DashboardState({required this.currentIndex, required this.pages});
 
-  DashboardState copyWith({
+  copyWith({
     int? currentIndex,
-  }) {
-    return DashboardState(
-      currentIndex: currentIndex ?? this.currentIndex,
-      pageList: pageList,
-    );
-  }
+  }) {}
 
   @override
-  List<Object> get props => [currentIndex, pageList];
+  List<Object?> get props => [pages, currentIndex];
 }
+
+class DashboardInitialState extends DashboardState {
+  const DashboardInitialState({
+    super.currentIndex = 0,
+    super.pages = pageList,
+  });
+
+  @override
+  DashboardInitialState copyWith({int? currentIndex}) {
+    return DashboardInitialState(
+      currentIndex: currentIndex ?? this.currentIndex,
+      pages: pageList,
+    );
+  }
+}
+
+const List<Widget> pageList = <Widget>[
+  HomeView(),
+  TemplatesView(),
+  AgreementsView(),
+  ProfileView(),
+];

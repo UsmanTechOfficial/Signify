@@ -7,12 +7,12 @@ class TemplatesView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('HomeView'),
+        title: const Text('Tamplete'),
         centerTitle: true,
       ),
       body: const Center(
         child: Text(
-          'HomeView is working',
+          'Tamplete is working',
           style: TextStyle(fontSize: 20),
         ),
       ),
