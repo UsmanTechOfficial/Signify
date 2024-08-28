@@ -1,30 +1,46 @@
 import 'package:equatable/equatable.dart';
 
-class AddSignatureState extends Equatable {
+import '../../../../widgets/add_signature_widgets/pen_tools.dart';
+
+/// [AddSignatureState]
+abstract class AddSignatureState extends Equatable {
+  const AddSignatureState();
+
+  @override
+  List<Object?> get props => [];
+}
+
+/// [SignatureInitialState]
+class AddSignatureInitial extends AddSignatureState {
+  const AddSignatureInitial();
+}
+
+/// [OnSignatureSelectedState]
+class OnSignatureSelectedState extends AddSignatureState {
   final int selectedSignature;
 
-  const AddSignatureState({required this.selectedSignature});
-
-  copyWith({int? selectedSignature}) {
-    return AddSignatureState(
-        selectedSignature: selectedSignature ?? this.selectedSignature);
-  }
+  const OnSignatureSelectedState({required this.selectedSignature});
 
   @override
   List<Object?> get props => [selectedSignature];
 }
 
-class AddSignatureInitial extends AddSignatureState {
-  const AddSignatureInitial({super.selectedSignature = -1});
-}
+/// [OnPenStrokeSelectionState]
+class OnPenStrokeSelectionState extends AddSignatureState {
+  final PenStroke selectedStroke;
 
-class OnSignatureSelectedState extends AddSignatureState {
-  const OnSignatureSelectedState({required super.selectedSignature});
+  const OnPenStrokeSelectionState({required this.selectedStroke});
 
   @override
-  copyWith({int? selectedSignature}) {
-    return OnSignatureSelectedState(
-      selectedSignature: selectedSignature ?? this.selectedSignature,
-    );
-  }
+  List<Object?> get props => [selectedStroke];
+}
+
+/// [OnPenColorSelectionState]
+class OnPenColorSelectionState extends AddSignatureState {
+  final PenColors selectedColor;
+
+  const OnPenColorSelectionState({required this.selectedColor});
+
+  @override
+  List<Object?> get props => [selectedColor];
 }
