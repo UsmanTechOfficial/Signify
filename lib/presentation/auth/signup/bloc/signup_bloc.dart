@@ -1,9 +1,8 @@
-import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-part 'signup_event.dart';
-part 'signup_state.dart';
+import 'signup_event.dart';
+import 'signup_state.dart';
 
 class SignupBloc extends Bloc<SignupEvent, SignupState> {
   final formKey = GlobalKey<FormState>();

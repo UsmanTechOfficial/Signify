@@ -22,11 +22,11 @@ class Main extends StatelessWidget {
       debugShowCheckedModeBanner: true,
       title: 'DynoSign',
       theme: AppTheme.instance.light,
-      // darkTheme: AppTheme.instance.dark,
-      // themeMode: ThemeMode.system,
+      darkTheme: AppTheme.instance.dark,
+      themeMode: ThemeMode.system,
       onGenerateRoute: AppPages.onGenerateRoute,
       scaffoldMessengerKey: scaffoldMessengerKey,
-      initialRoute: Routes.DASHBOARD,
+      initialRoute: Routes.ADD_SIGNATURE,
       navigatorKey: navigatorKey,
     );
   }

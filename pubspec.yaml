@@ -11,7 +11,6 @@ dependencies:
   flutter:
     sdk: flutter
   cupertino_icons: ^1.0.8
-  dot_navigation_bar: any
   flutter_bloc: any
   equatable: any
   get_it: any
@@ -21,6 +20,7 @@ dependencies:
   file_selector: any
   path_provider: any
   intl: any
+  syncfusion_flutter_signaturepad: any
 dev_dependencies:
   flutter_test:
     sdk: flutter

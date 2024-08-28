@@ -56,7 +56,7 @@ class ForgetPasswordView extends StatelessWidget {
                     hint: "Enter Email address",
                     keyboardType: TextInputType.emailAddress,
                     borderColor: color.outlineVariant,
-                    borderRadius: AppStyle.borderRadius,
+                    borderRadius: AppStyle.buttonBorderRadius,
                     focusNode: bloc.emailFocus,
                     onChanged: (value) => bloc.add(EmailChanged(value)),
                     validator: (value) => Validation.emailValidation(
@@ -66,7 +66,7 @@ class ForgetPasswordView extends StatelessWidget {
                   const SizedBox(height: 20),
                   CustomElevatedTextButton(
                     width: double.maxFinite,
-                    borderRadius: AppStyle.borderRadius,
+                    borderRadius: AppStyle.buttonBorderRadius,
                     onPressed: () {
                       if (state.isValid) {
                         bloc.add(ForgetPasswordSubmitted());

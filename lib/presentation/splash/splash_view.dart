@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 
 import '../../assets_gen/assets.gen.dart';
 import '../../domain/consts/font_size.dart';
-import '../../domain/consts/global_var.dart';
 import '../../domain/custom_widgets/text/custom_text.dart';
 
 class SplashView extends StatelessWidget {
@@ -11,8 +10,8 @@ class SplashView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // final bloc = context.read<OnboardingBloc>();
-    final height = appHeight(context);
-    final width = appWidth(context);
+    // final height = appHeight(context);
+    // final width = appWidth(context);
     return Scaffold(
         body: Column(
       mainAxisAlignment: MainAxisAlignment.center,

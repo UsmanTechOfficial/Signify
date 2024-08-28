@@ -44,7 +44,7 @@ class GetStartedView extends StatelessWidget {
               Padding(
                 padding: EdgeInsets.symmetric(vertical: height * 0.1),
                 child: CustomElevatedTextButton(
-                  borderRadius: AppStyle.borderRadius,
+                  borderRadius: AppStyle.buttonBorderRadius,
                   width: width * 0.9,
                   text: "Get Started",
                   onPressed: () => {

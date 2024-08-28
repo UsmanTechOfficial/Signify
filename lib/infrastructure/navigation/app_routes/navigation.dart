@@ -1,11 +1,8 @@
-import 'package:dyno_sign/infrastructure/navigation/app_routes/routes.dart';
-import 'package:dyno_sign/presentation/onboarding/view/get_started_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../presentation/auth/signup/bloc/signup_bloc.dart';
-import '../../../presentation/splash/splash_view.dart';
 import '../pages_import.dart';
+import 'routes.dart';
 
 final navigatorKey = GlobalKey<NavigatorState>();
 
@@ -34,6 +31,18 @@ class Go {
         ) ??
         Future.value();
   }
+
+  static MaterialPageRoute<T> to<T>({
+    required Bloc<dynamic, dynamic> bloc,
+    required Widget view,
+  }) {
+    return MaterialPageRoute(
+      builder: (context) => BlocProvider.value(
+        value: bloc,
+        child: view,
+      ),
+    );
+  }
 }
 
 class AppPages {
@@ -53,11 +62,11 @@ class AppPages {
             child: const GetStartedView(),
           ),
         );
-      case Routes.REQUESTSIGNATURE:
+      case Routes.REQUEST_SIGNATURE:
         return MaterialPageRoute(
           builder: (context) => BlocProvider(
-            create: (context) => RequestSignatureBloc(),
-            child: const RequestSignatureView(),
+            create: (context) => RequestSignaturesBloc(),
+            child: const RequestSignaturesView(),
           ),
         );
       case Routes.SPLASH:
@@ -81,11 +90,67 @@ class AppPages {
             child: const SignupView(),
           ),
         );
-      case Routes.FORGETPASSWORD:
+      case Routes.FORGET_PASSWORD:
         return MaterialPageRoute(
           builder: (context) => BlocProvider(
             create: (context) => ForgetPasswordBloc(),
             child: const ForgetPasswordView(),
+          ),
+        );
+      case Routes.SELECTED_DOCUMENT:
+        return MaterialPageRoute(
+          builder: (context) => BlocProvider(
+            create: (context) => SelectedDocumentBloc(),
+            child: const DocumentSelectedView(),
+          ),
+        );
+      case Routes.DOCUMENT_PREVIEW:
+        return MaterialPageRoute(
+          builder: (context) => BlocProvider(
+            create: (context) => DocumentPreviewBloc(),
+            child: const DocumentPreviewView(),
+          ),
+        );
+      case Routes.EMAIL_DETAIL_VIEW:
+        return MaterialPageRoute(
+          builder: (context) => BlocProvider(
+            create: (context) => EmailDetailViewBloc(),
+            child: const EmailDetailView(),
+          ),
+        );
+      case Routes.RECIPIENTS_DETAIL:
+        return MaterialPageRoute(
+          builder: (context) => BlocProvider(
+            create: (context) => RecipientsDetailBloc(),
+            child: const RecipientsDetailView(),
+          ),
+        );
+      case Routes.ASSIGN_FIELDS:
+        return MaterialPageRoute(
+          builder: (context) => BlocProvider(
+            create: (context) => AssignFieldsBloc(),
+            child: const AssignFieldsView(),
+          ),
+        );
+      case Routes.AGREEMENT_OVERVIEW:
+        return MaterialPageRoute(
+          builder: (context) => BlocProvider(
+            create: (context) => AgreementOverviewBloc(),
+            child: const AgreementOverviewView(),
+          ),
+        );
+      case Routes.AGREEMENT_DETAIL_ADDED:
+        return MaterialPageRoute(
+          builder: (context) => BlocProvider(
+            create: (context) => AgreementDetailAddedBloc(),
+            child: const AgreementDetailAddedView(),
+          ),
+        );
+      case Routes.ADD_SIGNATURE:
+        return MaterialPageRoute(
+          builder: (context) => BlocProvider(
+            create: (context) => AddSignatureBloc(),
+            child: const AddSignatureView(),
           ),
         );
       default:

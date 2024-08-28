@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import '../theme_library.dart';
 
 DividerThemeData get dividerTheme => DividerThemeData(
-      color: colorSchemeLight.outline,
+      color: colorSchemeLight.outlineVariant,
       // Use the outline color for dividers
       space: 1.0,
       // The amount of space occupied by a Divider
@@ -16,7 +16,7 @@ DividerThemeData get dividerTheme => DividerThemeData(
     );
 
 DividerThemeData get darkDividerTheme => DividerThemeData(
-      color: colorSchemeDark.outline,
+      color: colorSchemeDark.outlineVariant,
       // Use the outline color for dividers
       space: 1.0,
       // The amount of space occupied by a Divider

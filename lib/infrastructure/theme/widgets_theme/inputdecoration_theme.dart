@@ -51,7 +51,8 @@ TextStyle _textStyle({Color? color, double? fontSize}) {
 }
 
 OutlineInputBorder _outlineInputBorder(
-    {double borderRadius = AppStyle.borderRadius, required Color borderColor}) {
+    {double borderRadius = AppStyle.buttonBorderRadius,
+    required Color borderColor}) {
   return OutlineInputBorder(
       borderRadius: BorderRadius.circular(borderRadius),
       borderSide: BorderSide(color: borderColor));

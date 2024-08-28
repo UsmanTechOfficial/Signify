@@ -3,8 +3,6 @@ import 'package:flutter/material.dart';
 import '../theme_library.dart';
 
 AppBarTheme get appBarTheme => AppBarTheme(
-    surfaceTintColor: Colors.transparent,
-    color: Colors.transparent,
     iconTheme: IconThemeData(
       size: 28,
       color: colorSchemeLight.onSurface,
@@ -20,8 +18,6 @@ AppBarTheme get appBarTheme => AppBarTheme(
     ));
 
 AppBarTheme get darkAppBarTheme => AppBarTheme(
-    surfaceTintColor: Colors.transparent,
-    color: Colors.transparent,
     iconTheme: IconThemeData(color: colorSchemeDark.onSurface),
     actionsIconTheme: IconThemeData(color: colorSchemeDark.onPrimary),
     titleTextStyle: TextStyle(

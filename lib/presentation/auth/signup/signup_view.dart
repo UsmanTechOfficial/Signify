@@ -13,6 +13,8 @@ import '../../../domain/custom_widgets/buttons/custom_elevated_button.dart';
 import '../../../domain/custom_widgets/buttons/custom_elevated_text_button.dart';
 import '../../../domain/custom_widgets/form_field/custom_formfield.dart';
 import 'bloc/signup_bloc.dart';
+import 'bloc/signup_event.dart';
+import 'bloc/signup_state.dart';
 
 class SignupView extends StatelessWidget {
   const SignupView({super.key});
@@ -47,7 +49,7 @@ class SignupView extends StatelessWidget {
                   hint: "Enter Email address",
                   keyboardType: TextInputType.emailAddress,
                   borderColor: color.outlineVariant,
-                  borderRadius: AppStyle.borderRadius,
+                  borderRadius: AppStyle.buttonBorderRadius,
                   focusNode: context.read<SignupBloc>().emailFocus,
                   onFieldSubmitted: (value) => FocusScope.of(context)
                       .requestFocus(context.read<SignupBloc>().passwordFocus),
@@ -67,7 +69,7 @@ class SignupView extends StatelessWidget {
                       controller: context.read<SignupBloc>().passwordController,
                       obscureText: bloc.state.isShowPassword,
                       borderColor: color.outlineVariant,
-                      borderRadius: AppStyle.borderRadius,
+                      borderRadius: AppStyle.buttonBorderRadius,
                       focusNode: context.read<SignupBloc>().passwordFocus,
                       onFieldSubmitted: (value) =>
                           FocusScope.of(context).requestFocus(
@@ -104,7 +106,7 @@ class SignupView extends StatelessWidget {
                       controller: context.read<SignupBloc>().cnfPsdController,
                       obscureText: bloc.state.isShowConfirmPassword,
                       borderColor: color.outlineVariant,
-                      borderRadius: AppStyle.borderRadius,
+                      borderRadius: AppStyle.buttonBorderRadius,
                       focusNode: context.read<SignupBloc>().cnfPsdFocus,
                       validator: (p0) => Validation.psdValidation(
                         context.read<SignupBloc>().cnfPsdController,

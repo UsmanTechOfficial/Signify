@@ -1,17 +1,29 @@
+import 'package:dyno_sign/domain/custom_widgets/buttons/custom_elevated_text_button.dart';
+import 'package:dyno_sign/infrastructure/navigation/app_routes/navigation.dart';
+import 'package:dyno_sign/infrastructure/navigation/app_routes/routes.dart';
 import 'package:flutter/material.dart';
 
-class RequestSignatureView extends StatelessWidget {
-    const RequestSignatureView({super.key});
+class RequestSignaturesView extends StatelessWidget {
+  const RequestSignaturesView({super.key});
 
-    @override
-    Widget build(BuildContext context) {
-        return Scaffold(
-            appBar: AppBar(
-                title: const Text('RequestSignature'),
-            ),
-            body: const Center(
-                child: Text('Welcome to RequestSignature Page'),
-            ),
-        );
-    }
+  @override
+  Widget build(BuildContext context) {
+    // final color = appColorScheme(context);
+    // final height = appHeight(context);
+    // final width = appWidth(context);
+
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('RequestSignature'),
+      ),
+      body: Center(
+        child: CustomElevatedTextButton(
+          text: 'Welcome to RequestSignature Page',
+          onPressed: () {
+            Go.toNamed(Routes.SELECTED_DOCUMENT);
+          },
+        ),
+      ),
+    );
+  }
 }

@@ -54,7 +54,7 @@ class LoginView extends StatelessWidget {
                     hint: "Enter Email address",
                     keyboardType: TextInputType.emailAddress,
                     borderColor: color.outlineVariant,
-                    borderRadius: AppStyle.borderRadius,
+                    borderRadius: AppStyle.buttonBorderRadius,
                     focusNode: context.read<LoginBloc>().emailFocus,
                     onFieldSubmitted: (value) => FocusScope.of(context)
                         .requestFocus(context.read<LoginBloc>().passwordFocus),
@@ -72,7 +72,7 @@ class LoginView extends StatelessWidget {
                     controller: context.read<LoginBloc>().passwordController,
                     obscureText: !state.isShowPassword,
                     borderColor: color.outlineVariant,
-                    borderRadius: AppStyle.borderRadius,
+                    borderRadius: AppStyle.buttonBorderRadius,
                     focusNode: context.read<LoginBloc>().passwordFocus,
                     validator: (p0) => Validation.psdValidation(
                         context.read<LoginBloc>().passwordController),
@@ -92,7 +92,7 @@ class LoginView extends StatelessWidget {
                   Align(
                     alignment: Alignment.centerRight,
                     child: TextButton(
-                      onPressed: () => Go.toNamed(Routes.FORGETPASSWORD),
+                      onPressed: () => Go.toNamed(Routes.FORGET_PASSWORD),
                       child: CustomText(
                         "Forgot password?",
                         color: color.onSurface,
