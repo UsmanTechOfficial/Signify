@@ -9,3 +9,5 @@ double appHeight(context) => MediaQuery.sizeOf(context).height;
 double appWidth(context) => MediaQuery.sizeOf(context).width;
 
 final scaffoldMessengerKey = GlobalKey<ScaffoldMessengerState>();
+
+final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();

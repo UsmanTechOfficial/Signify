@@ -155,13 +155,20 @@ class _DrawTabState extends State<DrawTab> {
                 borderRadius: BorderRadius.circular(AppStyle.buttonBorderRadius),
               ),
               child: BlocBuilder<AddSignatureBloc, AddSignatureState>(
+                buildWhen: (previous, current) {
+                  return current is OnPenColorSelectionState ||
+                      current is OnPenStrokeSelectionState;
+                },
                 builder: (context, state) {
+                  if (state is OnPenColorSelectionState) {
+                    bloc.selectedColor = state.selectedColor;
+                  }
                   if (state is OnPenStrokeSelectionState) {
                     bloc.selectedStroke = state.selectedStroke;
                   }
                   return SfSignaturePad(
                     key: signatureGlobalKey,
-                    strokeColor: Colors.blue,
+                    strokeColor: bloc.selectedColor.color,
                     minimumStrokeWidth: bloc.selectedStroke.stroke.toDouble(),
                     maximumStrokeWidth: PenStroke.bold.stroke.toDouble(),
                   );
@@ -245,7 +252,7 @@ class _DrawTabState extends State<DrawTab> {
                           },
                           builder: (_, state) {
                             if (state is OnPenColorSelectionState) {
-                              bloc.selectedColor = state.selectedColor.index;
+                              bloc.selectedColor = state.selectedColor;
                             }
                             return Row(
                               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -257,7 +264,7 @@ class _DrawTabState extends State<DrawTab> {
                                         penColor: PenColors.values[index]));
                                   },
                                   child: CustomPenColor(
-                                    selectedColor: bloc.selectedColor,
+                                    selectedColor: bloc.selectedColor.index,
                                     penColors: PenColors.values[index],
                                   ),
                                 ),

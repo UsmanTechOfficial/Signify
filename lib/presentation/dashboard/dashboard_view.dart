@@ -1,8 +1,12 @@
 import 'package:dyno_sign/domain/consts/global_var.dart';
+import 'package:dyno_sign/domain/consts/styles.dart';
+import 'package:dyno_sign/domain/custom_widgets/buttons/custom_outlined_icon_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../assets_gen/assets.gen.dart';
+import '../../domain/custom_widgets/buttons/custom_elevated_button.dart';
+import '../../domain/custom_widgets/buttons/custom_elevated_icon_button.dart';
 import 'bloc/dashboard_bloc.dart';
 
 class DashboardView extends StatelessWidget {
@@ -10,9 +14,39 @@ class DashboardView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final width = appWidth(context);
     final bloc = context.read<DashboardBloc>();
-
+    final color = appColorScheme(context);
     return Scaffold(
+      key: scaffoldKey,
+      drawer: Drawer(
+        width: width * 0.75,
+        child: Column(
+          mainAxisSize: MainAxisSize.max,
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            DrawerHeader(
+              child: Row(
+                mainAxisSize: MainAxisSize.max,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Assets.images.splashImg.image(
+                    width: 150,
+                    fit: BoxFit.contain,
+                  ),
+                  InkWell(
+                    onTap: () {},
+                    child: IconButton(
+                      onPressed: () {},
+                      icon: Assets.images.,
+                    ),
+                  ),
+                ],
+              ),
+            )
+          ],
+        ),
+      ),
       body: BlocBuilder<DashboardBloc, DashboardState>(
         builder: (_, state) {
           return state.pages[state.currentIndex];
@@ -32,15 +66,13 @@ class DashboardView extends StatelessWidget {
                     children: [
                       CustomNavItem(
                         isSelected: bloc.state.currentIndex == 0 ? true : false,
-                        onTap: () =>
-                            bloc.add(const DashboardPageChangedEvent(0)),
+                        onTap: () => bloc.add(const DashboardPageChangedEvent(0)),
                         label: 'Home',
                         icon: Assets.icons.icHomeOutlined.svg(),
                         activeIcon: Assets.icons.icHomeFilled.svg(),
                       ),
                       CustomNavItem(
-                        onTap: () =>
-                            bloc.add(const DashboardPageChangedEvent(1)),
+                        onTap: () => bloc.add(const DashboardPageChangedEvent(1)),
                         isSelected: bloc.state.currentIndex == 1 ? true : false,
                         label: 'Template',
                         icon: Assets.icons.icTemplatesOutlined.svg(),
@@ -51,16 +83,14 @@ class DashboardView extends StatelessWidget {
                   Row(
                     children: [
                       CustomNavItem(
-                        onTap: () =>
-                            bloc.add(const DashboardPageChangedEvent(2)),
+                        onTap: () => bloc.add(const DashboardPageChangedEvent(2)),
                         isSelected: bloc.state.currentIndex == 2 ? true : false,
                         label: 'Agreement',
                         icon: Assets.icons.icAgreementsOutlined.svg(),
                         activeIcon: Assets.icons.icAgreementsFilled.svg(),
                       ),
                       CustomNavItem(
-                        onTap: () =>
-                            bloc.add(const DashboardPageChangedEvent(3)),
+                        onTap: () => bloc.add(const DashboardPageChangedEvent(3)),
                         isSelected: bloc.state.currentIndex == 3 ? true : false,
                         label: 'Profile',
                         icon: Assets.icons.icProfileOutlined.svg(),
@@ -119,9 +149,7 @@ class CustomNavItem extends StatelessWidget {
                 return IconTheme(
                   data: IconThemeData(
                     size: size,
-                    color: isSelected
-                        ? Theme.of(context).primaryColor
-                        : Colors.grey,
+                    color: isSelected ? Theme.of(context).primaryColor : Colors.grey,
                   ),
                   child: isSelected ? activeIcon : icon,
                 );
@@ -136,9 +164,7 @@ class CustomNavItem extends StatelessWidget {
                   label,
                   style: TextStyle(
                     fontSize: size,
-                    color: isSelected
-                        ? Theme.of(context).primaryColor
-                        : Colors.grey,
+                    color: isSelected ? Theme.of(context).primaryColor : Colors.grey,
                   ),
                 );
               },

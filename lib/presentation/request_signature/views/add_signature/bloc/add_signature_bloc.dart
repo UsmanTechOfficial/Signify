@@ -6,7 +6,9 @@ import 'add_signature_state.dart';
 class AddSignatureBloc extends Bloc<AddSignatureEvent, AddSignatureState> {
   int selectedSign = -1;
   var selectedStroke = PenStroke.fine;
-  int selectedColor = PenColors.black.index;
+  var selectedColor = PenColors.black;
+
+  // int selectedColor = PenColors.black.index;
 
   /// [AddSignatureInitial]
   AddSignatureBloc() : super(const AddSignatureInitial()) {

@@ -13,6 +13,7 @@ class CustomElevatedIconButton extends StatelessWidget {
   final double? borderWidth;
   final Color? iconColor;
   final double? iconSize;
+  final double? elevation;
 
   const CustomElevatedIconButton({
     super.key,
@@ -26,6 +27,7 @@ class CustomElevatedIconButton extends StatelessWidget {
     this.borderWidth,
     this.iconColor,
     this.iconSize,
+    this.elevation,
   });
 
   @override
@@ -36,12 +38,11 @@ class CustomElevatedIconButton extends StatelessWidget {
       child: ElevatedButton(
         onPressed: onPressed,
         style: ElevatedButton.styleFrom(
+          elevation: elevation,
           backgroundColor: fillColor ?? appColorScheme(context).primary,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(borderRadius ?? 8.0),
-            side: BorderSide(
-                color: borderColor ?? Colors.transparent,
-                width: borderWidth ?? 1.0),
+            side: BorderSide(color: borderColor ?? Colors.transparent, width: borderWidth ?? 1.0),
           ),
         ),
         child: Icon(

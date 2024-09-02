@@ -3,33 +3,27 @@ import 'package:flutter/material.dart';
 import '../theme_library.dart';
 
 DrawerThemeData get drawerTheme => DrawerThemeData(
-      backgroundColor: colorSchemeLight
-          .surface, // Use the surface color for Drawer background
-      scrimColor:
-          colorSchemeLight.scrim, // Use the scrim color when the Drawer is open
-      elevation: 16.0, // Example elevation, adjust as needed
-      shape: const RoundedRectangleBorder(
-// Example shape, adjust as needed
-        borderRadius: BorderRadius.only(
-          topRight: Radius.circular(20.0),
-          bottomRight: Radius.circular(20.0),
-        ),
-      ),
-// You can add other properties as needed
+      backgroundColor: colorSchemeLight.surface,
+      shadowColor: colorSchemeLight.shadow,
+      // scrimColor: colorSchemeLight.scrim,
+      elevation: 16.0,
+      // shape: const RoundedRectangleBorder(
+      //   borderRadius: BorderRadius.only(
+      //     topRight: Radius.circular(20.0),
+      //     bottomRight: Radius.circular(20.0),
+      //   ),
+      // ),
     );
 
 DrawerThemeData get darkDrawerTheme => DrawerThemeData(
-      backgroundColor: colorSchemeDark
-          .surface, // Use the surface color for Drawer background
-      scrimColor:
-          colorSchemeDark.scrim, // Use the scrim color when the Drawer is open
-      elevation: 16.0, // Example elevation, adjust as needed
-      shape: const RoundedRectangleBorder(
-// Example shape, adjust as needed
-        borderRadius: BorderRadius.only(
-          topRight: Radius.circular(20.0),
-          bottomRight: Radius.circular(20.0),
-        ),
-      ),
-// You can add other properties as needed
+      backgroundColor: colorSchemeDark.surface,
+      // scrimColor: colorSchemeDark.scrim,
+      shadowColor: colorSchemeDark.shadow,
+      elevation: 16.0,
+      // shape: const RoundedRectangleBorder(
+      //   borderRadius: BorderRadius.only(
+      //     topRight: Radius.circular(20.0),
+      //     bottomRight: Radius.circular(20.0),
+      //   ),
+      // ),
     );

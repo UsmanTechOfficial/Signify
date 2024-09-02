@@ -15,6 +15,7 @@ class CustomElevatedButton extends StatelessWidget {
     this.borderRadius,
     this.borderWidth,
     this.alignment,
+    this.elevation,
   });
 
   final Widget child;
@@ -27,6 +28,7 @@ class CustomElevatedButton extends StatelessWidget {
   final double? borderRadius;
   final double? borderWidth;
   final AlignmentGeometry? alignment;
+  final double? elevation;
 
   @override
   Widget build(BuildContext context) {
@@ -36,11 +38,10 @@ class CustomElevatedButton extends StatelessWidget {
       child: ElevatedButton(
           onPressed: onPressed,
           style: OutlinedButton.styleFrom(
-            elevation: 0,
+            elevation: elevation ?? 0,
             backgroundColor: appColorScheme(context).surface,
             side: BorderSide(
-                color: borderColor ?? appColorScheme(context).primary,
-                width: borderWidth ?? 1.0),
+                color: borderColor ?? appColorScheme(context).primary, width: borderWidth ?? 1.0),
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(borderRadius ?? 8.0),
             ),

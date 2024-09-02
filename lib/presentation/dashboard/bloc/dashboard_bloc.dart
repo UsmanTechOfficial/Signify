@@ -16,8 +16,7 @@ part 'dashboard_event.dart';
 
 part 'dashboard_state.dart';
 
-class DashboardBloc extends Bloc<DashboardEvent, DashboardState>
-    with BaseBottomSheet {
+class DashboardBloc extends Bloc<DashboardEvent, DashboardState> with BaseBottomSheet {
   DashboardBloc() : super(const DashboardInitialState()) {
     on<DashboardPageChangedEvent>(
       (event, emit) {
