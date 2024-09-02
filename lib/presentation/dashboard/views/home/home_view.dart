@@ -1,6 +1,4 @@
 import 'package:dyno_sign/domain/consts/global_var.dart';
-import 'package:dyno_sign/domain/custom_widgets/buttons/custom_elevated_button.dart';
-import 'package:dyno_sign/domain/custom_widgets/buttons/custom_outlined_icon_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -31,15 +29,14 @@ class HomeView extends StatelessWidget {
             slivers: [
               SliverAppBar(
                 leading: InkWell(
-                  onTap: () {
-                    scaffoldKey.currentState?.openDrawer();
-                  },
-                  child: Icon(Icons.menu),
-                ),
+                    onTap: () {
+                      scaffoldKey.currentState?.openDrawer();
+                    },
+                    child: const Icon(Icons.menu_outlined)),
                 pinned: false,
                 floating: true,
                 expandedHeight: 60.0,
-                flexibleSpace: FlexibleSpaceBar(
+                flexibleSpace: const FlexibleSpaceBar(
                   expandedTitleScale: 1.1,
                   collapseMode: CollapseMode.parallax,
                   title: CustomText(
@@ -61,7 +58,8 @@ class HomeView extends StatelessWidget {
                           title: "Doc",
                           icon: Assets.icons.docIcon.svg(),
                           subtitle: "${index + 5}",
-                          onTap: () => context.read<HomeBloc>().add(SelectTile(index)),
+                          onTap: () =>
+                              context.read<HomeBloc>().add(SelectTile(index)),
                         );
                       },
                     );
@@ -97,7 +95,9 @@ class HomeView extends StatelessWidget {
                           isSelected: state.selectedCategoryIndex == index,
                           title: "Agreements",
                           icon: Assets.icons.docIcon.svg(),
-                          onTap: () => context.read<HomeBloc>().add(SelectCategory(index)),
+                          onTap: () => context
+                              .read<HomeBloc>()
+                              .add(SelectCategory(index)),
                         );
                       },
                     );
@@ -148,7 +148,8 @@ class HomeView extends StatelessWidget {
                           child: Container(
                             color: Colors.green,
                           ),
-                          onTap: () => context.read<HomeBloc>().add(SelectDoc(index)),
+                          onTap: () =>
+                              context.read<HomeBloc>().add(SelectDoc(index)),
                         );
                       },
                     );
@@ -245,7 +246,8 @@ class CategoryCard extends StatelessWidget {
     final colorScheme = Theme.of(context).colorScheme;
 
     return Card(
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(AppStyle.tileBorderRadius)),
+      shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(AppStyle.tileBorderRadius)),
       shadowColor: isSelected ? colorScheme.primary : colorScheme.shadow,
       elevation: 4,
       color: isSelected ? colorScheme.primary : colorScheme.surface,
@@ -257,7 +259,9 @@ class CategoryCard extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
             CircleAvatar(
-              backgroundColor: isSelected ? colorScheme.onPrimary : colorScheme.secondaryContainer,
+              backgroundColor: isSelected
+                  ? colorScheme.onPrimary
+                  : colorScheme.secondaryContainer,
               child: icon,
             ),
             CustomText(
@@ -294,7 +298,8 @@ class DocCard extends StatelessWidget {
     final colorScheme = Theme.of(context).colorScheme;
 
     return Card(
-      shadowColor: isSelected ? colorScheme.primary : colorScheme.outlineVariant,
+      shadowColor:
+          isSelected ? colorScheme.primary : colorScheme.outlineVariant,
       elevation: 4,
       color: colorScheme.surface,
       shape: RoundedRectangleBorder(
@@ -324,7 +329,8 @@ class DocCard extends StatelessWidget {
                             ),
                           )
                         : null,
-                    color: isSelected ? colorScheme.primary : colorScheme.surface,
+                    color:
+                        isSelected ? colorScheme.primary : colorScheme.surface,
                     borderRadius: const BorderRadius.only(
                       bottomRight: Radius.circular(AppStyle.tileBorderRadius),
                       bottomLeft: Radius.circular(
@@ -342,21 +348,26 @@ class DocCard extends StatelessWidget {
                           "Agreements",
                           fontSize: AppFontSize.labelMediumFont,
                           fontWeight: FontWeight.w500,
-                          color: isSelected ? colorScheme.onPrimary : colorScheme.onSurface,
+                          color: isSelected
+                              ? colorScheme.onPrimary
+                              : colorScheme.onSurface,
                         ),
                         Row(
                           children: [
                             Icon(
                               Icons.circle,
                               size: 10,
-                              color:
-                                  isSelected ? colorScheme.onPrimary : colorScheme.primaryContainer,
+                              color: isSelected
+                                  ? colorScheme.onPrimary
+                                  : colorScheme.primaryContainer,
                             ),
                             const SizedBox(width: 5),
                             CustomText(
                               "Completed",
                               fontSize: AppFontSize.labelSmallFont,
-                              color: isSelected ? colorScheme.onPrimary : colorScheme.onSurface,
+                              color: isSelected
+                                  ? colorScheme.onPrimary
+                                  : colorScheme.onSurface,
                             ),
                           ],
                         ),

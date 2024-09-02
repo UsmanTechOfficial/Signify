@@ -16,15 +16,24 @@ part 'dashboard_event.dart';
 
 part 'dashboard_state.dart';
 
-class DashboardBloc extends Bloc<DashboardEvent, DashboardState> with BaseBottomSheet {
+class DashboardBloc extends Bloc<DashboardEvent, DashboardState>
+    with BaseBottomSheet {
+  ///[] Constructor
   DashboardBloc() : super(const DashboardInitialState()) {
-    on<DashboardPageChangedEvent>(
-      (event, emit) {
-        emit(state.copyWith(currentIndex: event.index));
-      },
-    );
+    /// on [DashboardPageChangedEvent] Event handler for page change
+    on<DashboardPageChangedEvent>((event, emit) {
+      emit(DashboardPageChangeState(newIndex: event.index));
+    });
+
+    /// [DrawerTabChangeEvent] Event handler for drawer tab change
+    on<DrawerTabChangeEvent>((event, emit) {
+      emit(DrawerTabChangeState(newIndex: event.index));
+    });
   }
 
+  final int selectedPage = 0;
+
+  ///[] Show sign request sheet
   void showSignRequestSheet(BuildContext context) {
     baseBottomSheet(
       context,
@@ -43,4 +52,18 @@ enum SelectDocTypes {
   files,
   library,
   media,
+}
+
+enum DrawerTabs {
+  home("Home", "assets/icons/ic_home_outlined.svg"),
+  templates("Templates", "assets/icons/ic_home_outlined.svg"),
+  agreements("Agreements", "assets/icons/ic_home_outlined.svg"),
+  profile("Profile", "assets/icons/ic_home_outlined.svg"),
+  folder("FolderS", "assets/icons/ic_home_outlined.svg"),
+  setting("Settings", "assets/icons/ic_home_outlined.svg");
+
+  final String tab;
+  final String icon;
+
+  const DrawerTabs(this.tab, this.icon);
 }

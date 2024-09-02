@@ -1,12 +1,11 @@
+import 'package:dyno_sign/domain/consts/font_size.dart';
 import 'package:dyno_sign/domain/consts/global_var.dart';
 import 'package:dyno_sign/domain/consts/styles.dart';
-import 'package:dyno_sign/domain/custom_widgets/buttons/custom_outlined_icon_button.dart';
+import 'package:dyno_sign/domain/custom_widgets/text/custom_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../assets_gen/assets.gen.dart';
-import '../../domain/custom_widgets/buttons/custom_elevated_button.dart';
-import '../../domain/custom_widgets/buttons/custom_elevated_icon_button.dart';
 import 'bloc/dashboard_bloc.dart';
 
 class DashboardView extends StatelessWidget {
@@ -17,6 +16,7 @@ class DashboardView extends StatelessWidget {
     final width = appWidth(context);
     final bloc = context.read<DashboardBloc>();
     final color = appColorScheme(context);
+
     return Scaffold(
       key: scaffoldKey,
       drawer: Drawer(
@@ -34,26 +34,79 @@ class DashboardView extends StatelessWidget {
                     width: 150,
                     fit: BoxFit.contain,
                   ),
-                  InkWell(
-                    onTap: () {},
-                    child: IconButton(
-                      onPressed: () {},
-                      icon: Assets.images.,
+                  IconButton(
+                    style: IconButton.styleFrom(
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(
+                          AppStyle.buttonBorderRadius,
+                        ),
+                      ),
+                      backgroundColor: color.outlineVariant.withOpacity(0.5),
                     ),
+                    onPressed: () {
+                      scaffoldKey.currentState?.closeDrawer();
+                    },
+                    icon: Assets.icons.moreIcon.svg(color: color.primary),
                   ),
                 ],
               ),
-            )
+            ),
+            BlocBuilder<DashboardBloc, DashboardState>(
+              buildWhen: (previous, current) =>
+                  current is DashboardPageChangeState ||
+                  current is DrawerTabChangeState,
+              builder: (context, state) {
+                final bloc = context.read<DashboardBloc>();
+
+                final int currentIndex = state is DashboardPageChangeState
+                    ? state.newIndex
+                    : state is DrawerTabChangeState
+                        ? state.newIndex
+                        : 0;
+
+                return Column(
+                  children: List.generate(
+                    DrawerTabs.values.length,
+                    (index) => SettingListTile(
+                      isSelected: index == currentIndex,
+                      title: DrawerTabs.values[index].tab,
+                      icon: DrawerTabs.values[index].icon,
+                      onTap: () {
+                        bloc.add(DrawerTabChangeEvent(index));
+                        scaffoldKey.currentState?.closeDrawer();
+                      },
+                    ),
+                  ),
+                );
+              },
+            ),
           ],
         ),
       ),
       body: BlocBuilder<DashboardBloc, DashboardState>(
+        buildWhen: (previous, current) =>
+            current is DashboardPageChangeState ||
+            current is DrawerTabChangeState,
         builder: (_, state) {
-          return state.pages[state.currentIndex];
+          int currentIndex;
+
+          if (state is DashboardInitialState) {
+            currentIndex = state.currentIndex;
+          } else if (state is DashboardPageChangeState) {
+            currentIndex = state.newIndex;
+          } else if (state is DrawerTabChangeState) {
+            currentIndex = state.newIndex;
+          } else {
+            currentIndex = 0; // Fallback to the first page if state is unknown
+          }
+
+          return pageList[currentIndex];
         },
       ),
       bottomNavigationBar: BlocBuilder<DashboardBloc, DashboardState>(
-        builder: (_, state) {
+        builder: (context, state) {
+          final currentIndex =
+              state is DashboardPageChangeState ? state.newIndex : 0;
           return BottomAppBar(
             shape: const CircularNotchedRectangle(),
             notchMargin: 10,
@@ -65,15 +118,17 @@ class DashboardView extends StatelessWidget {
                   Row(
                     children: [
                       CustomNavItem(
-                        isSelected: bloc.state.currentIndex == 0 ? true : false,
-                        onTap: () => bloc.add(const DashboardPageChangedEvent(0)),
+                        isSelected: currentIndex == 0,
+                        onTap: () =>
+                            bloc.add(const DashboardPageChangedEvent(0)),
                         label: 'Home',
                         icon: Assets.icons.icHomeOutlined.svg(),
                         activeIcon: Assets.icons.icHomeFilled.svg(),
                       ),
                       CustomNavItem(
-                        onTap: () => bloc.add(const DashboardPageChangedEvent(1)),
-                        isSelected: bloc.state.currentIndex == 1 ? true : false,
+                        isSelected: currentIndex == 1,
+                        onTap: () =>
+                            bloc.add(const DashboardPageChangedEvent(1)),
                         label: 'Template',
                         icon: Assets.icons.icTemplatesOutlined.svg(),
                         activeIcon: Assets.icons.icTemplatesFilled.svg(),
@@ -83,15 +138,17 @@ class DashboardView extends StatelessWidget {
                   Row(
                     children: [
                       CustomNavItem(
-                        onTap: () => bloc.add(const DashboardPageChangedEvent(2)),
-                        isSelected: bloc.state.currentIndex == 2 ? true : false,
+                        isSelected: currentIndex == 2,
+                        onTap: () =>
+                            bloc.add(const DashboardPageChangedEvent(2)),
                         label: 'Agreement',
                         icon: Assets.icons.icAgreementsOutlined.svg(),
                         activeIcon: Assets.icons.icAgreementsFilled.svg(),
                       ),
                       CustomNavItem(
-                        onTap: () => bloc.add(const DashboardPageChangedEvent(3)),
-                        isSelected: bloc.state.currentIndex == 3 ? true : false,
+                        isSelected: currentIndex == 3,
+                        onTap: () =>
+                            bloc.add(const DashboardPageChangedEvent(3)),
                         label: 'Profile',
                         icon: Assets.icons.icProfileOutlined.svg(),
                         activeIcon: Assets.icons.icProfileFilled.svg(),
@@ -149,7 +206,9 @@ class CustomNavItem extends StatelessWidget {
                 return IconTheme(
                   data: IconThemeData(
                     size: size,
-                    color: isSelected ? Theme.of(context).primaryColor : Colors.grey,
+                    color: isSelected
+                        ? Theme.of(context).primaryColor
+                        : Colors.grey,
                   ),
                   child: isSelected ? activeIcon : icon,
                 );
@@ -164,7 +223,9 @@ class CustomNavItem extends StatelessWidget {
                   label,
                   style: TextStyle(
                     fontSize: size,
-                    color: isSelected ? Theme.of(context).primaryColor : Colors.grey,
+                    color: isSelected
+                        ? Theme.of(context).primaryColor
+                        : Colors.grey,
                   ),
                 );
               },
@@ -172,6 +233,40 @@ class CustomNavItem extends StatelessWidget {
           ],
         ),
       ),
+    );
+  }
+}
+
+class SettingListTile extends StatelessWidget {
+  final bool isSelected;
+  final VoidCallback? onTap;
+  final String title;
+  final String icon;
+
+  const SettingListTile({
+    super.key,
+    required this.isSelected,
+    this.onTap,
+    required this.title,
+    required this.icon,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final color = appColorScheme(context);
+    return ListTile(
+      selected: isSelected,
+      dense: true,
+      shape: const RoundedRectangleBorder(),
+      leading: SvgGenImage(icon)
+          .svg(color: isSelected ? color.surface : color.onSurface),
+      title: CustomText(
+        title,
+        color: isSelected ? color.surface : color.onSurface,
+        fontSize: AppFontSize.labelMediumFont,
+        fontWeight: FontWeight.w400,
+      ),
+      onTap: onTap,
     );
   }
 }

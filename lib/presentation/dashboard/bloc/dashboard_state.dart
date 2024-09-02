@@ -1,32 +1,52 @@
 part of 'dashboard_bloc.dart';
 
 sealed class DashboardState extends Equatable {
-  final int currentIndex;
-  final List<Widget> pages;
-
-  const DashboardState({required this.currentIndex, required this.pages});
-
-  copyWith({
-    int? currentIndex,
-  }) {}
+  const DashboardState();
 
   @override
-  List<Object?> get props => [pages, currentIndex];
+  List<Object?> get props => [];
 }
 
 class DashboardInitialState extends DashboardState {
+  final int currentIndex;
+
   const DashboardInitialState({
-    super.currentIndex = 0,
-    super.pages = pageList,
+    this.currentIndex = 0,
   });
 
   @override
-  DashboardInitialState copyWith({int? currentIndex}) {
-    return DashboardInitialState(
-      currentIndex: currentIndex ?? this.currentIndex,
-      pages: pageList,
+  List<Object?> get props => [currentIndex];
+}
+
+class DashboardPageChangeState extends DashboardState {
+  final int newIndex;
+
+  const DashboardPageChangeState({
+    required this.newIndex,
+  });
+
+  @override
+  List<Object?> get props => [newIndex];
+
+  copyWith({
+    int? newIndex,
+    List<Widget>? pages,
+  }) {
+    return DashboardPageChangeState(
+      newIndex: newIndex ?? this.newIndex,
     );
   }
+}
+
+class DrawerTabChangeState extends DashboardState {
+  final int newIndex;
+
+  const DrawerTabChangeState({
+    required this.newIndex,
+  });
+
+  @override
+  List<Object?> get props => [newIndex];
 }
 
 const List<Widget> pageList = <Widget>[

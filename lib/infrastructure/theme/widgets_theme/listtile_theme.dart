@@ -4,10 +4,11 @@ import '../theme_library.dart';
 
 ListTileThemeData get listTileTheme => ListTileThemeData(
       tileColor: colorSchemeLight.surface,
-      selectedColor: colorSchemeLight.primary,
+      // selectedColor: colorSchemeLight.primary,
       selectedTileColor: colorSchemeLight.primary,
       iconColor: colorSchemeLight.secondary,
       textColor: colorSchemeLight.onSurface,
+
       contentPadding: const EdgeInsets.symmetric(horizontal: 10),
       shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(AppStyle.buttonBorderRadius)),
