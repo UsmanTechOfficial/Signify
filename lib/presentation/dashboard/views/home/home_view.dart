@@ -14,8 +14,6 @@ class HomeView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
-    // final height = appHeight(context);
-    // final width = appWidth(context);
     return BlocProvider(
       create: (context) => HomeBloc(),
       child: Scaffold(

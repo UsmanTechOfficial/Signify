@@ -8,8 +8,6 @@ class AddSignatureBloc extends Bloc<AddSignatureEvent, AddSignatureState> {
   var selectedStroke = PenStroke.fine;
   var selectedColor = PenColors.black;
 
-  // int selectedColor = PenColors.black.index;
-
   /// [AddSignatureInitial]
   AddSignatureBloc() : super(const AddSignatureInitial()) {
     /// [OnSignatureSelectionEvent] emit [OnSignatureSelectedState]

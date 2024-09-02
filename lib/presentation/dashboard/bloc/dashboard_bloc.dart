@@ -3,6 +3,7 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../domain/consts/global_var.dart';
 import '../../../domain/custom_widgets/bottomSheets/add_sign_sheets/sign_request_sheet.dart';
 import '../views/home/home_view.dart';
 
@@ -25,13 +26,13 @@ class DashboardBloc extends Bloc<DashboardEvent, DashboardState>
       emit(DashboardPageChangeState(newIndex: event.index));
     });
 
-    /// [DrawerTabChangeEvent] Event handler for drawer tab change
-    on<DrawerTabChangeEvent>((event, emit) {
-      emit(DrawerTabChangeState(newIndex: event.index));
-    });
+    // /// [DrawerTabChangeEvent] Event handler for drawer tab change
+    // on<DrawerTabChangeEvent>((event, emit) {
+    //   emit(DrawerTabChangeState(newIndex: event.index));
+    // });
   }
 
-  final int selectedPage = 0;
+  var currentPage;
 
   ///[] Show sign request sheet
   void showSignRequestSheet(BuildContext context) {

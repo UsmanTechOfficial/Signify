@@ -38,16 +38,16 @@ class DashboardPageChangeState extends DashboardState {
   }
 }
 
-class DrawerTabChangeState extends DashboardState {
-  final int newIndex;
-
-  const DrawerTabChangeState({
-    required this.newIndex,
-  });
-
-  @override
-  List<Object?> get props => [newIndex];
-}
+// class DrawerTabChangeState extends DashboardState {
+//   final int newIndex;
+//
+//   const DrawerTabChangeState({
+//     required this.newIndex,
+//   });
+//
+//   @override
+//   List<Object?> get props => [newIndex];
+// }
 
 const List<Widget> pageList = <Widget>[
   HomeView(),

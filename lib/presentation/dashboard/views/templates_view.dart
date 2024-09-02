@@ -8,6 +8,11 @@ class TemplatesView extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Tamplete'),
+        leading: InkWell(
+            onTap: () {
+              scaffoldKey.currentState?.openDrawer();
+            },
+            child: const Icon(Icons.menu_outlined)),
         centerTitle: true,
       ),
       body: const Center(
