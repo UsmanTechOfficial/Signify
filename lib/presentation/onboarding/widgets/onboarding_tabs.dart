@@ -1,7 +1,7 @@
 import 'package:dyno_sign/domain/consts/global_var.dart';
 import 'package:flutter/material.dart';
 
-import '../../../domain/custom_widgets/text/custom_text.dart';
+import '../../widgets/text/custom_text.dart';
 
 class OnboardingTab extends StatelessWidget {
   final Widget image;

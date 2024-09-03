@@ -29,3 +29,8 @@ export '../../presentation/request_signature/views/add_signature/add_signature_v
 export '../../presentation/request_signature/views/email_detail/bloc/email_detail_bloc.dart';
 export '../../presentation/request_signature/views/email_detail/email_detail_view.dart';
 export '../../../presentation/splash/splash_view.dart';
+
+export '../../../presentation/dashboard/views/settings/bloc/settings_bloc.dart';
+export '../../../presentation/dashboard/views/settings/settings_view.dart';
+export '../../../presentation/dashboard/views/folders/bloc/folders_bloc.dart';
+export '../../../presentation/dashboard/views/folders/folders_view.dart';

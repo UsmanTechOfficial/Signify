@@ -1,11 +1,14 @@
 import 'package:dyno_sign/domain/consts/global_var.dart';
 import 'package:dyno_sign/domain/consts/styles.dart';
+import 'package:dyno_sign/infrastructure/navigation/app_routes/navigation.dart';
+import 'package:dyno_sign/infrastructure/navigation/app_routes/routes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../assets_gen/assets.gen.dart';
-import '../widgets/dashboard_widgets/custom_nav_bar_item.dart';
-import '../widgets/dashboard_widgets/drawer_items_tile.dart';
+
+import '../request_signature/widgets/dashboard_widgets/custom_nav_bar_item.dart';
+import '../request_signature/widgets/dashboard_widgets/drawer_items_tile.dart';
 import 'bloc/dashboard_bloc.dart';
 
 class DashboardView extends StatelessWidget {
@@ -13,126 +16,154 @@ class DashboardView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final width = appWidth(context);
     final bloc = context.read<DashboardBloc>();
     final color = appColorScheme(context);
+    final width = appWidth(context);
 
-    return Scaffold(
-      key: scaffoldKey,
-      // drawer: Drawer(
-      //   width: width * 0.75,
-      //   child: Column(
-      //     mainAxisSize: MainAxisSize.max,
-      //     mainAxisAlignment: MainAxisAlignment.start,
-      //     children: [
-      //       DrawerHeader(
-      //         child: Row(
-      //           mainAxisSize: MainAxisSize.max,
-      //           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      //           children: [
-      //             Assets.images.splashImg.image(
-      //               width: 150,
-      //               fit: BoxFit.contain,
-      //             ),
-      //             IconButton(
-      //               style: IconButton.styleFrom(
-      //                 shape: RoundedRectangleBorder(
-      //                   borderRadius: BorderRadius.circular(
-      //                     AppStyle.buttonBorderRadius,
-      //                   ),
-      //                 ),
-      //                 backgroundColor: color.outlineVariant.withOpacity(0.5),
-      //               ),
-      //               onPressed: () => scaffoldKey.currentState?.closeDrawer(),
-      //               icon: Assets.icons.moreIcon.svg(color: color.primary),
-      //             ),
-      //           ],
-      //         ),
-      //       ),
-      //       BlocBuilder<DashboardBloc, DashboardState>(
-      //         buildWhen: (previous, current) =>
-      //             current is DashboardPageChangeState,
-      //         builder: (context, state) {
-      //           return Column(
-      //             children: DrawerTabs.values.map((tab) {
-      //               return DrawerItemsTile(
-      //                 isSelected: tab.index == bloc.currentPage,
-      //                 title: tab.tab,
-      //                 icon: tab.icon,
-      //                 onTap: () {},
-      //               );
-      //             }).toList(),
-      //           );
-      //         },
-      //       ),
-      //     ],
-      //   ),
-      // ),
-      body: BlocBuilder<DashboardBloc, DashboardState>(
-        buildWhen: (previous, current) {
-          return current is DashboardPageChangeState;
-        },
-        builder: (context, state) {
-          if (state is DashboardPageChangeState) {
-            bloc.currentPage = state.newIndex;
-          }
+    return BlocBuilder<DashboardBloc, DashboardState>(
+      buildWhen: (previous, current) => current is DashboardPageChangeState,
+      builder: (context, state) {
+        int currentPage = _getCurrentPage(state);
 
-          return pageList[bloc.currentPage];
-        },
-      ),
-      bottomNavigationBar:
-          BlocBuilder<DashboardBloc, DashboardState>(builder: (context, state) {
-        return BottomAppBar(
-          shape: const CircularNotchedRectangle(),
-          notchMargin: 10,
-          child: SizedBox(
-            height: 60,
+        return Scaffold(
+          resizeToAvoidBottomInset: false,
+          key: scaffoldKey,
+          drawer: _buildDrawer(width, color, bloc),
+          body: pageList[currentPage],
+          bottomNavigationBar: _buildBottomNavigationBar(bloc, currentPage),
+          floatingActionButton: _buildFAB(context, bloc),
+          floatingActionButtonLocation:
+              FloatingActionButtonLocation.centerDocked,
+        );
+      },
+    );
+  }
+
+  int _getCurrentPage(DashboardState state) {
+    if (state is DashboardPageChangeState) {
+      return state.newIndex;
+    } else if (state is DashboardInitialState) {
+      return state.currentIndex;
+    }
+    return 0;
+  }
+
+  Widget _buildDrawer(double width, ColorScheme color, DashboardBloc bloc) {
+    return Drawer(
+      width: width * 0.75,
+      child: Column(
+        mainAxisSize: MainAxisSize.max,
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          DrawerHeader(
             child: Row(
+              mainAxisSize: MainAxisSize.max,
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Row(
-                  children: [
-                    CustomNavBarItem(
-                      isSelected: bloc.currentPage == 0,
-                      onTap: () => bloc.add(const DashboardPageChangedEvent(0)),
-                      label: 'Home',
-                      icon: Assets.icons.icHomeOutlined.svg(),
-                      activeIcon: Assets.icons.icHomeFilled.svg(),
-                    ),
-                    CustomNavBarItem(
-                      isSelected: bloc.currentPage == 1,
-                      onTap: () => bloc.add(const DashboardPageChangedEvent(1)),
-                      label: 'Template',
-                      icon: Assets.icons.icTemplatesOutlined.svg(),
-                      activeIcon: Assets.icons.icTemplatesFilled.svg(),
-                    ),
-                  ],
+                Assets.images.splashImg.image(
+                  width: 150,
+                  fit: BoxFit.contain,
                 ),
-                Row(
-                  children: [
-                    CustomNavBarItem(
-                      isSelected: bloc.currentPage == 2,
-                      onTap: () => bloc.add(const DashboardPageChangedEvent(2)),
-                      label: 'Agreement',
-                      icon: Assets.icons.icAgreementsOutlined.svg(),
-                      activeIcon: Assets.icons.icAgreementsFilled.svg(),
+                IconButton(
+                  style: IconButton.styleFrom(
+                    shape: RoundedRectangleBorder(
+                      borderRadius:
+                          BorderRadius.circular(AppStyle.buttonBorderRadius),
                     ),
-                    CustomNavBarItem(
-                      isSelected: bloc.currentPage == 3,
-                      onTap: () => bloc.add(const DashboardPageChangedEvent(3)),
-                      label: 'Profile',
-                      icon: Assets.icons.icProfileOutlined.svg(),
-                      activeIcon: Assets.icons.icProfileFilled.svg(),
-                    ),
-                  ],
+                    backgroundColor: color.outlineVariant.withOpacity(0.5),
+                  ),
+                  onPressed: () {
+                    scaffoldKey.currentState?.closeDrawer();
+                  },
+                  icon: Assets.icons.moreIcon.svg(color: color.primary),
                 ),
               ],
             ),
           ),
-        );
-      }),
-      floatingActionButton: _buildFAB(context, bloc),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+          Column(
+            children: DrawerTabs.values.map((tab) {
+              return BlocBuilder<DashboardBloc, DashboardState>(
+                buildWhen: (p, current) => current is DashboardPageChangeState,
+                builder: (context, state) {
+                  int selectedTab = 0;
+
+                  if (state is DashboardPageChangeState) {
+                    selectedTab = state.newIndex;
+                  } else if (state is DashboardInitialState) {
+                    selectedTab = state.currentIndex;
+                  }
+
+                  return DrawerItemsTile(
+                    isSelected: selectedTab == tab.index,
+                    title: tab.label,
+                    icon: tab.iconPath,
+                    onTap: () {
+                      scaffoldKey.currentState?.closeDrawer();
+                      selectedTab = tab.index;
+                      if (tab.index < 4) {
+                        bloc.add(DashboardPageChangedEvent(selectedTab));
+                      } else {
+                        _navigateToNewPage(tab.index);
+                      }
+                    },
+                  );
+                },
+              );
+            }).toList(),
+          )
+        ],
+      ),
+    );
+  }
+
+  Widget _buildBottomNavigationBar(DashboardBloc bloc, int currentPage) {
+    return BottomAppBar(
+      shape: const CircularNotchedRectangle(),
+      notchMargin: 10,
+      child: SizedBox(
+        height: 60,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Row(
+              children: [
+                CustomNavBarItem(
+                  isSelected: currentPage == 0,
+                  onTap: () => bloc.add(const DashboardPageChangedEvent(0)),
+                  label: 'Home',
+                  icon: Assets.icons.icHomeOutlined.svg(),
+                  activeIcon: Assets.icons.icHomeFilled.svg(),
+                ),
+                CustomNavBarItem(
+                  isSelected: currentPage == 1,
+                  onTap: () => bloc.add(const DashboardPageChangedEvent(1)),
+                  label: 'Template',
+                  icon: Assets.icons.icTemplatesOutlined.svg(),
+                  activeIcon: Assets.icons.icTemplatesFilled.svg(),
+                ),
+              ],
+            ),
+            Row(
+              children: [
+                CustomNavBarItem(
+                  isSelected: currentPage == 2,
+                  onTap: () => bloc.add(const DashboardPageChangedEvent(2)),
+                  label: 'Agreement',
+                  icon: Assets.icons.icAgreementsOutlined.svg(),
+                  activeIcon: Assets.icons.icAgreementsFilled.svg(),
+                ),
+                CustomNavBarItem(
+                  isSelected: currentPage == 3,
+                  onTap: () => bloc.add(const DashboardPageChangedEvent(3)),
+                  label: 'Profile',
+                  icon: Assets.icons.icProfileOutlined.svg(),
+                  activeIcon: Assets.icons.icProfileFilled.svg(),
+                ),
+              ],
+            ),
+          ],
+        ),
+      ),
     );
   }
 
@@ -143,5 +174,10 @@ class DashboardView extends StatelessWidget {
       backgroundColor: Theme.of(context).primaryColor,
       child: Icon(Icons.add, color: Theme.of(context).colorScheme.surface),
     );
+  }
+
+  void _navigateToNewPage(int index) {
+    if (index == 4) Go.toNamed(Routes.PROFILE);
+    if (index == 5) Go.toNamed(Routes.SETTINGS);
   }
 }

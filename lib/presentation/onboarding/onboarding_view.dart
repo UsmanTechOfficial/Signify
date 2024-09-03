@@ -3,8 +3,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../assets_gen/assets.gen.dart';
 import '../../domain/consts/global_var.dart';
-import '../../domain/custom_widgets/buttons/custom_outlined_text_button.dart';
-import '../../domain/custom_widgets/buttons/custom_rouded_button.dart';
+
+import '../widgets/buttons/custom_outlined_text_button.dart';
+import '../widgets/buttons/custom_rouded_button.dart';
 import 'bloc/onboarding_bloc.dart';
 import 'bloc/onboarding_event.dart';
 import 'bloc/onboarding_state.dart';

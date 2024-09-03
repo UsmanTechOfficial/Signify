@@ -3,19 +3,21 @@ import 'package:flutter/material.dart';
 import '../theme_library.dart';
 
 SearchBarThemeData get searchBarTheme => SearchBarThemeData(
-      backgroundColor: WidgetStateProperty.all<Color>(colorSchemeLight.surface),
-      elevation: WidgetStateProperty.all<double>(2.0),
+      backgroundColor: WidgetStateProperty.all<Color>(
+          colorSchemeLight.outlineVariant.withOpacity(0.5)),
+      elevation: WidgetStateProperty.all<double>(0),
       shape: WidgetStateProperty.all<OutlinedBorder>(
-        RoundedRectangleBorder(borderRadius: BorderRadius.circular(4.0)),
+        RoundedRectangleBorder(borderRadius: BorderRadius.circular(8.0)),
       ),
 // Add other properties as needed
     );
 
 SearchBarThemeData get darkSearchBarTheme => SearchBarThemeData(
-      backgroundColor: WidgetStateProperty.all<Color>(colorSchemeDark.surface),
-      elevation: WidgetStateProperty.all<double>(2.0),
+      backgroundColor: WidgetStateProperty.all<Color>(
+          colorSchemeDark.outlineVariant.withOpacity(0.5)),
+      elevation: WidgetStateProperty.all<double>(0),
       shape: WidgetStateProperty.all<OutlinedBorder>(
-        RoundedRectangleBorder(borderRadius: BorderRadius.circular(4.0)),
+        RoundedRectangleBorder(borderRadius: BorderRadius.circular(8.0)),
       ),
 // Add other properties as needed
     );

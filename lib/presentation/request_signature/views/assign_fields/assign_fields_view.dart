@@ -4,8 +4,9 @@ import 'package:flutter/material.dart';
 import '../../../../domain/consts/font_size.dart';
 import '../../../../domain/consts/global_var.dart';
 import '../../../../domain/consts/styles.dart';
-import '../../../../domain/custom_widgets/buttons/custom_outlined_text_button.dart';
-import '../../../../domain/custom_widgets/text/custom_text.dart';
+
+import '../../../widgets/buttons/custom_outlined_text_button.dart';
+import '../../../widgets/text/custom_text.dart';
 import '../../../dashboard/views/home/home_view.dart';
 
 class AssignFieldsView extends StatelessWidget {

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../assets_gen/assets.gen.dart';
 import '../../domain/consts/font_size.dart';
-import '../../domain/custom_widgets/text/custom_text.dart';
+import '../widgets/text/custom_text.dart';
 
 class SplashView extends StatelessWidget {
   const SplashView({super.key});

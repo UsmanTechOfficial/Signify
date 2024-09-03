@@ -1,14 +1,16 @@
 import 'package:dyno_sign/domain/consts/styles.dart';
-import 'package:dyno_sign/domain/custom_widgets/buttons/custom_elevated_text_button.dart';
-import 'package:dyno_sign/domain/custom_widgets/buttons/custom_outlined_text_button.dart';
+
 import 'package:dyno_sign/infrastructure/navigation/app_routes/navigation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../domain/consts/font_size.dart';
-import '../../../../domain/custom_widgets/form_field/custom_formfield.dart';
-import '../../../../domain/custom_widgets/text/custom_text.dart';
+
 import '../../../../infrastructure/navigation/app_routes/routes.dart';
+import '../../../widgets/buttons/custom_elevated_text_button.dart';
+import '../../../widgets/buttons/custom_outlined_text_button.dart';
+import '../../../widgets/form_field/custom_formfield.dart';
+import '../../../widgets/text/custom_text.dart';
 import 'bloc/agreement_detail_added_bloc.dart';
 import 'bloc/agreement_detail_added_event.dart';
 import 'bloc/agreement_detail_added_state.dart';

@@ -1,6 +1,6 @@
 import 'package:equatable/equatable.dart';
 
-import '../../../../widgets/add_signature_widgets/pen_tools.dart';
+import '../../../widgets/add_signature_widgets/pen_tools.dart';
 
 /// [AddSignatureEvent]
 abstract class AddSignatureEvent extends Equatable {

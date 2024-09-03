@@ -1,12 +1,13 @@
 import 'package:dyno_sign/domain/consts/validation.dart';
-import 'package:dyno_sign/domain/custom_widgets/text/custom_text.dart';
 import 'package:dyno_sign/infrastructure/theme/theme_library.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../domain/consts/global_var.dart';
-import '../../../domain/custom_widgets/buttons/custom_elevated_text_button.dart';
-import '../../../domain/custom_widgets/form_field/custom_formfield.dart';
+
+import '../../widgets/buttons/custom_elevated_text_button.dart';
+import '../../widgets/form_field/custom_formfield.dart';
+import '../../widgets/text/custom_text.dart';
 import 'bloc/forget_password_bloc.dart';
 
 class ForgetPasswordView extends StatelessWidget {

@@ -6,10 +6,11 @@ import '../../../assets_gen/assets.gen.dart';
 import '../../../domain/consts/font_size.dart';
 import '../../../domain/consts/global_var.dart';
 import '../../../domain/consts/styles.dart';
-import '../../../domain/custom_widgets/buttons/custom_elevated_text_button.dart';
-import '../../../domain/custom_widgets/text/custom_text.dart';
+
 import '../../../infrastructure/navigation/app_routes/navigation.dart';
 import '../../../infrastructure/navigation/app_routes/routes.dart';
+import '../../widgets/buttons/custom_elevated_text_button.dart';
+import '../../widgets/text/custom_text.dart';
 import '../bloc/onboarding_state.dart';
 
 class GetStartedView extends StatelessWidget {

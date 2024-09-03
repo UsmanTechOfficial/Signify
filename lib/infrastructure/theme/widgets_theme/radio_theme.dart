@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import '../theme_library.dart';
 
 RadioThemeData get radioThemeData => RadioThemeData(
-      fillColor: WidgetStateProperty.all(colorSchemeLight.primary),
+      fillColor: WidgetStateProperty.all(colorSchemeLight.outlineVariant),
       overlayColor:
           WidgetStateProperty.all(colorSchemeLight.onPrimary.withOpacity(0.2)),
       splashRadius: 24, // Default splash radius

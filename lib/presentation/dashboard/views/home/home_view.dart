@@ -1,11 +1,11 @@
-import 'package:dyno_sign/domain/consts/global_var.dart';
+import 'package:dyno_sign/presentation/dashboard/widgets/custom_appbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../assets_gen/assets.gen.dart';
 import '../../../../domain/consts/font_size.dart';
 import '../../../../domain/consts/styles.dart';
-import '../../../../domain/custom_widgets/text/custom_text.dart';
+import '../../../widgets/text/custom_text.dart';
 import 'bloc/home_bloc.dart';
 
 class HomeView extends StatelessWidget {
@@ -14,149 +14,123 @@ class HomeView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
-    return BlocProvider(
-      create: (context) => HomeBloc(),
-      child: Scaffold(
-        body: RefreshIndicator(
-          onRefresh: () async {
-            return Future<void>.delayed(const Duration(seconds: 3));
-          },
-          child: CustomScrollView(
-            key: const PageStorageKey<String>("homeScrollPosition"),
-            physics: const AlwaysScrollableScrollPhysics(),
-            slivers: [
-              SliverAppBar(
-                leading: InkWell(
-                    onTap: () {
-                      scaffoldKey.currentState?.openDrawer();
+    return Scaffold(
+      body: RefreshIndicator(
+        onRefresh: () async => Future<void>.delayed(const Duration(seconds: 3)),
+        child: CustomScrollView(
+          key: const PageStorageKey<String>("homeScrollPosition"),
+          physics: const AlwaysScrollableScrollPhysics(),
+          slivers: [
+            const CustomAppbar(title: "Home"),
+            SliverList(
+              delegate: SliverChildBuilderDelegate(
+                childCount: 3,
+                (context, index) {
+                  return BlocBuilder<HomeBloc, HomeState>(
+                    builder: (context, state) {
+                      return CategoryTile(
+                        title: "Doc",
+                        icon: Assets.icons.docIcon.svg(),
+                        subtitle: "${index + 5}",
+                        onTap: () =>
+                            context.read<HomeBloc>().add(SelectTile(index)),
+                      );
                     },
-                    child: const Icon(Icons.menu_outlined)),
-                pinned: false,
-                floating: true,
-                expandedHeight: 60.0,
-                flexibleSpace: const FlexibleSpaceBar(
-                  expandedTitleScale: 1.1,
-                  collapseMode: CollapseMode.parallax,
-                  title: CustomText(
-                    "Home",
-                    fontSize: AppFontSize.titleMediumFont,
-                    fontWeight: FontWeight.w500,
-                    textAlign: TextAlign.center,
-                  ),
-                  centerTitle: true,
-                ),
+                  );
+                },
               ),
-              SliverList(
-                delegate: SliverChildBuilderDelegate(
-                  childCount: 3,
-                  (context, index) {
-                    return BlocBuilder<HomeBloc, HomeState>(
-                      builder: (context, state) {
-                        return CategoryTile(
-                          title: "Doc",
-                          icon: Assets.icons.docIcon.svg(),
-                          subtitle: "${index + 5}",
-                          onTap: () =>
-                              context.read<HomeBloc>().add(SelectTile(index)),
-                        );
-                      },
-                    );
-                  },
-                ),
+            ),
+            SliverToBoxAdapter(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const SizedBox(height: 30),
+                  CustomText(
+                    "Select",
+                    color: colorScheme.onSurface,
+                    fontSize: AppFontSize.titleSmallFont,
+                    fontWeight: FontWeight.w600,
+                  )
+                ],
               ),
-              SliverToBoxAdapter(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const SizedBox(height: 30),
-                    CustomText(
-                      "Select",
-                      color: colorScheme.onSurface,
-                      fontSize: AppFontSize.titleSmallFont,
-                      fontWeight: FontWeight.w600,
-                    )
-                  ],
-                ),
+            ),
+            SliverGrid(
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 3,
+                  mainAxisSpacing: 5.0,
+                  crossAxisSpacing: 5.0,
+                  mainAxisExtent: 100),
+              delegate: SliverChildBuilderDelegate(
+                childCount: 3,
+                (BuildContext context, int index) {
+                  return BlocBuilder<HomeBloc, HomeState>(
+                    builder: (context, state) {
+                      return CategoryCard(
+                        isSelected: state.selectedCategoryIndex == index,
+                        title: "Agreements",
+                        icon: Assets.icons.docIcon.svg(),
+                        onTap: () =>
+                            context.read<HomeBloc>().add(SelectCategory(index)),
+                      );
+                    },
+                  );
+                },
               ),
-              SliverGrid(
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 3,
-                    mainAxisSpacing: 5.0,
-                    crossAxisSpacing: 5.0,
-                    mainAxisExtent: 100),
-                delegate: SliverChildBuilderDelegate(
-                  childCount: 3,
-                  (BuildContext context, int index) {
-                    return BlocBuilder<HomeBloc, HomeState>(
-                      builder: (context, state) {
-                        return CategoryCard(
-                          isSelected: state.selectedCategoryIndex == index,
-                          title: "Agreements",
-                          icon: Assets.icons.docIcon.svg(),
-                          onTap: () => context
-                              .read<HomeBloc>()
-                              .add(SelectCategory(index)),
-                        );
-                      },
-                    );
-                  },
-                ),
-              ),
-              SliverToBoxAdapter(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const SizedBox(height: 30),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        CustomText(
-                          "Agreements",
-                          color: colorScheme.onSurface,
-                          fontSize: AppFontSize.titleSmallFont,
+            ),
+            SliverToBoxAdapter(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const SizedBox(height: 30),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      CustomText(
+                        "Agreements",
+                        color: colorScheme.onSurface,
+                        fontSize: AppFontSize.titleSmallFont,
+                        fontWeight: FontWeight.w600,
+                      ),
+                      TextButton(
+                        onPressed: () {},
+                        child: CustomText(
+                          "See all",
+                          color: colorScheme.primary,
+                          fontSize: AppFontSize.labelSmallFont,
                           fontWeight: FontWeight.w600,
                         ),
-                        TextButton(
-                          onPressed: () {},
-                          child: CustomText(
-                            "See all",
-                            color: colorScheme.primary,
-                            fontSize: AppFontSize.labelSmallFont,
-                            fontWeight: FontWeight.w600,
-                          ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+            SliverGrid(
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 2,
+                mainAxisSpacing: 10.0,
+                crossAxisSpacing: 10.0,
+                mainAxisExtent: 200,
+              ),
+              delegate: SliverChildBuilderDelegate(
+                (BuildContext context, int index) {
+                  return BlocBuilder<HomeBloc, HomeState>(
+                    builder: (context, state) {
+                      return DocCard(
+                        isSelected: state.selectedDocIndex == index,
+                        child: Container(
+                          color: Colors.green,
                         ),
-                      ],
-                    ),
-                  ],
-                ),
+                        onTap: () =>
+                            context.read<HomeBloc>().add(SelectDoc(index)),
+                      );
+                    },
+                  );
+                },
+                childCount: 8,
               ),
-              SliverGrid(
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2,
-                  mainAxisSpacing: 10.0,
-                  crossAxisSpacing: 10.0,
-                  mainAxisExtent: 200,
-                ),
-                delegate: SliverChildBuilderDelegate(
-                  (BuildContext context, int index) {
-                    return BlocBuilder<HomeBloc, HomeState>(
-                      builder: (context, state) {
-                        return DocCard(
-                          isSelected: state.selectedDocIndex == index,
-                          child: Container(
-                            color: Colors.green,
-                          ),
-                          onTap: () =>
-                              context.read<HomeBloc>().add(SelectDoc(index)),
-                        );
-                      },
-                    );
-                  },
-                  childCount: 8,
-                ),
-              ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );

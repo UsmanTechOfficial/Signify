@@ -153,6 +153,20 @@ class AppPages {
             child: const AddSignatureView(),
           ),
         );
+      case Routes.SETTINGS:
+        return MaterialPageRoute(
+          builder: (context) => BlocProvider(
+            create: (context) => SettingsBloc(),
+            child: const SettingsView(),
+          ),
+        );
+      case Routes.FOLDERS:
+        return MaterialPageRoute(
+          builder: (context) => BlocProvider(
+            create: (context) => FoldersBloc(),
+            child: const FoldersView(),
+          ),
+        );
       default:
         return null;
     }

@@ -4,9 +4,9 @@ import 'package:dyno_sign/infrastructure/navigation/app_routes/routes.dart';
 import 'package:flutter/material.dart';
 import '../../../../domain/consts/font_size.dart';
 import '../../../../domain/consts/global_var.dart';
-import '../../../../domain/custom_widgets/buttons/custom_elevated_text_button.dart';
-import '../../../../domain/custom_widgets/buttons/custom_outlined_text_button.dart';
-import '../../../../domain/custom_widgets/text/custom_text.dart';
+import '../../../widgets/buttons/custom_elevated_text_button.dart';
+import '../../../widgets/buttons/custom_outlined_text_button.dart';
+import '../../../widgets/text/custom_text.dart';
 
 class RecipientsDetailView extends StatelessWidget {
   const RecipientsDetailView({super.key});

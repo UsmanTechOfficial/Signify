@@ -1,5 +1,4 @@
 import 'package:dyno_sign/domain/consts/extention_methods.dart';
-import 'package:dyno_sign/domain/custom_widgets/text/custom_text.dart';
 import 'package:dyno_sign/infrastructure/navigation/app_routes/navigation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -9,9 +8,11 @@ import '../../../domain/consts/font_size.dart';
 import '../../../domain/consts/global_var.dart';
 import '../../../domain/consts/styles.dart';
 import '../../../domain/consts/validation.dart';
-import '../../../domain/custom_widgets/buttons/custom_elevated_button.dart';
-import '../../../domain/custom_widgets/buttons/custom_elevated_text_button.dart';
-import '../../../domain/custom_widgets/form_field/custom_formfield.dart';
+
+import '../../widgets/buttons/custom_elevated_button.dart';
+import '../../widgets/buttons/custom_elevated_text_button.dart';
+import '../../widgets/form_field/custom_formfield.dart';
+import '../../widgets/text/custom_text.dart';
 import 'bloc/signup_bloc.dart';
 import 'bloc/signup_event.dart';
 import 'bloc/signup_state.dart';

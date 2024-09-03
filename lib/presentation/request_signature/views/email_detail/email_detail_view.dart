@@ -5,9 +5,9 @@ import 'package:flutter/material.dart';
 
 import '../../../../domain/consts/font_size.dart';
 import '../../../../domain/consts/global_var.dart';
-import '../../../../domain/custom_widgets/buttons/custom_outlined_text_button.dart';
-import '../../../../domain/custom_widgets/form_field/custom_formfield.dart';
-import '../../../../domain/custom_widgets/text/custom_text.dart';
+import '../../../widgets/buttons/custom_outlined_text_button.dart';
+import '../../../widgets/form_field/custom_formfield.dart';
+import '../../../widgets/text/custom_text.dart';
 
 class EmailDetailView extends StatelessWidget {
   const EmailDetailView({super.key});

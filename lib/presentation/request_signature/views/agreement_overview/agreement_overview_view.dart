@@ -2,7 +2,7 @@ import 'package:dyno_sign/domain/consts/styles.dart';
 import 'package:flutter/material.dart';
 import '../../../../domain/consts/font_size.dart';
 import '../../../../domain/consts/global_var.dart';
-import '../../../../domain/custom_widgets/text/custom_text.dart';
+import '../../../widgets/text/custom_text.dart';
 import '../../../dashboard/views/home/home_view.dart';
 
 class AgreementOverviewView extends StatelessWidget {

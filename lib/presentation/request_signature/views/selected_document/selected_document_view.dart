@@ -1,5 +1,3 @@
-import 'package:dyno_sign/domain/custom_widgets/buttons/custom_elevated_text_button.dart';
-import 'package:dyno_sign/domain/custom_widgets/buttons/custom_outlined_text_button.dart';
 import 'package:dyno_sign/infrastructure/navigation/app_routes/navigation.dart';
 import 'package:dyno_sign/infrastructure/navigation/app_routes/routes.dart';
 import 'package:dyno_sign/presentation/request_signature/views/selected_document/bloc/selected_document_state.dart';
@@ -8,7 +6,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../domain/consts/font_size.dart';
 import '../../../../domain/consts/styles.dart';
-import '../../../../domain/custom_widgets/text/custom_text.dart';
+import '../../../widgets/buttons/custom_elevated_text_button.dart';
+import '../../../widgets/buttons/custom_outlined_text_button.dart';
+import '../../../widgets/text/custom_text.dart';
 import 'bloc/selected_document_bloc.dart';
 import 'bloc/selected_document_event.dart';
 

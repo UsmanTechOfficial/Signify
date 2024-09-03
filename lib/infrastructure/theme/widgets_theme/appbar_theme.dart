@@ -7,7 +7,7 @@ AppBarTheme get appBarTheme => AppBarTheme(
       size: 28,
       color: colorSchemeLight.onSurface,
     ),
-    actionsIconTheme: IconThemeData(color: colorSchemeLight.onPrimary),
+    actionsIconTheme: IconThemeData(color: colorSchemeLight.onSurface),
     titleTextStyle: TextStyle(
       color: colorSchemeLight.onSurface,
       fontSize: AppFontSize.titleLargeFont,

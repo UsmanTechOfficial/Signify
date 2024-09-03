@@ -1,7 +1,8 @@
-import 'package:dyno_sign/domain/custom_widgets/buttons/custom_elevated_text_button.dart';
 import 'package:dyno_sign/infrastructure/navigation/app_routes/navigation.dart';
 import 'package:dyno_sign/infrastructure/navigation/app_routes/routes.dart';
 import 'package:flutter/material.dart';
+
+import '../widgets/buttons/custom_elevated_text_button.dart';
 
 class RequestSignaturesView extends StatelessWidget {
   const RequestSignaturesView({super.key});
