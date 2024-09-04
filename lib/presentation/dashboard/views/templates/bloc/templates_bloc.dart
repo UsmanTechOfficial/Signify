@@ -1,56 +1,52 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../widgets/filters.dart';
+
 part 'templates_event.dart';
 
 part 'templates_state.dart';
 
 class TemplatesBloc extends Bloc<TemplatesEvent, TemplatesState> {
+  StatusFilters selectedStatusFilter = StatusFilters.all;
+  DateFilters selectedDateFilters = DateFilters.all;
+
   TemplatesBloc() : super(const TemplatesInitialState()) {
     /// [SearchTemplatesEvent]
-    on<SearchTemplatesEvent>((event, emit) async {
-      emit(const SearchLoadingState());
-      await Future.delayed(const Duration(seconds: 2));
+    on<SearchTemplatesEvent>(
+      (event, emit) async {
+        emit(const SearchLoadingState());
+        final results = await _fetchSearch(event);
 
-      final results = ["Template 1", "Template 2", "Template 3"]
-          .where((template) =>
-              template.toLowerCase().contains(event.query.toLowerCase()))
-          .toList();
+        if (results.isNotEmpty) {
+          emit(SearchLoadedState(results));
+        } else {
+          emit(const SearchErrorState("No results found"));
+        }
+      },
+    );
 
-      if (results.isNotEmpty) {
-        emit(SearchLoadedState(results));
-      } else {
-        emit(const SearchErrorState("No results found"));
-      }
-    });
+    /// [StatusFilterSelectionEvent]
+    on<StatusFilterSelectionEvent>(
+      (event, emit) {
+        emit(StatusFilterSelectionState(event.selectedFilter));
+      },
+    );
+
+    /// [DateFilterSelectionEvent]
+    on<DateFilterSelectionEvent>(
+      (event, emit) {
+        emit(DateFilterSelectionState(event.selectedFilter));
+      },
+    );
   }
-}
 
-enum StatusFilters {
-  all('All Agreements'),
-  onlyForMe('Only for me'),
-  sendOther('Send by others'),
-  waitingOther('Waiting for others'),
-  completed('Completed'),
-  receiveCopy('Receive a copy'),
-  draft('Draft'),
-  cancelled('Cancelled'),
-  downloads('Downloads');
+  _fetchSearch(SearchTemplatesEvent event) async {
+    await Future.delayed(const Duration(seconds: 1));
 
-  final String label;
-
-  const StatusFilters(this.label);
-}
-
-enum DateFilters {
-  all('All Agreements'),
-  last12Mon('Last 12 Months'),
-  last6Mon('Last 06 Months'),
-  last30Day('Last 30 Days'),
-  lastWeek('Last Week'),
-  last24H('Last 24 Hours');
-
-  final String label;
-
-  const DateFilters(this.label);
+    return ["Template 1", "Template 2", "Template 3"]
+        .where((template) =>
+            template.toLowerCase().contains(event.query.toLowerCase()))
+        .toList();
+  }
 }

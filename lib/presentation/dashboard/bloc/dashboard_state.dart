@@ -13,7 +13,7 @@ class DashboardInitialState extends DashboardState {
   const DashboardInitialState({this.currentIndex = 0});
 
   @override
-  List<Object?> get props => [currentIndex];
+  List<Object?> get props => [currentIndex]; // Correct equality check
 }
 
 class DashboardPageChangeState extends DashboardState {
@@ -22,5 +22,5 @@ class DashboardPageChangeState extends DashboardState {
   const DashboardPageChangeState({required this.newIndex});
 
   @override
-  List<Object?> get props => [newIndex];
+  List<Object?> get props => [newIndex]; // Correct equality check
 }

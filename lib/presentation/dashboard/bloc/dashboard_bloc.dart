@@ -1,17 +1,8 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
 import '../../widgets/bottomSheets/add_sign_sheets/sign_request_sheet.dart';
 import '../../widgets/bottomSheets/base_bottom_sheet.dart';
-import '../views/agreements/agreements_view.dart';
-import '../views/agreements/bloc/agreements_bloc.dart';
-import '../views/home/bloc/home_bloc.dart';
-import '../views/home/home_view.dart';
-import '../views/profile/bloc/profile_bloc.dart';
-import '../views/profile/profile_view.dart';
-import '../views/templates/bloc/templates_bloc.dart';
-import '../views/templates/templates_view.dart';
 
 part 'dashboard_event.dart';
 
@@ -21,7 +12,16 @@ class DashboardBloc extends Bloc<DashboardEvent, DashboardState>
     with BaseBottomSheet {
   DashboardBloc() : super(const DashboardInitialState()) {
     on<DashboardPageChangedEvent>((event, emit) {
-      emit(DashboardPageChangeState(newIndex: event.index));
+      // Only emit state if the new page index is different from the current one
+      if (state is DashboardPageChangeState) {
+        if ((state as DashboardPageChangeState).newIndex != event.index) {
+          emit(DashboardPageChangeState(newIndex: event.index));
+        }
+      } else if (state is DashboardInitialState) {
+        if ((state as DashboardInitialState).currentIndex != event.index) {
+          emit(DashboardPageChangeState(newIndex: event.index));
+        }
+      }
     });
   }
 
@@ -33,25 +33,6 @@ class DashboardBloc extends Bloc<DashboardEvent, DashboardState>
     );
   }
 }
-
-List<Widget> pageList = <Widget>[
-  BlocProvider<HomeBloc>(
-    create: (context) => HomeBloc(),
-    child: const HomeView(),
-  ),
-  BlocProvider<TemplatesBloc>(
-    create: (context) => TemplatesBloc(),
-    child: const TemplatesView(),
-  ),
-  BlocProvider<AgreementsBloc>(
-    create: (context) => AgreementsBloc(),
-    child: const AgreementsView(),
-  ),
-  BlocProvider<ProfileBloc>(
-    create: (context) => ProfileBloc(),
-    child: const ProfileView(),
-  ),
-];
 
 enum DrawerTabs {
   home("Home", "assets/icons/ic_home_outlined.svg"),

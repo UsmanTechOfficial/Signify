@@ -38,3 +38,21 @@ final class SearchLoadedState extends TemplatesState {
   @override
   List<Object?> get props => [result];
 }
+
+final class StatusFilterSelectionState extends TemplatesState {
+  final StatusFilters newFilter;
+
+  const StatusFilterSelectionState(this.newFilter);
+
+  @override
+  List<Object?> get props => [newFilter];
+}
+
+final class DateFilterSelectionState extends TemplatesState {
+  final DateFilters newFilter;
+
+  const DateFilterSelectionState(this.newFilter);
+
+  @override
+  List<Object?> get props => [newFilter];
+}

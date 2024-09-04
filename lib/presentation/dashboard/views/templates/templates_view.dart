@@ -1,14 +1,15 @@
 import 'package:dyno_sign/domain/consts/global_var.dart';
-import 'package:dyno_sign/domain/consts/styles.dart';
 import 'package:dyno_sign/infrastructure/theme/theme_library.dart';
 import 'package:dyno_sign/presentation/dashboard/views/templates/bloc/templates_bloc.dart';
 import 'package:dyno_sign/presentation/widgets/buttons/custom_icon_button.dart';
+import 'package:dyno_sign/presentation/widgets/buttons/custom_outlined_text_button.dart';
 import 'package:dyno_sign/presentation/widgets/form_field/custom_formfield.dart';
 import 'package:dyno_sign/presentation/widgets/text/custom_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../widgets/custom_appbar.dart';
+import '../../widgets/filters.dart';
 
 class TemplatesView extends StatelessWidget {
   const TemplatesView({super.key});
@@ -17,6 +18,7 @@ class TemplatesView extends StatelessWidget {
   Widget build(BuildContext context) {
     final color = Theme.of(context).colorScheme;
     final searchController = TextEditingController();
+    var bloc = BlocProvider.of<TemplatesBloc>(context);
 
     return Scaffold(
       body: RefreshIndicator(
@@ -72,13 +74,13 @@ class TemplatesView extends StatelessWidget {
                         icon: const Icon(Icons.bar_chart),
                         onPressed: () {
                           showModalBottomSheet(
-                            isScrollControlled: true,
                             showDragHandle: true,
+                            isScrollControlled: true,
                             context: context,
                             builder: (context) {
-                              return BlocProvider(
-                                create: (context) => TemplatesBloc(),
-                                child: const FilterSheet(),
+                              return BlocProvider.value(
+                                value: bloc,
+                                child: FilterSheet(bloc: bloc),
                               );
                             },
                           );
@@ -102,63 +104,135 @@ class TemplatesView extends StatelessWidget {
 }
 
 class FilterSheet extends StatelessWidget {
-  const FilterSheet({super.key});
+  final TemplatesBloc bloc;
+
+  const FilterSheet({super.key, required this.bloc});
 
   @override
   Widget build(BuildContext context) {
-    return ListView(
-      physics: const NeverScrollableScrollPhysics(),
-      padding: EdgeInsets.symmetric(horizontal: appWidth(context) * .04),
-      children: [
-        const CustomText(
-          "Status",
-          fontWeight: FontWeight.w600,
-          fontSize: AppFontSize.titleSmallFont,
-        ),
-        Column(
-            children: StatusFilters.values
-                .map((filter) => SizedBox(
-                      height: 40,
-                      child: ListTile(
-                        dense: true,
-                        leading: Radio.adaptive(
-                          activeColor: appColorScheme(context).primary,
-                          value: filter.index == 0,
-                          groupValue: true,
-                          onChanged: (value) {},
+    final color = appColorScheme(context);
+    return DraggableScrollableSheet(
+      expand: false,
+      builder: (BuildContext context, ScrollController scrollController) {
+        return SingleChildScrollView(
+          controller: scrollController,
+          padding: EdgeInsets.symmetric(horizontal: appWidth(context) * .04),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  CustomOutlinedTextButton(
+                    text: "Reset",
+                    borderColor: Colors.transparent,
+                    textColor: color.outline,
+                    onPressed: () {
+                      bloc.add(
+                        const StatusFilterSelectionEvent(StatusFilters.all),
+                      );
+                      bloc.add(
+                        const DateFilterSelectionEvent(DateFilters.all),
+                      );
+                    },
+                  ),
+                  CustomOutlinedTextButton(
+                    text: "Apply",
+                    borderColor: color.outlineVariant,
+                    textColor: color.onSurface,
+                    onPressed: () {},
+                  ),
+                ],
+              ),
+              const CustomText(
+                "Status",
+                fontWeight: FontWeight.w600,
+                fontSize: AppFontSize.titleSmallFont,
+              ),
+              BlocBuilder<TemplatesBloc, TemplatesState>(
+                buildWhen: (previous, current) =>
+                    current is StatusFilterSelectionState,
+                builder: (context, state) {
+                  return ListView.builder(
+                    shrinkWrap: true,
+                    controller: scrollController,
+                    physics: const NeverScrollableScrollPhysics(),
+                    itemCount: StatusFilters.values.length,
+                    itemBuilder: (context, index) {
+                      final filter = StatusFilters.values[index];
+
+                      if (state is StatusFilterSelectionState) {
+                        bloc.selectedStatusFilter = state.newFilter;
+                      }
+                      return SizedBox(
+                        height: 40,
+                        child: ListTile(
+                          dense: true,
+                          leading: Radio<StatusFilters>.adaptive(
+                            activeColor: appColorScheme(context).primary,
+                            value: filter,
+                            groupValue: bloc.selectedStatusFilter,
+                            onChanged: (newValue) {
+                              context
+                                  .read<TemplatesBloc>()
+                                  .add(StatusFilterSelectionEvent(newValue!));
+                            },
+                          ),
+                          title: CustomText(
+                            filter.label,
+                            fontSize: AppFontSize.labelMediumFont,
+                          ),
                         ),
-                        title: CustomText(
-                          filter.label,
-                          fontSize: AppFontSize.labelMediumFont,
+                      );
+                    },
+                  );
+                },
+              ),
+              const CustomText(
+                "Date",
+                fontWeight: FontWeight.w600,
+                fontSize: AppFontSize.titleSmallFont,
+              ),
+              BlocBuilder<TemplatesBloc, TemplatesState>(
+                buildWhen: (previous, current) =>
+                    current is DateFilterSelectionState,
+                builder: (context, state) {
+                  if (state is DateFilterSelectionState) {
+                    bloc.selectedDateFilters = state.newFilter;
+                  }
+                  return ListView.builder(
+                    shrinkWrap: true,
+                    controller: scrollController,
+                    physics: const NeverScrollableScrollPhysics(),
+                    itemCount: DateFilters.values.length,
+                    itemBuilder: (context, index) {
+                      final filter = DateFilters.values[index];
+                      return SizedBox(
+                        height: 40,
+                        child: ListTile(
+                          dense: true,
+                          leading: Radio<DateFilters>.adaptive(
+                            activeColor: appColorScheme(context).primary,
+                            value: filter,
+                            groupValue: bloc.selectedDateFilters,
+                            onChanged: (newValue) {
+                              bloc.add(DateFilterSelectionEvent(newValue!));
+                            },
+                          ),
+                          title: CustomText(
+                            filter.label,
+                            fontSize: AppFontSize.labelMediumFont,
+                          ),
                         ),
-                      ),
-                    ))
-                .toList()),
-        const CustomText(
-          "Date",
-          fontWeight: FontWeight.w600,
-          fontSize: AppFontSize.titleSmallFont,
-        ),
-        Column(
-            children: DateFilters.values
-                .map((filter) => SizedBox(
-                      height: 40,
-                      child: ListTile(
-                        dense: true,
-                        leading: Radio.adaptive(
-                          activeColor: appColorScheme(context).primary,
-                          value: filter.index == 0,
-                          groupValue: true,
-                          onChanged: (value) {},
-                        ),
-                        title: CustomText(
-                          filter.label,
-                          fontSize: AppFontSize.labelMediumFont,
-                        ),
-                      ),
-                    ))
-                .toList())
-      ],
+                      );
+                    },
+                  );
+                },
+              ),
+            ],
+          ),
+        );
+      },
     );
   }
 }

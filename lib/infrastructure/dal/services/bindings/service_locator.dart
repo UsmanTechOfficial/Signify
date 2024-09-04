@@ -1,4 +1,3 @@
-import 'package:equatable/equatable.dart';
 import 'package:get_it/get_it.dart';
 
 import '../api_services/api_helper.dart';
@@ -6,7 +5,7 @@ import '../global_services/storage_service.dart';
 
 final getIt = GetIt.instance;
 
-class ServiceLocator extends Equatable {
+class ServiceLocator {
   static final ServiceLocator _internal = ServiceLocator._();
 
   // Private constructor
@@ -22,7 +21,4 @@ class ServiceLocator extends Equatable {
     getIt.registerLazySingleton<StorageService>(() => StorageService());
     getIt.registerLazySingleton<ApiHelper>(() => ApiHelper());
   }
-
-  @override
-  List<Object?> get props => [];
 }

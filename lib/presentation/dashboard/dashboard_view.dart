@@ -1,7 +1,16 @@
 import 'package:dyno_sign/domain/consts/global_var.dart';
 import 'package:dyno_sign/domain/consts/styles.dart';
+import 'package:dyno_sign/infrastructure/dal/doas/agreements/agreements_dao.dart';
 import 'package:dyno_sign/infrastructure/navigation/app_routes/navigation.dart';
 import 'package:dyno_sign/infrastructure/navigation/app_routes/routes.dart';
+import 'package:dyno_sign/presentation/dashboard/views/agreements/agreements_view.dart';
+import 'package:dyno_sign/presentation/dashboard/views/agreements/bloc/agreements_bloc.dart';
+import 'package:dyno_sign/presentation/dashboard/views/home/bloc/home_bloc.dart';
+import 'package:dyno_sign/presentation/dashboard/views/home/home_view.dart';
+import 'package:dyno_sign/presentation/dashboard/views/profile/bloc/profile_bloc.dart';
+import 'package:dyno_sign/presentation/dashboard/views/profile/profile_view.dart';
+import 'package:dyno_sign/presentation/dashboard/views/templates/bloc/templates_bloc.dart';
+import 'package:dyno_sign/presentation/dashboard/views/templates/templates_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -20,22 +29,49 @@ class DashboardView extends StatelessWidget {
     final color = appColorScheme(context);
     final width = appWidth(context);
 
-    return BlocBuilder<DashboardBloc, DashboardState>(
-      buildWhen: (previous, current) => current is DashboardPageChangeState,
-      builder: (context, state) {
-        int currentPage = _getCurrentPage(state);
+    return MultiRepositoryProvider(
+      providers: [
+        RepositoryProvider<AgreementsRepository>(
+          create: (context) => AgreementsRepository(),
+        ),
+      ],
+      child: MultiBlocProvider(
+        providers: [
+          BlocProvider(create: (context) => HomeBloc()),
+          BlocProvider(create: (context) => TemplatesBloc()),
+          BlocProvider(
+              create: (context) => AgreementsBloc(
+                    RepositoryProvider.of<AgreementsRepository>(context),
+                  )),
+          BlocProvider(create: (context) => ProfileBloc()),
+        ],
+        child: BlocBuilder<DashboardBloc, DashboardState>(
+          buildWhen: (previous, current) => previous != current,
+          // Rebuild only when the state actually changes
+          builder: (context, state) {
+            int currentPage = _getCurrentPage(state);
 
-        return Scaffold(
-          resizeToAvoidBottomInset: false,
-          key: scaffoldKey,
-          drawer: _buildDrawer(width, color, bloc),
-          body: pageList[currentPage],
-          bottomNavigationBar: _buildBottomNavigationBar(bloc, currentPage),
-          floatingActionButton: _buildFAB(context, bloc),
-          floatingActionButtonLocation:
-              FloatingActionButtonLocation.centerDocked,
-        );
-      },
+            return Scaffold(
+              resizeToAvoidBottomInset: false,
+              key: scaffoldKey,
+              drawer: _buildDrawer(width, color, bloc),
+              body: IndexedStack(
+                index: currentPage,
+                children: const [
+                  HomeView(),
+                  TemplatesView(),
+                  AgreementsView(),
+                  ProfileView(),
+                ],
+              ),
+              bottomNavigationBar: _buildBottomNavigationBar(bloc, currentPage),
+              floatingActionButton: _buildFAB(context, bloc),
+              floatingActionButtonLocation:
+                  FloatingActionButtonLocation.centerDocked,
+            );
+          },
+        ),
+      ),
     );
   }
 
@@ -129,14 +165,22 @@ class DashboardView extends StatelessWidget {
               children: [
                 CustomNavBarItem(
                   isSelected: currentPage == 0,
-                  onTap: () => bloc.add(const DashboardPageChangedEvent(0)),
+                  onTap: () {
+                    if (currentPage != 0) {
+                      bloc.add(const DashboardPageChangedEvent(0));
+                    }
+                  },
                   label: 'Home',
                   icon: Assets.icons.icHomeOutlined.svg(),
                   activeIcon: Assets.icons.icHomeFilled.svg(),
                 ),
                 CustomNavBarItem(
                   isSelected: currentPage == 1,
-                  onTap: () => bloc.add(const DashboardPageChangedEvent(1)),
+                  onTap: () {
+                    if (currentPage != 1) {
+                      bloc.add(const DashboardPageChangedEvent(1));
+                    }
+                  },
                   label: 'Template',
                   icon: Assets.icons.icTemplatesOutlined.svg(),
                   activeIcon: Assets.icons.icTemplatesFilled.svg(),
@@ -147,14 +191,22 @@ class DashboardView extends StatelessWidget {
               children: [
                 CustomNavBarItem(
                   isSelected: currentPage == 2,
-                  onTap: () => bloc.add(const DashboardPageChangedEvent(2)),
+                  onTap: () {
+                    if (currentPage != 2) {
+                      bloc.add(const DashboardPageChangedEvent(2));
+                    }
+                  },
                   label: 'Agreement',
                   icon: Assets.icons.icAgreementsOutlined.svg(),
                   activeIcon: Assets.icons.icAgreementsFilled.svg(),
                 ),
                 CustomNavBarItem(
                   isSelected: currentPage == 3,
-                  onTap: () => bloc.add(const DashboardPageChangedEvent(3)),
+                  onTap: () {
+                    if (currentPage != 3) {
+                      bloc.add(const DashboardPageChangedEvent(3));
+                    }
+                  },
                   label: 'Profile',
                   icon: Assets.icons.icProfileOutlined.svg(),
                   activeIcon: Assets.icons.icProfileFilled.svg(),
