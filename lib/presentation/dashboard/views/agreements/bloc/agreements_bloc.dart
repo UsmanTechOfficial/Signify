@@ -1,4 +1,4 @@
-import 'package:dyno_sign/infrastructure/dal/doas/agreements/agreements_dao.dart';
+import 'package:dyno_sign/domain/core/usecases/agreements/get_all_agreements_usecase.dart';
 import 'package:dyno_sign/infrastructure/dal/models/docs_model.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -6,27 +6,16 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../widgets/filters.dart';
 
 part 'agreements_event.dart';
-
 part 'agreements_state.dart';
 
 class AgreementsBloc extends Bloc<AgreementsEvent, AgreementsState> {
   StatusFilters selectedStatusFilter = StatusFilters.all;
   DateFilters selectedDateFilters = DateFilters.all;
-  final List<DocsModel> allItems = [];
 
-  final AgreementsRepository agreementsRepository;
+  GetAllAgreementsUseCase getAllAgreementsUseCase;
 
-  AgreementsBloc(this.agreementsRepository)
+  AgreementsBloc(this.getAllAgreementsUseCase)
       : super(const AgreementsInitialState()) {
-    /// [SearchAgreementsEvent]
-    on<SearchAgreementsEvent>((event, emit) {
-      final filteredItems = allItems.where((item) {
-        return item.title.toLowerCase().contains(event.query.toLowerCase());
-      }).toList();
-
-      emit(SearchState(searchText: event.query, result: filteredItems));
-    });
-
     /// [StatusFilterSelectionEvent]
     on<StatusFilterSelectionEvent>(
       (event, emit) {
@@ -41,20 +30,18 @@ class AgreementsBloc extends Bloc<AgreementsEvent, AgreementsState> {
       },
     );
 
-    on<GetAllAgreementsEvent>(
-      (event, emit) async {
-        emit(AgreementsLoadingState());
-        try {
-          final result = await agreementsRepository.getAllAgreements();
-          if (result.isNotEmpty) {
-            emit(AgreementsLoadedState(data: result));
-          }
-        } catch (e) {
-          emit(const AgreementsErrorState(
-              errorMessage: "something wents wrong"));
-        }
-      },
-    );
+    on<GetAllAgreementsEvent>(_fetchAgreements);
+  }
+
+  _fetchAgreements(
+      GetAllAgreementsEvent event, Emitter<AgreementsState> emit) async {
+    try {
+      emit(AgreementsLoadingState());
+      var allItems = await getAllAgreementsUseCase.execute();
+      emit(AgreementsLoadedState(data: allItems));
+    } catch (e) {
+      emit(AgreementsErrorState(errorMessage: e.toString()));
+    }
   }
 
   _fetchSearch(SearchAgreementsEvent event) async {

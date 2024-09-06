@@ -1,10 +1,9 @@
+import 'package:dyno_sign/domain/consts/global_var.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../pages_import.dart';
 import 'routes.dart';
-
-final navigatorKey = GlobalKey<NavigatorState>();
 
 class Go {
   static Future<void> toNamed(String routeName, {Object? arguments}) {

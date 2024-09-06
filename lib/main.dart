@@ -1,15 +1,17 @@
+import 'package:dyno_sign/infrastructure/dal/services/dependency_injection/injection.container.dart';
 import 'package:flutter/material.dart';
 import 'package:get_storage/get_storage.dart';
 
 import 'domain/consts/global_var.dart';
-import 'infrastructure/dal/services/bindings/service_locator.dart';
+import 'infrastructure/dal/services/service_locator//service_locator.dart';
 import 'infrastructure/navigation/app_routes/navigation.dart';
 import 'infrastructure/navigation/app_routes/routes.dart';
 import 'infrastructure/theme/theme.dart';
 
 void main() async {
   await GetStorage.init();
-  ServiceLocator();
+  await ServiceLocator.init();
+  await InjectionContainer.init();
   runApp(const Main());
 }
 

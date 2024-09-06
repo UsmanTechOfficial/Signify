@@ -1,6 +1,5 @@
 import 'package:dyno_sign/domain/consts/global_var.dart';
 import 'package:dyno_sign/domain/consts/styles.dart';
-import 'package:dyno_sign/infrastructure/dal/doas/agreements/agreements_dao.dart';
 import 'package:dyno_sign/infrastructure/navigation/app_routes/navigation.dart';
 import 'package:dyno_sign/infrastructure/navigation/app_routes/routes.dart';
 import 'package:dyno_sign/presentation/dashboard/views/agreements/agreements_view.dart';
@@ -15,7 +14,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../assets_gen/assets.gen.dart';
-
 import '../request_signature/widgets/dashboard_widgets/custom_nav_bar_item.dart';
 import '../request_signature/widgets/dashboard_widgets/drawer_items_tile.dart';
 import 'bloc/dashboard_bloc.dart';
@@ -29,48 +27,38 @@ class DashboardView extends StatelessWidget {
     final color = appColorScheme(context);
     final width = appWidth(context);
 
-    return MultiRepositoryProvider(
+    return MultiBlocProvider(
       providers: [
-        RepositoryProvider<AgreementsRepository>(
-          create: (context) => AgreementsRepository(),
-        ),
+        BlocProvider(create: (context) => HomeBloc()),
+        BlocProvider(create: (context) => TemplatesBloc()),
+        BlocProvider(create: (context) => getIt<AgreementsBloc>()),
+        BlocProvider(create: (context) => ProfileBloc()),
       ],
-      child: MultiBlocProvider(
-        providers: [
-          BlocProvider(create: (context) => HomeBloc()),
-          BlocProvider(create: (context) => TemplatesBloc()),
-          BlocProvider(
-              create: (context) => AgreementsBloc(
-                    RepositoryProvider.of<AgreementsRepository>(context),
-                  )),
-          BlocProvider(create: (context) => ProfileBloc()),
-        ],
-        child: BlocBuilder<DashboardBloc, DashboardState>(
-          buildWhen: (previous, current) => previous != current,
-          // Rebuild only when the state actually changes
-          builder: (context, state) {
-            int currentPage = _getCurrentPage(state);
+      child: BlocBuilder<DashboardBloc, DashboardState>(
+        buildWhen: (previous, current) => previous != current,
+        // Rebuild only when the state actually changes
+        builder: (context, state) {
+          int currentPage = _getCurrentPage(state);
 
-            return Scaffold(
-              resizeToAvoidBottomInset: false,
-              key: scaffoldKey,
-              drawer: _buildDrawer(width, color, bloc),
-              body: IndexedStack(
-                index: currentPage,
-                children: const [
-                  HomeView(),
-                  TemplatesView(),
-                  AgreementsView(),
-                  ProfileView(),
-                ],
-              ),
-              bottomNavigationBar: _buildBottomNavigationBar(bloc, currentPage),
-              floatingActionButton: _buildFAB(context, bloc),
-              floatingActionButtonLocation:
-                  FloatingActionButtonLocation.centerDocked,
-            );
-          },
-        ),
+          return Scaffold(
+            resizeToAvoidBottomInset: false,
+            key: scaffoldKey,
+            drawer: _buildDrawer(width, color, bloc),
+            body: IndexedStack(
+              index: currentPage,
+              children: const [
+                HomeView(),
+                TemplatesView(),
+                AgreementsView(),
+                ProfileView(),
+              ],
+            ),
+            bottomNavigationBar: _buildBottomNavigationBar(bloc, currentPage),
+            floatingActionButton: _buildFAB(context, bloc),
+            floatingActionButtonLocation:
+                FloatingActionButtonLocation.centerDocked,
+          );
+        },
       ),
     );
   }
@@ -229,7 +217,7 @@ class DashboardView extends StatelessWidget {
   }
 
   void _navigateToNewPage(int index) {
-    if (index == 4) Go.toNamed(Routes.PROFILE);
+    if (index == 4) Go.toNamed(Routes.FOLDERS);
     if (index == 5) Go.toNamed(Routes.SETTINGS);
   }
 }

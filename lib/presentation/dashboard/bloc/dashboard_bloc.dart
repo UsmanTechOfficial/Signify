@@ -1,6 +1,7 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
 import '../../widgets/bottomSheets/add_sign_sheets/sign_request_sheet.dart';
 import '../../widgets/bottomSheets/base_bottom_sheet.dart';
 
@@ -39,8 +40,8 @@ enum DrawerTabs {
   templates("Templates", "assets/icons/ic_templates_outlined.svg"),
   agreements("Agreements", "assets/icons/ic_agreements_outlined.svg"),
   profile("Profile", "assets/icons/ic_profile_outlined.svg"),
-  folder("Folder", "assets/icons/ic_folder_outlined.svg"),
-  setting("Settings", "assets/icons/ic_settings_outlined.svg");
+  folder("Folder", "assets/icons/ic_home_outlined.svg"),
+  setting("Settings", "assets/icons/ic_home_outlined.svg");
 
   final String label;
   final String iconPath;
