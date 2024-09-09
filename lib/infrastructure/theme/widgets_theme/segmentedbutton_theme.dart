@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../theme_library.dart';
+import '../theme.dart';
 
 SegmentedButtonThemeData get segmentedButtonTheme => SegmentedButtonThemeData(
 // Define the style for the buttons

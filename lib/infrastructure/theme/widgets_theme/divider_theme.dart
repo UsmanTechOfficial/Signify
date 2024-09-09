@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../theme_library.dart';
+import '../theme.dart';
 
 DividerThemeData get dividerTheme => DividerThemeData(
       color: colorSchemeLight.outlineVariant,

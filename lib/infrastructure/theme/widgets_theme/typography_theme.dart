@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../theme_library.dart';
+import '../theme.dart';
 
 Typography get typography => Typography.material2018(
       platform: TargetPlatform.android,

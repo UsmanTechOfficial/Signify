@@ -16,7 +16,7 @@ class Routes {
   static const ADD_SIGNATURE = '/add_signature';
   static const PROFILE = '/profile';
   static const SETTINGS = '/settings';
-    static const TEMPLATES = '/dashboard/templates';
-    static const AGREEMENTS = '/dashboard/agreements';
-    static const FOLDERS = '/dashboard/folders';
+  static const TEMPLATES = '/templates';
+  static const AGREEMENTS = '/agreements';
+  static const FOLDERS = '/folders';
 }

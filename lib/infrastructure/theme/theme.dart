@@ -1,177 +1,52 @@
-import 'package:flutter/material.dart';
-
-import 'theme_library.dart';
-
-class AppTheme {
-  AppTheme._();
-
-  factory AppTheme() {
-    return instance;
-  }
-
-  static final AppTheme instance = AppTheme._();
-
-  ThemeData get light {
-    return ThemeData(
-        useMaterial3: true,
-        brightness: Brightness.light,
-        colorScheme: colorSchemeLight,
-        iconTheme: iconThemeData,
-        appBarTheme: appBarTheme,
-        // textTheme: darkTxtTheme,
-        // primaryTextTheme: darkTxtTheme,
-        bottomNavigationBarTheme: bottomNavigationBarTheme,
-        bannerTheme: bannerTheme,
-        bottomAppBarTheme: bottomAppBarTheme,
-        bottomSheetTheme: bottomSheetTheme,
-        // buttonBarTheme: buttonBarTheme,
-        buttonTheme: buttonTheme,
-        shadowColor: colorSchemeLight.shadow,
-        canvasColor: colorSchemeLight.surface,
-        cardTheme: cardTheme,
-        checkboxTheme: checkboxTheme,
-        chipTheme: chipThemeData,
-        dataTableTheme: dataTableTheme,
-        datePickerTheme: datePickerTheme,
-        dialogTheme: dialogTheme,
-        dividerTheme: dividerTheme,
-        drawerTheme: drawerTheme,
-        elevatedButtonTheme: elevatedButtonTheme,
-        expansionTileTheme: expansionTileTheme,
-        inputDecorationTheme: inputDecorationTheme,
-        filledButtonTheme: filledButtonTheme,
-        iconButtonTheme: iconButtonTheme,
-        outlinedButtonTheme: outlinedButtonTheme,
-        radioTheme: radioThemeData,
-        textButtonTheme: textButtonTheme,
-        switchTheme: switchTheme,
-        toggleButtonsTheme: toggleButtonsTheme,
-        tooltipTheme: tooltipTheme,
-        timePickerTheme: timePickerTheme,
-        tabBarTheme: tabBarTheme,
-        snackBarTheme: snackBarTheme,
-        segmentedButtonTheme: segmentedButtonTheme,
-        listTileTheme: listTileTheme,
-        menuButtonTheme: menuButtonTheme,
-        sliderTheme: sliderTheme,
-        menuTheme: menuTheme,
-        menuBarTheme: menuBarTheme,
-        floatingActionButtonTheme: floatingActionButtonTheme,
-        navigationBarTheme: navigationBarTheme,
-        navigationRailTheme: navigationRailTheme,
-        pageTransitionsTheme: pageTransitionsTheme,
-        popupMenuTheme: popupMenuTheme,
-        scrollbarTheme: scrollbarTheme,
-        searchBarTheme: searchBarTheme,
-        searchViewTheme: searchViewTheme,
-        progressIndicatorTheme: progressIndicatorTheme,
-        splashFactory: InkRipple.splashFactory,
-        textSelectionTheme: textSelectionTheme,
-        navigationDrawerTheme: navigationDrawerTheme,
-        focusColor: colorSchemeLight.primary,
-        typography: typography,
-        dropdownMenuTheme: dropdownMenuTheme,
-        primarySwatch: primaryMaterial,
-        cardColor: colorSchemeLight.surface,
-        dialogBackgroundColor: colorSchemeLight.surface,
-        disabledColor: colorSchemeLight.onSurface.withOpacity(0.38),
-        dividerColor: colorSchemeLight.outline,
-        highlightColor: colorSchemeLight.primaryContainer,
-        hintColor: colorSchemeLight.onSurfaceVariant,
-        hoverColor: colorSchemeLight.secondaryContainer.withOpacity(0.08),
-        primaryColor: colorSchemeLight.primary,
-        primaryColorDark: colorSchemeLight.primaryContainer,
-        primaryColorLight: colorSchemeLight.primaryContainer,
-        secondaryHeaderColor: colorSchemeLight.secondaryContainer,
-        splashColor: colorSchemeLight.secondaryContainer.withOpacity(0.12),
-        materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-        primaryIconTheme: primaryIconTheme,
-        indicatorColor: colorSchemeLight.secondary,
-        unselectedWidgetColor: colorSchemeLight.onSurface.withOpacity(0.60),
-        visualDensity: VisualDensity.adaptivePlatformDensity,
-        applyElevationOverlayColor: false,
-        scaffoldBackgroundColor: colorSchemeLight.surface);
-  }
-
-  ThemeData get dark {
-    return ThemeData(
-        useMaterial3: true,
-        brightness: Brightness.dark,
-        colorScheme: colorSchemeDark,
-        appBarTheme: darkAppBarTheme,
-        iconTheme: darkIconThemeData,
-        // textTheme: darkTxtTheme,
-        // primaryTextTheme: darkTxtTheme,
-        bottomNavigationBarTheme: darkBottomNavigationBarTheme,
-        bannerTheme: darkBannerTheme,
-        bottomAppBarTheme: darkBottomAppBarTheme,
-        bottomSheetTheme: darkBottomSheetTheme,
-        // buttonBarTheme: darkButtonBarTheme,
-        buttonTheme: darkButtonTheme,
-        shadowColor: colorSchemeDark.shadow,
-        canvasColor: colorSchemeDark.surface,
-        cardTheme: darkCardTheme,
-        checkboxTheme: darkCheckboxTheme,
-        chipTheme: darkChipThemeData,
-        dataTableTheme: darkDataTableTheme,
-        datePickerTheme: darkDatePickerTheme,
-        dialogTheme: darkDialogTheme,
-        dividerTheme: darkDividerTheme,
-        drawerTheme: darkDrawerTheme,
-        elevatedButtonTheme: darkElevatedButtonTheme,
-        expansionTileTheme: darkExpansionTileTheme,
-        inputDecorationTheme: darkInputDecorationTheme,
-        filledButtonTheme: darkFilledButtonTheme,
-        iconButtonTheme: darkIconButtonTheme,
-        outlinedButtonTheme: darkOutlinedButtonTheme,
-        radioTheme: darkRadioThemeData,
-        textButtonTheme: darkTextButtonTheme,
-        switchTheme: darkSwitchTheme,
-        toggleButtonsTheme: darkToggleButtonsTheme,
-        tooltipTheme: darkTooltipTheme,
-        timePickerTheme: darkTimePickerTheme,
-        tabBarTheme: darkTabBarTheme,
-        snackBarTheme: darkSnackBarTheme,
-        segmentedButtonTheme: darkSegmentedButtonTheme,
-        listTileTheme: darkListTileTheme,
-        menuButtonTheme: darkMenuButtonTheme,
-        sliderTheme: darkSliderTheme,
-        menuTheme: darkMenuTheme,
-        menuBarTheme: darkMenuBarTheme,
-        floatingActionButtonTheme: darkFloatingActionButtonTheme,
-        navigationBarTheme: darkNavigationBarTheme,
-        navigationRailTheme: darkNavigationRailTheme,
-        pageTransitionsTheme: darkPageTransitionsTheme,
-        popupMenuTheme: darkPopupMenuTheme,
-        scrollbarTheme: darkScrollbarTheme,
-        searchBarTheme: darkSearchBarTheme,
-        searchViewTheme: darkSearchViewTheme,
-        progressIndicatorTheme: darkProgressIndicatorTheme,
-        splashFactory: InkRipple.splashFactory,
-        textSelectionTheme: darkTextSelectionTheme,
-        navigationDrawerTheme: darkNavigationDrawerTheme,
-        focusColor: colorSchemeDark.primary,
-        typography: darkTypography,
-        dropdownMenuTheme: darkDropdownMenuTheme,
-        primarySwatch: darkPrimaryMaterial,
-        cardColor: colorSchemeDark.surface,
-        dialogBackgroundColor: colorSchemeDark.surface,
-        disabledColor: colorSchemeDark.onSurface.withOpacity(0.38),
-        dividerColor: colorSchemeDark.outline,
-        highlightColor: colorSchemeDark.primaryContainer,
-        hintColor: colorSchemeDark.onSurfaceVariant,
-        hoverColor: colorSchemeDark.secondaryContainer.withOpacity(0.08),
-        primaryColor: colorSchemeDark.primary,
-        primaryColorDark: colorSchemeDark.primaryContainer,
-        primaryColorLight: colorSchemeDark.primaryContainer,
-        secondaryHeaderColor: colorSchemeDark.secondaryContainer,
-        splashColor: colorSchemeDark.secondaryContainer.withOpacity(0.12),
-        materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-        primaryIconTheme: darkPrimaryIconTheme,
-        indicatorColor: colorSchemeDark.secondary,
-        unselectedWidgetColor: colorSchemeDark.onSurface.withOpacity(0.60),
-        visualDensity: VisualDensity.adaptivePlatformDensity,
-        applyElevationOverlayColor: false,
-        scaffoldBackgroundColor: colorSchemeDark.surface);
-  }
-}
+export '../../../domain/consts/font_size.dart';
+export '../../../domain/consts/styles.dart';
+export 'color_scheme.dart';
+export 'widgets_theme/appbar_theme.dart';
+export 'widgets_theme/banner_theme.dart';
+export 'widgets_theme/bottomappbar_theme.dart';
+export 'widgets_theme/bottomnavigationbar_theme.dart';
+export 'widgets_theme/bottomsheet_theme.dart';
+export 'widgets_theme/button_theme.dart';
+export 'widgets_theme/card_theme.dart';
+export 'widgets_theme/checkbox_theme.dart';
+export 'widgets_theme/chip_theme.dart';
+export 'widgets_theme/datatable_theme.dart';
+export 'widgets_theme/datepicker_theme.dart';
+export 'widgets_theme/dialog_theme.dart';
+export 'widgets_theme/divider_theme.dart';
+export 'widgets_theme/drawer_theme.dart';
+export 'widgets_theme/dropdownmenu_theme.dart';
+export 'widgets_theme/elevatedbutton_theme.dart';
+export 'widgets_theme/expansiontile_theme.dart';
+export 'widgets_theme/filledbutton_theme.dart';
+export 'widgets_theme/floatingactionbutton_theme.dart';
+export 'widgets_theme/icon_theme.dart';
+export 'widgets_theme/iconbutton_theme.dart';
+export 'widgets_theme/inputdecoration_theme.dart';
+export 'widgets_theme/listtile_theme.dart';
+export 'widgets_theme/menu_theme.dart';
+export 'widgets_theme/menubar_theme.dart';
+export 'widgets_theme/menubutton_theme.dart';
+export 'widgets_theme/navigationbar_theme.dart';
+export 'widgets_theme/navigationdrawer_theme.dart';
+export 'widgets_theme/navigationrail_theme.dart';
+export 'widgets_theme/outlinedbutton_theme.dart';
+export 'widgets_theme/pagetransitions_theme.dart';
+export 'widgets_theme/popupmenu_theme.dart';
+export 'widgets_theme/primaryicon_theme.dart';
+export 'widgets_theme/progressindicator_theme.dart';
+export 'widgets_theme/radio_theme.dart';
+export 'widgets_theme/scrollbar_theme.dart';
+export 'widgets_theme/searchbar_theme.dart';
+export 'widgets_theme/searchview_theme.dart';
+export 'widgets_theme/segmentedbutton_theme.dart';
+export 'widgets_theme/slider_theme.dart';
+export 'widgets_theme/snackbar_theme.dart';
+export 'widgets_theme/switch_theme.dart';
+export 'widgets_theme/tabbar_theme.dart';
+export 'widgets_theme/textbutton_theme.dart';
+export 'widgets_theme/textselection_theme.dart';
+export 'widgets_theme/timepicker_theme.dart';
+export 'widgets_theme/togglebuttons_theme.dart';
+export 'widgets_theme/tooltip_theme.dart';
+export 'widgets_theme/typography_theme.dart';

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../theme_library.dart';
+import '../theme.dart';
 
 NavigationRailThemeData get navigationRailTheme => NavigationRailThemeData(
       backgroundColor: colorSchemeLight.surfaceContainerHighest,

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../theme_library.dart';
+import '../theme.dart';
 
 IconThemeData get primaryIconTheme =>
     IconThemeData(color: colorSchemeLight.onPrimary);

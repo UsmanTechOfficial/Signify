@@ -1,15 +1,16 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../../../widgets/add_signature_widgets/pen_tools.dart';
-import 'add_signature_event.dart';
-import 'add_signature_state.dart';
+import '../../request_signature/widgets/add_signature_widgets/pen_tools.dart';
+import 'signature_manager_event.dart';
+import 'signature_manager_state.dart';
 
-class AddSignatureBloc extends Bloc<AddSignatureEvent, AddSignatureState> {
+class SignatureManagerBloc
+    extends Bloc<SignatureManagerEvent, SignatureManagerState> {
   int selectedSign = -1;
   var selectedStroke = PenStroke.fine;
   var selectedColor = PenColors.black;
 
   /// [AddSignatureInitial]
-  AddSignatureBloc() : super(const AddSignatureInitial()) {
+  SignatureManagerBloc() : super(const AddSignatureInitial()) {
     /// [OnSignatureSelectionEvent] emit [OnSignatureSelectedState]
     on<OnSignatureSelectionEvent>((event, emit) {
       emit(OnSignatureSelectedState(selectedSignature: event.selectedSign));

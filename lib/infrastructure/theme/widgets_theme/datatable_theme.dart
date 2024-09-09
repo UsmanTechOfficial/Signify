@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../theme_library.dart';
+import '../theme.dart';
 
 DataTableThemeData get dataTableTheme => DataTableThemeData(
       decoration: BoxDecoration(

@@ -1,3 +1,4 @@
+import 'package:dyno_sign/domain/consts/global_var.dart';
 import 'package:dyno_sign/presentation/dashboard/widgets/custom_appbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -14,14 +15,20 @@ class HomeView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
-    return Scaffold(
-      body: RefreshIndicator(
-        onRefresh: () async => Future<void>.delayed(const Duration(seconds: 3)),
+    return NestedScrollView(
+      floatHeaderSlivers: true,
+      physics: const AlwaysScrollableScrollPhysics(),
+      key: const PageStorageKey<String>("homeScrollPosition"),
+      headerSliverBuilder: (BuildContext context, bool _) {
+        return <Widget>[
+          const CustomAppbar(title: 'Home'),
+        ];
+      },
+      body: Padding(
+        padding: EdgeInsets.symmetric(horizontal: appWidth(context) * 0.05),
         child: CustomScrollView(
-          key: const PageStorageKey<String>("homeScrollPosition"),
-          physics: const AlwaysScrollableScrollPhysics(),
+          shrinkWrap: true,
           slivers: [
-            const CustomAppbar(title: "Home"),
             SliverList(
               delegate: SliverChildBuilderDelegate(
                 childCount: 3,

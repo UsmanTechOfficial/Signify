@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../theme_library.dart';
+import '../theme.dart';
 
 TextSelectionThemeData get textSelectionTheme => TextSelectionThemeData(
       cursorColor: colorSchemeLight.primary, // Color of the cursor

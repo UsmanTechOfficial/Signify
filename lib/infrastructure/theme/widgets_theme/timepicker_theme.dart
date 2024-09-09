@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../theme_library.dart';
+import '../theme.dart';
 
 TimePickerThemeData get timePickerTheme => TimePickerThemeData(
       backgroundColor: colorSchemeLight.surface,

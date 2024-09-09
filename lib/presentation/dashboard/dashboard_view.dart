@@ -29,14 +29,13 @@ class DashboardView extends StatelessWidget {
 
     return MultiBlocProvider(
       providers: [
-        BlocProvider(create: (context) => HomeBloc()),
-        BlocProvider(create: (context) => TemplatesBloc()),
+        BlocProvider(create: (context) => getIt<HomeBloc>()),
+        BlocProvider(create: (context) => getIt<TemplatesBloc>()),
         BlocProvider(create: (context) => getIt<AgreementsBloc>()),
-        BlocProvider(create: (context) => ProfileBloc()),
+        BlocProvider(create: (context) => getIt<ProfileBloc>()),
       ],
       child: BlocBuilder<DashboardBloc, DashboardState>(
         buildWhen: (previous, current) => previous != current,
-        // Rebuild only when the state actually changes
         builder: (context, state) {
           int currentPage = _getCurrentPage(state);
 

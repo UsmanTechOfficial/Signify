@@ -1,17 +1,17 @@
 import 'package:equatable/equatable.dart';
 
-import '../../../widgets/add_signature_widgets/pen_tools.dart';
+import '../../request_signature/widgets/add_signature_widgets/pen_tools.dart';
 
-/// [AddSignatureEvent]
-abstract class AddSignatureEvent extends Equatable {
-  const AddSignatureEvent();
+/// [SignatureManagerEvent]
+abstract class SignatureManagerEvent extends Equatable {
+  const SignatureManagerEvent();
 
   @override
   List<Object?> get props => [];
 }
 
 /// [OnSignatureSelectionEvent]
-class OnSignatureSelectionEvent extends AddSignatureEvent {
+class OnSignatureSelectionEvent extends SignatureManagerEvent {
   final int selectedSign;
 
   const OnSignatureSelectionEvent({required this.selectedSign});
@@ -21,7 +21,7 @@ class OnSignatureSelectionEvent extends AddSignatureEvent {
 }
 
 /// [OnPenStrokeSelectionEvent]
-class OnPenStrokeSelectionEvent extends AddSignatureEvent {
+class OnPenStrokeSelectionEvent extends SignatureManagerEvent {
   final PenStroke penStroke;
 
   const OnPenStrokeSelectionEvent({required this.penStroke});
@@ -31,7 +31,7 @@ class OnPenStrokeSelectionEvent extends AddSignatureEvent {
 }
 
 /// [OnPenColorSelectionEvent]
-class OnPenColorSelectionEvent extends AddSignatureEvent {
+class OnPenColorSelectionEvent extends SignatureManagerEvent {
   final PenColors penColor;
 
   const OnPenColorSelectionEvent({required this.penColor});

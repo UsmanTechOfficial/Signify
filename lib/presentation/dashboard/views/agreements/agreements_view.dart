@@ -1,5 +1,5 @@
 import 'package:dyno_sign/domain/consts/global_var.dart';
-import 'package:dyno_sign/infrastructure/theme/theme_library.dart';
+import 'package:dyno_sign/infrastructure/theme/theme.dart';
 import 'package:dyno_sign/presentation/widgets/buttons/custom_icon_button.dart';
 import 'package:dyno_sign/presentation/widgets/buttons/custom_outlined_text_button.dart';
 import 'package:dyno_sign/presentation/widgets/form_field/custom_formfield.dart';
@@ -19,18 +19,14 @@ class AgreementsView extends StatelessWidget {
   Widget build(BuildContext context) {
     final color = Theme.of(context).colorScheme;
     final searchController = TextEditingController();
-    var bloc = BlocProvider.of<AgreementsBloc>(context)
-      ..add(GetAllAgreementsEvent());
+    final bloc = getIt<AgreementsBloc>()..add(GetAllAgreementsEvent());
 
-    return Scaffold(
-      body: RefreshIndicator(
-        onRefresh: () async {
-          return Future<void>.delayed(const Duration(seconds: 3));
-        },
-        child: CustomScrollView(
-          key: const PageStorageKey<String>("AgreementsScrollPosition"),
-          physics: const AlwaysScrollableScrollPhysics(),
-          slivers: [
+    return NestedScrollView(
+        key: const PageStorageKey<String>("AgreementsScrollPosition"),
+        physics: const AlwaysScrollableScrollPhysics(),
+        floatHeaderSlivers: true,
+        headerSliverBuilder: (context, innerBoxIsScrolled) {
+          return [
             CustomAppbar(
               title: "Agreements",
               action: CustomIconButton(
@@ -46,33 +42,27 @@ class AgreementsView extends StatelessWidget {
                   child: Row(
                     children: [
                       Expanded(
-                        child: SizedBox(
+                        child: CustomTextFormField(
                           height: 40,
-                          child: CustomTextFormField(
-                            controller: searchController,
-                            hint: "Search here",
-                            borderColor: Colors.transparent,
-                            filled: true,
-                            readOnly: true,
-                            prefix: Icons.search_rounded,
-                            fillColor: color.outlineVariant.withOpacity(0.5),
-                            borderRadius: AppStyle.buttonBorderRadius,
-                            focusBorderColor: Colors.transparent,
-                            onTap: () {
-                              showSearch(
-                                context: context,
-                                delegate: AgreementsSearchDelegate(
-                                  agreementsBloc:
-                                      BlocProvider.of<AgreementsBloc>(context),
-                                ),
-                              );
-                            },
-                          ),
+                          controller: searchController,
+                          hint: "Search here",
+                          borderColor: Colors.transparent,
+                          filled: true,
+                          readOnly: true,
+                          prefix: Icons.search_rounded,
+                          fillColor: color.outlineVariant.withOpacity(0.5),
+                          borderRadius: AppStyle.buttonBorderRadius,
+                          focusBorderColor: Colors.transparent,
+                          onTap: () {
+                            showSearch(
+                              context: context,
+                              delegate: AgreementsSearchDelegate(bloc: bloc),
+                            );
+                          },
                         ),
                       ),
-                      const SizedBox(width: 10),
-                      // Added spacing between the search bar and the icon
                       CustomIconButton(
+                        padding: 10,
                         icon: const Icon(Icons.bar_chart),
                         onPressed: () {
                           showModalBottomSheet(
@@ -92,54 +82,60 @@ class AgreementsView extends StatelessWidget {
                   ),
                 ),
               ),
-            ),
-            BlocBuilder<AgreementsBloc, AgreementsState>(
-              builder: (context, state) {
-                if (state is AgreementsLoadingState) {
-                  return const SliverFillRemaining(
-                    child: Center(child: CircularProgressIndicator()),
-                  );
-                } else if (state is AgreementsLoadedState) {
-                  return SliverGrid(
-                    gridDelegate:
-                        const SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 2,
-                      mainAxisSpacing: 10.0,
-                      crossAxisSpacing: 10.0,
-                      mainAxisExtent: 200, // Adjust this as needed
-                    ),
-                    delegate: SliverChildBuilderDelegate(
-                      (BuildContext context, int index) {
-                        return DocCard(
-                          onTap: () {},
-                          child: SizedBox(
-                            height: double.maxFinite,
-                            width: double.maxFinite,
-                            child: Image.network(
-                              filterQuality: FilterQuality.low,
-                              state.data[index].thumbnailUrl,
-                              fit: BoxFit.cover,
-                            ),
-                          ),
-                        );
-                      },
-                      childCount: state.data.length,
-                    ),
-                  );
-                } else if (state is AgreementsErrorState) {
-                  return const SliverFillRemaining(
-                    child: Center(
-                      child: Text('An error occurred. Please try again later.'),
-                    ),
-                  );
-                }
-                return const SliverFillRemaining(child: SizedBox.shrink());
-              },
             )
-          ],
-        ),
-      ),
-    );
+          ];
+        },
+        body: Padding(
+          padding: EdgeInsets.symmetric(horizontal: appWidth(context) * 0.05),
+          child: CustomScrollView(
+            slivers: [
+              BlocBuilder<AgreementsBloc, AgreementsState>(
+                builder: (context, state) {
+                  if (state is AgreementsLoadingState) {
+                    return const SliverFillRemaining(
+                      child: Center(child: CircularProgressIndicator()),
+                    );
+                  } else if (state is AgreementsLoadedState) {
+                    return SliverGrid(
+                      gridDelegate:
+                          const SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: 2,
+                        mainAxisSpacing: 10.0,
+                        crossAxisSpacing: 10.0,
+                        mainAxisExtent: 200, // Adjust this as needed
+                      ),
+                      delegate: SliverChildBuilderDelegate(
+                        (BuildContext context, int index) {
+                          return DocCard(
+                            onTap: () {},
+                            child: SizedBox(
+                              height: double.maxFinite,
+                              width: double.maxFinite,
+                              child: Image.network(
+                                filterQuality: FilterQuality.low,
+                                state.data[index].thumbnailUrl,
+                                fit: BoxFit.cover,
+                              ),
+                            ),
+                          );
+                        },
+                        childCount: state.data.length,
+                      ),
+                    );
+                  } else if (state is AgreementsErrorState) {
+                    return const SliverFillRemaining(
+                      child: Center(
+                        child:
+                            Text('An error occurred. Please try again later.'),
+                      ),
+                    );
+                  }
+                  return const SliverFillRemaining(child: SizedBox.shrink());
+                },
+              )
+            ],
+          ),
+        ));
   }
 }
 
@@ -278,9 +274,9 @@ class FilterSheet extends StatelessWidget {
 }
 
 class AgreementsSearchDelegate extends SearchDelegate<String> {
-  final AgreementsBloc agreementsBloc;
+  final AgreementsBloc bloc;
 
-  AgreementsSearchDelegate({required this.agreementsBloc});
+  AgreementsSearchDelegate({required this.bloc});
 
   @override
   List<Widget> buildActions(BuildContext context) {
@@ -306,10 +302,10 @@ class AgreementsSearchDelegate extends SearchDelegate<String> {
 
   @override
   Widget buildResults(BuildContext context) {
-    agreementsBloc.add(SearchAgreementsEvent(query));
+    bloc.add(SearchAgreementsEvent(query));
 
     return BlocBuilder<AgreementsBloc, AgreementsState>(
-      bloc: agreementsBloc,
+      bloc: bloc,
       builder: (context, state) {
         if (state is SearchState) {
           return ListView.builder(

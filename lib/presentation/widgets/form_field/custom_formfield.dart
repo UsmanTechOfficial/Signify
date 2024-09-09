@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import '../../../domain/consts/global_var.dart';
 
 class CustomTextFormField extends StatelessWidget {
+  final double? height;
+  final double? width;
   final TextEditingController? controller;
   final String hint;
   final double borderRadius;
@@ -54,45 +56,51 @@ class CustomTextFormField extends StatelessWidget {
     this.focusNode,
     this.onTap,
     this.onFieldSubmitted,
+    this.height,
+    this.width,
   });
 
   @override
   Widget build(BuildContext context) {
-    return TextFormField(
-      controller: controller ?? TextEditingController(),
-      decoration: InputDecoration(
-        hintText: hint,
-        prefixIcon: prefix != null
-            ? Icon(
-                prefix,
-                color: Colors.grey.withOpacity(0.75),
-              )
-            : null,
-        suffixIcon: suffix,
-        filled: filled,
-        fillColor: fillColor,
-        enabledBorder: _outlineInputBorder(borderRadius, borderColor),
-        focusedBorder: _outlineInputBorder(
-            borderRadius, focusBorderColor ?? appColorScheme(context).primary),
-        errorBorder: _outlineInputBorder(
-            borderRadius, errorBorderColor ?? appColorScheme(context).error),
-        disabledBorder: _outlineInputBorder(borderRadius,
-            disabledBorderColor ?? Colors.transparent), // Disabled border
+    return SizedBox(
+      height: height,
+      width: width,
+      child: TextFormField(
+        controller: controller ?? TextEditingController(),
+        decoration: InputDecoration(
+          hintText: hint,
+          prefixIcon: prefix != null
+              ? Icon(
+                  prefix,
+                  color: Colors.grey.withOpacity(0.75),
+                )
+              : null,
+          suffixIcon: suffix,
+          filled: filled,
+          fillColor: fillColor,
+          enabledBorder: _outlineInputBorder(borderRadius, borderColor),
+          focusedBorder: _outlineInputBorder(borderRadius,
+              focusBorderColor ?? appColorScheme(context).primary),
+          errorBorder: _outlineInputBorder(
+              borderRadius, errorBorderColor ?? appColorScheme(context).error),
+          disabledBorder: _outlineInputBorder(borderRadius,
+              disabledBorderColor ?? Colors.transparent), // Disabled border
+        ),
+        onFieldSubmitted: onFieldSubmitted,
+        keyboardType: keyboardType,
+        validator: validator,
+        obscureText: obscureText,
+        textAlign: textAlign ?? TextAlign.start,
+        maxLines: maxLines,
+        maxLength: maxLength,
+        focusNode: focusNode,
+        onChanged: onChanged,
+        textInputAction: textInputAction,
+        enabled: enabled,
+        readOnly: readOnly,
+        onTap: onTap,
+        onTapOutside: (event) => FocusScope.of(context).unfocus(),
       ),
-      onFieldSubmitted: onFieldSubmitted,
-      keyboardType: keyboardType,
-      validator: validator,
-      obscureText: obscureText,
-      textAlign: textAlign ?? TextAlign.start,
-      maxLines: maxLines,
-      maxLength: maxLength,
-      focusNode: focusNode,
-      onChanged: onChanged,
-      textInputAction: textInputAction,
-      enabled: enabled,
-      readOnly: readOnly,
-      onTap: onTap,
-      onTapOutside: (event) => FocusScope.of(context).unfocus(),
     );
   }
 

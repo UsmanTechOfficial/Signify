@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../theme_library.dart';
+import '../theme.dart';
 
 DialogTheme get dialogTheme => DialogTheme(
       backgroundColor: colorSchemeLight.surface,

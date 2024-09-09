@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../theme_library.dart';
+import '../theme.dart';
 
 SwitchThemeData get switchTheme => SwitchThemeData(
       thumbColor: WidgetStateProperty.resolveWith<Color>(

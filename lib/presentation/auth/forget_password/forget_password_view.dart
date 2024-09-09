@@ -1,5 +1,5 @@
 import 'package:dyno_sign/domain/consts/validation.dart';
-import 'package:dyno_sign/infrastructure/theme/theme_library.dart';
+import 'package:dyno_sign/infrastructure/theme/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

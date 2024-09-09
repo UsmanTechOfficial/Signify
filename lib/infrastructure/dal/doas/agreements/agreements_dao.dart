@@ -7,7 +7,7 @@ import 'package:dyno_sign/infrastructure/dal/services/api_services/api_helper.da
 import 'package:flutter/services.dart' show rootBundle;
 
 class AgreementsDoa extends AgreementsRepository {
-  ApiHelper _apiHelper;
+  final ApiHelper _apiHelper;
 
   AgreementsDoa(this._apiHelper);
 

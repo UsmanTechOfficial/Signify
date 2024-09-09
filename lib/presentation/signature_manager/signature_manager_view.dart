@@ -5,20 +5,20 @@ import 'package:dyno_sign/domain/consts/styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:syncfusion_flutter_signaturepad/signaturepad.dart';
-import '../../../../domain/consts/global_var.dart';
-import '../../../widgets/buttons/custom_elevated_text_button.dart';
-import '../../../widgets/buttons/custom_outlined_text_button.dart';
-import '../../../widgets/text/custom_text.dart';
-import '../../widgets/add_signature_widgets/custom_pen_color.dart';
-import '../../widgets/add_signature_widgets/custom_pen_stroke.dart';
-import '../../widgets/add_signature_widgets/pen_tools.dart';
-import '../../widgets/add_signature_widgets/signature_choice_card.dart';
-import 'bloc/add_signature_bloc.dart';
-import 'bloc/add_signature_event.dart';
-import 'bloc/add_signature_state.dart';
+import '../../domain/consts/global_var.dart';
+import '../widgets/buttons/custom_elevated_text_button.dart';
+import '../widgets/buttons/custom_outlined_text_button.dart';
+import '../widgets/text/custom_text.dart';
+import '../request_signature/widgets/add_signature_widgets/custom_pen_color.dart';
+import '../request_signature/widgets/add_signature_widgets/custom_pen_stroke.dart';
+import '../request_signature/widgets/add_signature_widgets/pen_tools.dart';
+import '../request_signature/widgets/add_signature_widgets/signature_choice_card.dart';
+import 'bloc/signature_manager_bloc.dart';
+import 'bloc/signature_manager_event.dart';
+import 'bloc/signature_manager_state.dart';
 
-class AddSignatureView extends StatelessWidget {
-  const AddSignatureView({super.key});
+class SignatureManagerView extends StatelessWidget {
+  const SignatureManagerView({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -62,13 +62,13 @@ class ChooseTab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<AddSignatureBloc, AddSignatureState>(
+    return BlocBuilder<SignatureManagerBloc, SignatureManagerState>(
       buildWhen: (previous, current) {
         return current is OnSignatureSelectedState;
       },
       builder: (context, state) {
         if (state is OnSignatureSelectedState) {
-          context.read<AddSignatureBloc>().selectedSign =
+          context.read<SignatureManagerBloc>().selectedSign =
               state.selectedSignature;
         }
 
@@ -83,14 +83,14 @@ class ChooseTab extends StatelessWidget {
             return SignatureChoiceCard(
               indicator: true,
               isSelected:
-                  context.read<AddSignatureBloc>().selectedSign == index,
+                  context.read<SignatureManagerBloc>().selectedSign == index,
               child: Center(
                 child: Image.asset('assets/images/splash_img.png',
                     fit: BoxFit.scaleDown),
               ),
               onTap: () {
                 context
-                    .read<AddSignatureBloc>()
+                    .read<SignatureManagerBloc>()
                     .add(OnSignatureSelectionEvent(selectedSign: index));
               },
             );
@@ -145,7 +145,7 @@ class _DrawTabState extends State<DrawTab> {
   @override
   Widget build(BuildContext context) {
     final color = appColorScheme(context);
-    final bloc = context.read<AddSignatureBloc>();
+    final bloc = context.read<SignatureManagerBloc>();
     return Scaffold(
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -160,7 +160,7 @@ class _DrawTabState extends State<DrawTab> {
                 borderRadius:
                     BorderRadius.circular(AppStyle.buttonBorderRadius),
               ),
-              child: BlocBuilder<AddSignatureBloc, AddSignatureState>(
+              child: BlocBuilder<SignatureManagerBloc, SignatureManagerState>(
                 buildWhen: (previous, current) {
                   return current is OnPenColorSelectionState ||
                       current is OnPenStrokeSelectionState;
@@ -212,7 +212,8 @@ class _DrawTabState extends State<DrawTab> {
                         color: color.outline,
                       ),
                       Expanded(
-                        child: BlocBuilder<AddSignatureBloc, AddSignatureState>(
+                        child: BlocBuilder<SignatureManagerBloc,
+                            SignatureManagerState>(
                           buildWhen: (previous, current) {
                             return current is OnPenStrokeSelectionState;
                           },
@@ -252,7 +253,8 @@ class _DrawTabState extends State<DrawTab> {
                         color: color.outline,
                       ),
                       Expanded(
-                        child: BlocBuilder<AddSignatureBloc, AddSignatureState>(
+                        child: BlocBuilder<SignatureManagerBloc,
+                            SignatureManagerState>(
                           buildWhen: (previous, current) {
                             return current is OnPenColorSelectionState;
                           },

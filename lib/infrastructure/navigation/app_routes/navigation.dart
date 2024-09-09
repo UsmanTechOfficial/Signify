@@ -1,8 +1,9 @@
-import 'package:dyno_sign/domain/consts/global_var.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../pages_import.dart';
+import '../../../domain/consts/consts.dart';
+import '../../../presentation/blocs.dart';
+import '../../../presentation/screens.dart';
 import 'routes.dart';
 
 class Go {
@@ -50,7 +51,7 @@ class AppPages {
       case Routes.DASHBOARD:
         return MaterialPageRoute(
           builder: (context) => BlocProvider(
-            create: (context) => DashboardBloc(),
+            create: (context) => getIt<DashboardBloc>(),
             child: const DashboardView(),
           ),
         );
@@ -148,8 +149,8 @@ class AppPages {
       case Routes.ADD_SIGNATURE:
         return MaterialPageRoute(
           builder: (context) => BlocProvider(
-            create: (context) => AddSignatureBloc(),
-            child: const AddSignatureView(),
+            create: (context) => SignatureManagerBloc(),
+            child: const SignatureManagerView(),
           ),
         );
       case Routes.SETTINGS:

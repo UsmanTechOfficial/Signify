@@ -1,5 +1,5 @@
 import 'package:dyno_sign/domain/consts/global_var.dart';
-import 'package:dyno_sign/infrastructure/theme/theme_library.dart';
+import 'package:dyno_sign/infrastructure/theme/theme.dart';
 import 'package:dyno_sign/presentation/dashboard/views/templates/bloc/templates_bloc.dart';
 import 'package:dyno_sign/presentation/widgets/buttons/custom_icon_button.dart';
 import 'package:dyno_sign/presentation/widgets/buttons/custom_outlined_text_button.dart';
@@ -18,17 +18,14 @@ class TemplatesView extends StatelessWidget {
   Widget build(BuildContext context) {
     final color = Theme.of(context).colorScheme;
     final searchController = TextEditingController();
-    var bloc = BlocProvider.of<TemplatesBloc>(context);
+    final bloc = getIt<TemplatesBloc>();
 
-    return Scaffold(
-      body: RefreshIndicator(
-        onRefresh: () async {
-          return Future<void>.delayed(const Duration(seconds: 3));
-        },
-        child: CustomScrollView(
-          key: const PageStorageKey<String>("TemplateScrollPosition"),
-          physics: const AlwaysScrollableScrollPhysics(),
-          slivers: [
+    return NestedScrollView(
+        key: const PageStorageKey<String>("TemplateScrollPosition"),
+        physics: const AlwaysScrollableScrollPhysics(),
+        floatHeaderSlivers: true,
+        headerSliverBuilder: (context, _) {
+          return [
             CustomAppbar(
               title: "Templates",
               action: CustomIconButton(
@@ -44,33 +41,30 @@ class TemplatesView extends StatelessWidget {
                   child: Row(
                     children: [
                       Expanded(
-                        child: SizedBox(
+                        child: CustomTextFormField(
                           height: 40,
-                          child: CustomTextFormField(
-                            controller: searchController,
-                            hint: "Search here",
-                            borderColor: Colors.transparent,
-                            filled: true,
-                            readOnly: true,
-                            prefix: Icons.search_rounded,
-                            fillColor: color.outlineVariant.withOpacity(0.5),
-                            borderRadius: AppStyle.buttonBorderRadius,
-                            focusBorderColor: Colors.transparent,
-                            onTap: () {
-                              showSearch(
-                                context: context,
-                                delegate: TemplatesSearchDelegate(
-                                  templatesBloc:
-                                      BlocProvider.of<TemplatesBloc>(context),
-                                ),
-                              );
-                            },
-                          ),
+                          controller: searchController,
+                          hint: "Search here",
+                          borderColor: Colors.transparent,
+                          filled: true,
+                          readOnly: true,
+                          prefix: Icons.search_rounded,
+                          fillColor: color.outlineVariant.withOpacity(0.5),
+                          borderRadius: AppStyle.buttonBorderRadius,
+                          focusBorderColor: Colors.transparent,
+                          onTap: () {
+                            showSearch(
+                              context: context,
+                              delegate: TemplatesSearchDelegate(
+                                templatesBloc:
+                                    BlocProvider.of<TemplatesBloc>(context),
+                              ),
+                            );
+                          },
                         ),
                       ),
-                      const SizedBox(width: 10),
-                      // Added spacing between the search bar and the icon
                       CustomIconButton(
+                        padding: 10,
                         icon: const Icon(Icons.bar_chart),
                         onPressed: () {
                           showModalBottomSheet(
@@ -91,15 +85,20 @@ class TemplatesView extends StatelessWidget {
                 ),
               ),
             ),
-            const SliverToBoxAdapter(
-              child: SizedBox(
-                height: 2000,
-              ),
-            )
-          ],
-        ),
-      ),
-    );
+          ];
+        },
+        body: Padding(
+          padding: EdgeInsets.symmetric(horizontal: appWidth(context) * 0.05),
+          child: const CustomScrollView(
+            slivers: [
+              SliverToBoxAdapter(
+                child: SizedBox(
+                  height: 2000,
+                ),
+              )
+            ],
+          ),
+        ));
   }
 }
 
@@ -129,10 +128,14 @@ class FilterSheet extends StatelessWidget {
                     textColor: color.outline,
                     onPressed: () {
                       bloc.add(
-                        const StatusFilterSelectionEvent(StatusFilters.all),
+                        const StatusFilterSelectionEvent(
+                          StatusFilters.all,
+                        ),
                       );
                       bloc.add(
-                        const DateFilterSelectionEvent(DateFilters.all),
+                        const DateFilterSelectionEvent(
+                          DateFilters.all,
+                        ),
                       );
                     },
                   ),
@@ -150,7 +153,7 @@ class FilterSheet extends StatelessWidget {
                 fontSize: AppFontSize.titleSmallFont,
               ),
               BlocBuilder<TemplatesBloc, TemplatesState>(
-                buildWhen: (previous, current) =>
+                buildWhen: (_, current) =>
                     current is StatusFilterSelectionState,
                 builder: (context, state) {
                   return ListView.builder(
@@ -194,8 +197,7 @@ class FilterSheet extends StatelessWidget {
                 fontSize: AppFontSize.titleSmallFont,
               ),
               BlocBuilder<TemplatesBloc, TemplatesState>(
-                buildWhen: (previous, current) =>
-                    current is DateFilterSelectionState,
+                buildWhen: (_, current) => current is DateFilterSelectionState,
                 builder: (context, state) {
                   if (state is DateFilterSelectionState) {
                     bloc.selectedDateFilters = state.newFilter;
