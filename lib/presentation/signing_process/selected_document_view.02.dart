@@ -1,6 +1,6 @@
 import 'package:dyno_sign/presentation/signing_process/bloc/signing_process_cubit.dart';
-import 'package:flutter/material.dart';
 import 'package:dyno_sign/presentation/widgets/widgets.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../domain/consts/consts.dart';

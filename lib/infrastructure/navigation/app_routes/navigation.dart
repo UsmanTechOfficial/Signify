@@ -57,52 +57,52 @@ class AppPages {
     switch (settings.name) {
       case Routes.DASHBOARD:
         return MaterialPageRoute(
-          builder: (context) => BlocProvider(
-            create: (context) => getIt<DashboardBloc>(),
-            child: const DashboardView(),
-          ),
+            builder: (context) => BlocProvider(
+                  create: (context) => getIt<DashboardBloc>(),
+                  child: const DashboardView(),
+                ),
             settings: settings);
       case Routes.ONBOARDING:
         return MaterialPageRoute(
-          builder: (context) => BlocProvider(
-            create: (context) => OnboardingBloc(),
-            child: const GetStartedView(),
-          ),
+            builder: (context) => BlocProvider(
+                  create: (context) => OnboardingBloc(),
+                  child: const GetStartedView(),
+                ),
             settings: settings);
       case Routes.REQUEST_SIGNATURE:
         return MaterialPageRoute(
-          builder: (context) => BlocProvider(
-            create: (context) => RequestSignaturesBloc(),
-            child: const RequestSignaturesView(),
-          ),
+            builder: (context) => BlocProvider(
+                  create: (context) => RequestSignaturesBloc(),
+                  child: const RequestSignaturesView(),
+                ),
             settings: settings);
       case Routes.SPLASH:
         return MaterialPageRoute(
-          builder: (context) => BlocProvider(
-            create: (context) => SplashBloc(),
-            child: const SplashView(),
-          ),
+            builder: (context) => BlocProvider(
+                  create: (context) => SplashBloc(),
+                  child: const SplashView(),
+                ),
             settings: settings);
       case Routes.LOGIN:
         return MaterialPageRoute(
-          builder: (context) => BlocProvider(
-            create: (context) => LoginBloc(),
-            child: const LoginView(),
-          ),
+            builder: (context) => BlocProvider(
+                  create: (context) => LoginBloc(),
+                  child: const LoginView(),
+                ),
             settings: settings);
       case Routes.SIGNUP:
         return MaterialPageRoute(
-          builder: (context) => BlocProvider(
-            create: (context) => SignupBloc(),
-            child: const SignupView(),
-          ),
+            builder: (context) => BlocProvider(
+                  create: (context) => SignupBloc(),
+                  child: const SignupView(),
+                ),
             settings: settings);
       case Routes.FORGET_PASSWORD:
         return MaterialPageRoute(
-          builder: (context) => BlocProvider(
-            create: (context) => ForgetPasswordBloc(),
-            child: const ForgetPasswordView(),
-          ),
+            builder: (context) => BlocProvider(
+                  create: (context) => ForgetPasswordBloc(),
+                  child: const ForgetPasswordView(),
+                ),
             settings: settings);
       case Routes.SELECTED_DOCUMENT:
         return MaterialPageRoute(
@@ -120,59 +120,59 @@ class AppPages {
             settings: settings);
       case Routes.EMAIL_DETAIL_VIEW:
         return MaterialPageRoute(
-          builder: (context) => BlocProvider(
-            create: (context) => EmailDetailViewBloc(),
-            child: const EmailDetailView(),
-          ),
+            builder: (context) => BlocProvider(
+                  create: (context) => EmailDetailViewBloc(),
+                  child: const EmailDetailView(),
+                ),
             settings: settings);
       case Routes.RECIPIENTS_DETAIL:
         return MaterialPageRoute(
-          builder: (context) => BlocProvider(
-            create: (context) => RecipientsDetailBloc(),
-            child: const RecipientsDetailView(),
-          ),
+            builder: (context) => BlocProvider(
+                  create: (context) => RecipientsDetailBloc(),
+                  child: const RecipientsDetailView(),
+                ),
             settings: settings);
       case Routes.ASSIGN_FIELDS:
         return MaterialPageRoute(
-          builder: (context) => BlocProvider(
-            create: (context) => AssignFieldsBloc(),
-            child: const AssignFieldsView(),
-          ),
+            builder: (context) => BlocProvider(
+                  create: (context) => AssignFieldsBloc(),
+                  child: const AssignFieldsView(),
+                ),
             settings: settings);
       case Routes.AGREEMENT_OVERVIEW:
         return MaterialPageRoute(
-          builder: (context) => BlocProvider(
-            create: (context) => AgreementOverviewBloc(),
-            child: const AgreementOverviewView(),
-          ),
+            builder: (context) => BlocProvider(
+                  create: (context) => AgreementOverviewBloc(),
+                  child: const AgreementOverviewView(),
+                ),
             settings: settings);
       case Routes.AGREEMENT_DETAIL_ADDED:
         return MaterialPageRoute(
-          builder: (context) => BlocProvider(
-            create: (context) => AgreementDetailAddedBloc(),
-            child: const AgreementDetailAddedView(),
-          ),
+            builder: (context) => BlocProvider(
+                  create: (context) => AgreementDetailAddedBloc(),
+                  child: const AgreementDetailAddedView(),
+                ),
             settings: settings);
       case Routes.ADD_SIGNATURE:
         return MaterialPageRoute(
-          builder: (context) => BlocProvider(
-            create: (context) => SignatureManagerBloc(),
-            child: const SignatureManagerView(),
-          ),
+            builder: (context) => BlocProvider(
+                  create: (context) => SignatureManagerBloc(),
+                  child: const SignatureManagerView(),
+                ),
             settings: settings);
       case Routes.SETTINGS:
         return MaterialPageRoute(
-          builder: (context) => BlocProvider(
-            create: (context) => SettingsBloc(),
-            child: const SettingsView(),
-          ),
+            builder: (context) => BlocProvider(
+                  create: (context) => SettingsBloc(),
+                  child: const SettingsView(),
+                ),
             settings: settings);
       case Routes.FOLDERS:
         return MaterialPageRoute(
-          builder: (context) => BlocProvider(
-            create: (context) => FoldersBloc(),
-            child: const FoldersView(),
-          ),
+            builder: (context) => BlocProvider(
+                  create: (context) => FoldersBloc(),
+                  child: const FoldersView(),
+                ),
             settings: settings);
       default:
         return null;

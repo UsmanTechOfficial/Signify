@@ -10,7 +10,6 @@ import 'package:dyno_sign/presentation/dashboard/views/profile/bloc/profile_bloc
 import 'package:dyno_sign/presentation/dashboard/views/profile/profile_view.dart';
 import 'package:dyno_sign/presentation/dashboard/views/templates/bloc/templates_bloc.dart';
 import 'package:dyno_sign/presentation/dashboard/views/templates/templates_view.dart';
-import 'package:dyno_sign/presentation/signing_process/bloc/signing_process_cubit.dart';
 import 'package:dyno_sign/presentation/widgets/bottom_sheets/bottom_sheets.dart';
 import 'package:dyno_sign/presentation/widgets/bottom_sheets/custom_bottom_sheet/sheets_widget/add_documents/add_document.sheet.dart';
 import 'package:dyno_sign/presentation/widgets/bottom_sheets/custom_bottom_sheet/sheets_widget/sign_selection/sign_selection.sheet.dart';
@@ -20,7 +19,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../assets_gen/assets.gen.dart';
 import '../request_signature/widgets/dashboard_widgets/custom_nav_bar_item.dart';
 import '../request_signature/widgets/dashboard_widgets/drawer_items_tile.dart';
-import '../signing_process/document_preview_view.01.dart';
 import 'bloc/dashboard_bloc.dart';
 
 class DashboardView extends StatelessWidget {

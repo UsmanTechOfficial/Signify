@@ -9,6 +9,7 @@ sealed class SigningProcessState extends Equatable {
 
 final class SigningProcessInitialState extends SigningProcessState {
   const SigningProcessInitialState();
+
   @override
   List<Object> get props => [];
 }
