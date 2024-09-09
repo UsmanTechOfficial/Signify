@@ -34,9 +34,7 @@ class CustomNavBarItem extends StatelessWidget {
                 return IconTheme(
                   data: IconThemeData(
                     size: size,
-                    color: isSelected
-                        ? Theme.of(context).primaryColor
-                        : Colors.grey,
+                    color: isSelected ? Theme.of(context).primaryColor : Colors.grey,
                   ),
                   child: isSelected ? activeIcon : icon,
                 );
@@ -51,9 +49,7 @@ class CustomNavBarItem extends StatelessWidget {
                   label,
                   style: TextStyle(
                     fontSize: size,
-                    color: isSelected
-                        ? Theme.of(context).primaryColor
-                        : Colors.grey,
+                    color: isSelected ? Theme.of(context).primaryColor : Colors.grey,
                   ),
                 );
               },

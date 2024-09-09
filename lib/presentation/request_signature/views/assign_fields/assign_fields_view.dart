@@ -1,13 +1,13 @@
 import 'package:dyno_sign/infrastructure/navigation/app_routes/navigation.dart';
 import 'package:dyno_sign/infrastructure/navigation/app_routes/routes.dart';
 import 'package:flutter/material.dart';
+
 import '../../../../domain/consts/font_size.dart';
 import '../../../../domain/consts/global_var.dart';
 import '../../../../domain/consts/styles.dart';
-
+import '../../../dashboard/views/home/home_view.dart';
 import '../../../widgets/buttons/custom_outlined_text_button.dart';
 import '../../../widgets/text/custom_text.dart';
-import '../../../dashboard/views/home/home_view.dart';
 
 class AssignFieldsView extends StatelessWidget {
   const AssignFieldsView({super.key});
@@ -169,8 +169,7 @@ class BottomField extends StatelessWidget {
   final Color? color;
   final String label;
 
-  const BottomField(
-      {super.key, required this.icon, this.color, required this.label});
+  const BottomField({super.key, required this.icon, this.color, required this.label});
 
   @override
   Widget build(BuildContext context) {
@@ -182,8 +181,7 @@ class BottomField extends StatelessWidget {
           width: 40,
           child: Card(
               shape: RoundedRectangleBorder(
-                  borderRadius:
-                      BorderRadius.circular(AppStyle.outlinedBtnRadius)),
+                  borderRadius: BorderRadius.circular(AppStyle.outlinedBtnRadius)),
               elevation: 4,
               shadowColor: colorScheme.outlineVariant,
               child: Icon(icon, color: color ?? colorScheme.primary, size: 25)),

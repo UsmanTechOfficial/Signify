@@ -1,12 +1,11 @@
-import 'package:dyno_sign/domain/consts/styles.dart';
 import 'package:flutter/material.dart';
 
-import '../../../domain/consts/font_size.dart';
-import '../text/custom_text.dart';
+import '../../../../../domain/consts/font_size.dart';
+import '../../../../../domain/consts/styles.dart';
 
-mixin BaseBottomSheet {
-  void baseBottomSheet(
-    BuildContext context, {
+class CustomModelSheet {
+  static void showBottomSheet({
+    required BuildContext context,
     required String title,
     required Widget content,
   }) {
@@ -39,13 +38,17 @@ mixin BaseBottomSheet {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  CustomText(
+                  Text(
                     title,
-                    fontSize: AppFontSize.titleMediumFont,
-                    fontWeight: FontWeight.w600,
+                    style: const TextStyle(
+                      fontSize: AppFontSize.titleMediumFont,
+                      fontWeight: FontWeight.w600,
+                    ),
                   ),
                   IconButton(
-                    onPressed: () => Navigator.of(context).pop(),
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                    },
                     icon: const Icon(
                       Icons.close,
                       size: 20,
@@ -59,10 +62,5 @@ mixin BaseBottomSheet {
         );
       },
     );
-  }
-
-  // Close the BottomSheet
-  void closeBottomSheet(BuildContext context) {
-    Navigator.of(context).pop();
   }
 }

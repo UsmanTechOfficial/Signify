@@ -1,18 +1,19 @@
 import 'dart:ui' as ui;
+
 import 'package:dyno_sign/domain/consts/font_size.dart';
 import 'package:dyno_sign/domain/consts/styles.dart';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:syncfusion_flutter_signaturepad/signaturepad.dart';
+
 import '../../domain/consts/global_var.dart';
-import '../widgets/buttons/custom_elevated_text_button.dart';
-import '../widgets/buttons/custom_outlined_text_button.dart';
-import '../widgets/text/custom_text.dart';
 import '../request_signature/widgets/add_signature_widgets/custom_pen_color.dart';
 import '../request_signature/widgets/add_signature_widgets/custom_pen_stroke.dart';
 import '../request_signature/widgets/add_signature_widgets/pen_tools.dart';
 import '../request_signature/widgets/add_signature_widgets/signature_choice_card.dart';
+import '../widgets/buttons/custom_elevated_text_button.dart';
+import '../widgets/buttons/custom_outlined_text_button.dart';
+import '../widgets/text/custom_text.dart';
 import 'bloc/signature_manager_bloc.dart';
 import 'bloc/signature_manager_event.dart';
 import 'bloc/signature_manager_state.dart';
@@ -68,8 +69,7 @@ class ChooseTab extends StatelessWidget {
       },
       builder: (context, state) {
         if (state is OnSignatureSelectedState) {
-          context.read<SignatureManagerBloc>().selectedSign =
-              state.selectedSignature;
+          context.read<SignatureManagerBloc>().selectedSign = state.selectedSignature;
         }
 
         return GridView.builder(
@@ -82,11 +82,9 @@ class ChooseTab extends StatelessWidget {
           itemBuilder: (_, index) {
             return SignatureChoiceCard(
               indicator: true,
-              isSelected:
-                  context.read<SignatureManagerBloc>().selectedSign == index,
+              isSelected: context.read<SignatureManagerBloc>().selectedSign == index,
               child: Center(
-                child: Image.asset('assets/images/splash_img.png',
-                    fit: BoxFit.scaleDown),
+                child: Image.asset('assets/images/splash_img.png', fit: BoxFit.scaleDown),
               ),
               onTap: () {
                 context
@@ -121,8 +119,7 @@ class _DrawTabState extends State<DrawTab> {
   }
 
   void _handleSaveButtonPressed() async {
-    final data =
-        await signatureGlobalKey.currentState!.toImage(pixelRatio: 3.0);
+    final data = await signatureGlobalKey.currentState!.toImage(pixelRatio: 3.0);
     final bytes = await data.toByteData(format: ui.ImageByteFormat.png);
     Navigator.push(
       context,
@@ -157,8 +154,7 @@ class _DrawTabState extends State<DrawTab> {
               height: 400,
               decoration: BoxDecoration(
                 border: Border.all(color: color.outline),
-                borderRadius:
-                    BorderRadius.circular(AppStyle.buttonBorderRadius),
+                borderRadius: BorderRadius.circular(AppStyle.buttonBorderRadius),
               ),
               child: BlocBuilder<SignatureManagerBloc, SignatureManagerState>(
                 buildWhen: (previous, current) {
@@ -212,8 +208,7 @@ class _DrawTabState extends State<DrawTab> {
                         color: color.outline,
                       ),
                       Expanded(
-                        child: BlocBuilder<SignatureManagerBloc,
-                            SignatureManagerState>(
+                        child: BlocBuilder<SignatureManagerBloc, SignatureManagerState>(
                           buildWhen: (previous, current) {
                             return current is OnPenStrokeSelectionState;
                           },
@@ -253,8 +248,7 @@ class _DrawTabState extends State<DrawTab> {
                         color: color.outline,
                       ),
                       Expanded(
-                        child: BlocBuilder<SignatureManagerBloc,
-                            SignatureManagerState>(
+                        child: BlocBuilder<SignatureManagerBloc, SignatureManagerState>(
                           buildWhen: (previous, current) {
                             return current is OnPenColorSelectionState;
                           },

@@ -1,9 +1,9 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+
 import 'agreement_detail_added_event.dart';
 import 'agreement_detail_added_state.dart';
 
-class AgreementDetailAddedBloc
-    extends Bloc<AgreementDetailAddedEvent, AgreementDetailAddedState> {
+class AgreementDetailAddedBloc extends Bloc<AgreementDetailAddedEvent, AgreementDetailAddedState> {
   AgreementDetailAddedBloc() : super(const AgreementDetailAddedState()) {
     on<UpdateAgreementName>((event, emit) {
       emit(state.copyWith(agreementName: event.agreementName));

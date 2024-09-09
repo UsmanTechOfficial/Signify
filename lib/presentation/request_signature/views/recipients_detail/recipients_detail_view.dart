@@ -2,6 +2,7 @@ import 'package:dyno_sign/domain/consts/styles.dart';
 import 'package:dyno_sign/infrastructure/navigation/app_routes/navigation.dart';
 import 'package:dyno_sign/infrastructure/navigation/app_routes/routes.dart';
 import 'package:flutter/material.dart';
+
 import '../../../../domain/consts/font_size.dart';
 import '../../../../domain/consts/global_var.dart';
 import '../../../widgets/buttons/custom_elevated_text_button.dart';
@@ -55,9 +56,8 @@ class RecipientsDetailView extends StatelessWidget {
                           Expanded(
                             child: ListTile(
                               leading: CircleAvatar(
-                                backgroundColor: index.isEven
-                                    ? color.primary
-                                    : color.secondaryContainer,
+                                backgroundColor:
+                                    index.isEven ? color.primary : color.secondaryContainer,
                                 child: const CustomText(
                                   'A',
                                   fontSize: AppFontSize.labelMediumFont,

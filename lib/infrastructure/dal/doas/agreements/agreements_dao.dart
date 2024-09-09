@@ -17,10 +17,8 @@ class AgreementsDoa extends AgreementsRepository {
       final jsonString = await rootBundle.loadString("assets/json/docs.json");
       List<dynamic> mapData = jsonDecode(jsonString);
 
-      final response = Response(
-          data: mapData,
-          statusCode: 200,
-          requestOptions: RequestOptions(path: ''));
+      final response =
+          Response(data: mapData, statusCode: 200, requestOptions: RequestOptions(path: ''));
 
       final List<dynamic>? data = response.data;
 

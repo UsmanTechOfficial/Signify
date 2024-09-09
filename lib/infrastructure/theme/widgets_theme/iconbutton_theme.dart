@@ -7,8 +7,7 @@ IconButtonThemeData get iconButtonTheme => IconButtonThemeData(
         splashFactory: InkRipple.splashFactory,
         // backgroundColor:
         //     WidgetStateProperty.all(colorSchemeLight.secondaryContainer),
-        foregroundColor:
-            WidgetStateProperty.all(colorSchemeLight.onSecondaryContainer),
+        foregroundColor: WidgetStateProperty.all(colorSchemeLight.onSecondaryContainer),
         overlayColor: WidgetStateProperty.resolveWith<Color?>(
           (Set<WidgetState> states) {
             if (states.contains(WidgetState.pressed)) {
@@ -37,8 +36,7 @@ IconButtonThemeData get darkIconButtonTheme => IconButtonThemeData(
         splashFactory: InkRipple.splashFactory,
         // backgroundColor:
         //     WidgetStateProperty.all(colorSchemeDark.secondaryContainer),
-        foregroundColor:
-            WidgetStateProperty.all(colorSchemeDark.onSecondaryContainer),
+        foregroundColor: WidgetStateProperty.all(colorSchemeDark.onSecondaryContainer),
         overlayColor: WidgetStateProperty.resolveWith<Color?>(
           (Set<WidgetState> states) {
             if (states.contains(WidgetState.pressed)) {

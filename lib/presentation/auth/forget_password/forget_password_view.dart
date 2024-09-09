@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../domain/consts/global_var.dart';
-
 import '../../widgets/buttons/custom_elevated_text_button.dart';
 import '../../widgets/form_field/custom_formfield.dart';
 import '../../widgets/text/custom_text.dart';

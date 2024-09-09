@@ -1,8 +1,9 @@
+import 'package:dyno_sign/presentation/signing_process/bloc/signing_process_cubit.dart';
+
 import '../../../domain/consts/consts.dart';
 
 class SigningProcessCubitContainer {
   static inject() async {
-    getIt.registerFactory<SigningProcessCubitContainer>(
-        () => SigningProcessCubitContainer());
+    getIt.registerFactory<SigningProcessCubit>(() => SigningProcessCubit());
   }
 }

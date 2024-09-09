@@ -18,8 +18,7 @@ class HomeState extends Equatable {
   }) {
     return HomeState(
       selectedTileIndex: selectedTileIndex ?? this.selectedTileIndex,
-      selectedCategoryIndex:
-          selectedCategoryIndex ?? this.selectedCategoryIndex,
+      selectedCategoryIndex: selectedCategoryIndex ?? this.selectedCategoryIndex,
       selectedDocIndex: selectedDocIndex ?? this.selectedDocIndex,
     );
   }

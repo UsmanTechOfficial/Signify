@@ -97,8 +97,7 @@ class AgreementsView extends StatelessWidget {
                     );
                   } else if (state is AgreementsLoadedState) {
                     return SliverGrid(
-                      gridDelegate:
-                          const SliverGridDelegateWithFixedCrossAxisCount(
+                      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                         crossAxisCount: 2,
                         mainAxisSpacing: 10.0,
                         crossAxisSpacing: 10.0,
@@ -125,8 +124,7 @@ class AgreementsView extends StatelessWidget {
                   } else if (state is AgreementsErrorState) {
                     return const SliverFillRemaining(
                       child: Center(
-                        child:
-                            Text('An error occurred. Please try again later.'),
+                        child: Text('An error occurred. Please try again later.'),
                       ),
                     );
                   }
@@ -186,8 +184,7 @@ class FilterSheet extends StatelessWidget {
                 fontSize: AppFontSize.titleSmallFont,
               ),
               BlocBuilder<AgreementsBloc, AgreementsState>(
-                buildWhen: (previous, current) =>
-                    current is StatusFilterSelectionState,
+                buildWhen: (previous, current) => current is StatusFilterSelectionState,
                 builder: (context, state) {
                   return ListView.builder(
                     shrinkWrap: true,
@@ -230,8 +227,7 @@ class FilterSheet extends StatelessWidget {
                 fontSize: AppFontSize.titleSmallFont,
               ),
               BlocBuilder<AgreementsBloc, AgreementsState>(
-                buildWhen: (previous, current) =>
-                    current is DateFilterSelectionState,
+                buildWhen: (previous, current) => current is DateFilterSelectionState,
                 builder: (context, state) {
                   if (state is DateFilterSelectionState) {
                     bloc.selectedDateFilters = state.newFilter;

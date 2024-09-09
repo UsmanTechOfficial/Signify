@@ -1,11 +1,9 @@
 import 'package:dyno_sign/domain/consts/styles.dart';
-
 import 'package:dyno_sign/infrastructure/navigation/app_routes/navigation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../domain/consts/font_size.dart';
-
 import '../../../../infrastructure/navigation/app_routes/routes.dart';
 import '../../../widgets/buttons/custom_elevated_text_button.dart';
 import '../../../widgets/buttons/custom_outlined_text_button.dart';
@@ -26,8 +24,7 @@ class AgreementDetailAddedView extends StatelessWidget {
         centerTitle: true,
       ),
       body: Padding(
-        padding: EdgeInsets.symmetric(
-            horizontal: MediaQuery.of(context).size.width * .05),
+        padding: EdgeInsets.symmetric(horizontal: MediaQuery.of(context).size.width * .05),
         child: SingleChildScrollView(
           physics: const ClampingScrollPhysics(),
           scrollDirection: Axis.vertical,
@@ -60,13 +57,11 @@ class AgreementDetailAddedView extends StatelessWidget {
                 builder: (context, state) {
                   return CustomTextFormField(
                     hint: "Enter Agreement Name",
-                    controller:
-                        TextEditingController(text: state.agreementName),
+                    controller: TextEditingController(text: state.agreementName),
                     borderColor: Theme.of(context).colorScheme.outlineVariant,
                     borderRadius: AppStyle.buttonBorderRadius,
-                    onFieldSubmitted: (value) => context
-                        .read<AgreementDetailAddedBloc>()
-                        .add(UpdateAgreementName(value)),
+                    onFieldSubmitted: (value) =>
+                        context.read<AgreementDetailAddedBloc>().add(UpdateAgreementName(value)),
                     maxLines: 2,
                     focusNode: FocusNode(),
                   );
@@ -86,9 +81,8 @@ class AgreementDetailAddedView extends StatelessWidget {
                     controller: TextEditingController(text: state.description),
                     borderColor: Theme.of(context).colorScheme.outlineVariant,
                     borderRadius: AppStyle.buttonBorderRadius,
-                    onFieldSubmitted: (value) => context
-                        .read<AgreementDetailAddedBloc>()
-                        .add(UpdateDescription(value)),
+                    onFieldSubmitted: (value) =>
+                        context.read<AgreementDetailAddedBloc>().add(UpdateDescription(value)),
                     maxLines: 5,
                     focusNode: FocusNode(),
                   );
@@ -118,9 +112,7 @@ class AgreementDetailAddedView extends StatelessWidget {
                               groupValue: state.selectedRoleIndex,
                               onChanged: (value) {
                                 if (value != null) {
-                                  context
-                                      .read<AgreementDetailAddedBloc>()
-                                      .add(SelectRole(value));
+                                  context.read<AgreementDetailAddedBloc>().add(SelectRole(value));
                                 }
                               },
                             ),
@@ -153,13 +145,11 @@ class AgreementDetailAddedView extends StatelessWidget {
                 builder: (context, state) {
                   return CustomTextFormField(
                     hint: "Enter Name",
-                    controller:
-                        TextEditingController(text: state.recipientName),
+                    controller: TextEditingController(text: state.recipientName),
                     borderColor: Theme.of(context).colorScheme.outlineVariant,
                     borderRadius: AppStyle.buttonBorderRadius,
-                    onFieldSubmitted: (value) => context
-                        .read<AgreementDetailAddedBloc>()
-                        .add(UpdateRecipientName(value)),
+                    onFieldSubmitted: (value) =>
+                        context.read<AgreementDetailAddedBloc>().add(UpdateRecipientName(value)),
                     focusNode: FocusNode(),
                   );
                 },
@@ -175,13 +165,11 @@ class AgreementDetailAddedView extends StatelessWidget {
                 builder: (context, state) {
                   return CustomTextFormField(
                     hint: "Enter email",
-                    controller:
-                        TextEditingController(text: state.recipientEmail),
+                    controller: TextEditingController(text: state.recipientEmail),
                     borderColor: Theme.of(context).colorScheme.outlineVariant,
                     borderRadius: AppStyle.buttonBorderRadius,
-                    onFieldSubmitted: (value) => context
-                        .read<AgreementDetailAddedBloc>()
-                        .add(UpdateRecipientEmail(value)),
+                    onFieldSubmitted: (value) =>
+                        context.read<AgreementDetailAddedBloc>().add(UpdateRecipientEmail(value)),
                     focusNode: FocusNode(),
                   );
                 },
@@ -194,9 +182,7 @@ class AgreementDetailAddedView extends StatelessWidget {
                   text: "Get Started",
                   borderRadius: AppStyle.buttonBorderRadius,
                   onPressed: () {
-                    context
-                        .read<AgreementDetailAddedBloc>()
-                        .add(const SubmitAgreement());
+                    context.read<AgreementDetailAddedBloc>().add(const SubmitAgreement());
                     // Handle the submission
                   },
                 ),

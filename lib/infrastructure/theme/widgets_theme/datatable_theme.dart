@@ -8,13 +8,11 @@ DataTableThemeData get dataTableTheme => DataTableThemeData(
             .surfaceContainerHighest, // Use the surfaceVariant color for DataTable background
       ),
       dataTextStyle: TextStyle(
-        color: colorSchemeLight
-            .onSurfaceVariant, // Use the onSurfaceVariant color for data text
+        color: colorSchemeLight.onSurfaceVariant, // Use the onSurfaceVariant color for data text
         fontSize: 14.0, // Example size, adjust as needed
       ),
       headingTextStyle: TextStyle(
-        color: colorSchemeLight
-            .onSurface, // Use the onSurface color for heading text
+        color: colorSchemeLight.onSurface, // Use the onSurface color for heading text
         fontSize: 16.0, // Example size, adjust as needed
         fontWeight: FontWeight.bold, // Example weight, adjust as needed
       ),
@@ -28,13 +26,11 @@ DataTableThemeData get darkDataTableTheme => DataTableThemeData(
             .surfaceContainerHighest, // Use the surfaceVariant color for DataTable background
       ),
       dataTextStyle: TextStyle(
-        color: colorSchemeDark
-            .onSurfaceVariant, // Use the onSurfaceVariant color for data text
+        color: colorSchemeDark.onSurfaceVariant, // Use the onSurfaceVariant color for data text
         fontSize: 14.0, // Example size, adjust as needed
       ),
       headingTextStyle: TextStyle(
-        color: colorSchemeDark
-            .onSurface, // Use the onSurface color for heading text
+        color: colorSchemeDark.onSurface, // Use the onSurface color for heading text
         fontSize: 16.0, // Example size, adjust as needed
         fontWeight: FontWeight.bold, // Example weight, adjust as needed
       ),

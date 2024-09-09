@@ -56,8 +56,7 @@ class TemplatesView extends StatelessWidget {
                             showSearch(
                               context: context,
                               delegate: TemplatesSearchDelegate(
-                                templatesBloc:
-                                    BlocProvider.of<TemplatesBloc>(context),
+                                templatesBloc: BlocProvider.of<TemplatesBloc>(context),
                               ),
                             );
                           },
@@ -153,8 +152,7 @@ class FilterSheet extends StatelessWidget {
                 fontSize: AppFontSize.titleSmallFont,
               ),
               BlocBuilder<TemplatesBloc, TemplatesState>(
-                buildWhen: (_, current) =>
-                    current is StatusFilterSelectionState,
+                buildWhen: (_, current) => current is StatusFilterSelectionState,
                 builder: (context, state) {
                   return ListView.builder(
                     shrinkWrap: true,

@@ -20,8 +20,8 @@ AppBarTheme get appBarTheme => AppBarTheme(
 AppBarTheme get darkAppBarTheme => AppBarTheme(
     iconTheme: IconThemeData(color: colorSchemeDark.onSurface),
     actionsIconTheme: IconThemeData(color: colorSchemeDark.onPrimary),
-    titleTextStyle: TextStyle(
-        color: colorSchemeDark.onSurface, fontSize: AppFontSize.titleLargeFont),
+    titleTextStyle:
+        TextStyle(color: colorSchemeDark.onSurface, fontSize: AppFontSize.titleLargeFont),
     toolbarTextStyle: TextStyle(
       color: colorSchemeDark.onSurface,
       fontSize: 18.0,

@@ -7,13 +7,11 @@ import '../../dal/services/api_services/api_helper.dart';
 
 class AgreementsBlocContainer {
   static Future<void> inject() async {
-    getIt.registerLazySingleton<AgreementsRepository>(
-        () => AgreementsDoa(getIt<ApiHelper>()));
+    getIt.registerLazySingleton<AgreementsRepository>(() => AgreementsDoa(getIt<ApiHelper>()));
 
     getIt.registerLazySingleton<GetAllAgreementsUseCase>(
         () => GetAllAgreementsUseCase(getIt<AgreementsRepository>()));
 
-    getIt.registerFactory<AgreementsBloc>(
-        () => AgreementsBloc(getIt<GetAllAgreementsUseCase>()));
+    getIt.registerFactory<AgreementsBloc>(() => AgreementsBloc(getIt<GetAllAgreementsUseCase>()));
   }
 }

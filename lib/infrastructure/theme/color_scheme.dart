@@ -23,7 +23,7 @@ const ColorScheme colorSchemeLight = ColorScheme(
   onSurfaceVariant: Color(0xff121112),
   outline: Color(0xff7c7c7c),
   outlineVariant: Color(0xffc8c8c8),
-  shadow: Color(0xff000000),
+  shadow: Color(0x80000000),
   scrim: Color(0xff000000),
   inverseSurface: Color(0xff161313),
   onInverseSurface: Color(0xfff5f5f5),
@@ -54,7 +54,7 @@ const ColorScheme colorSchemeDark = ColorScheme(
   onSurfaceVariant: Color(0xffe1e1e1),
   outline: Color(0xff7a7a7a),
   outlineVariant: Color(0xff2e2e2e),
-  shadow: Color(0xff000000),
+  shadow: Color(0x33121212),
   scrim: Color(0xff000000),
   inverseSurface: Color(0xfffefbfd),
   onInverseSurface: Color(0xff131313),
@@ -77,8 +77,7 @@ const MaterialColor primaryMaterial = MaterialColor(0xffF96A70, <int, Color>{
 });
 
 /// [Dark]
-const MaterialColor darkPrimaryMaterial =
-    MaterialColor(0xffeec4d8, <int, Color>{
+const MaterialColor darkPrimaryMaterial = MaterialColor(0xffeec4d8, <int, Color>{
   50: Color.fromRGBO(238, 196, 216, .1),
   100: Color.fromRGBO(238, 196, 216, .2),
   200: Color.fromRGBO(238, 196, 216, .3),

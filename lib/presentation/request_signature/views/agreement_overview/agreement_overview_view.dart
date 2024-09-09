@@ -1,9 +1,10 @@
 import 'package:dyno_sign/domain/consts/styles.dart';
 import 'package:flutter/material.dart';
+
 import '../../../../domain/consts/font_size.dart';
 import '../../../../domain/consts/global_var.dart';
-import '../../../widgets/text/custom_text.dart';
 import '../../../dashboard/views/home/home_view.dart';
+import '../../../widgets/text/custom_text.dart';
 
 class AgreementOverviewView extends StatelessWidget {
   const AgreementOverviewView({super.key});
@@ -58,8 +59,7 @@ class AgreementOverviewView extends StatelessWidget {
                     width: double.maxFinite,
                     decoration: BoxDecoration(
                         color: color.primary,
-                        borderRadius:
-                            BorderRadius.circular(AppStyle.tileBorderRadius)),
+                        borderRadius: BorderRadius.circular(AppStyle.tileBorderRadius)),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -74,8 +74,7 @@ class AgreementOverviewView extends StatelessWidget {
                           thickness: 1,
                         ),
                         const CardTile(title: "Amir Mahmod", label: "Sender"),
-                        const CardTile(
-                            title: "12/04/2024", label: "Created on"),
+                        const CardTile(title: "12/04/2024", label: "Created on"),
                         const CardTile(title: "amir@email.com", label: "Email"),
                       ],
                     ),
@@ -105,8 +104,7 @@ class AgreementOverviewView extends StatelessWidget {
             ),
             SliverGrid.builder(
               itemCount: 2,
-              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2),
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
               itemBuilder: (context, index) {
                 return DocCard(
                   isSelected: index.isEven,
@@ -145,8 +143,8 @@ class AgreementOverviewView extends StatelessWidget {
                                 child: Card(
                                   color: color.primary,
                                   shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(
-                                          AppStyle.outlinedBtnRadius)),
+                                      borderRadius:
+                                          BorderRadius.circular(AppStyle.outlinedBtnRadius)),
                                   child: Center(
                                     child: CustomText(
                                       '${index + 1}',
@@ -159,9 +157,8 @@ class AgreementOverviewView extends StatelessWidget {
                                 ),
                               ),
                               CircleAvatar(
-                                backgroundColor: index.isEven
-                                    ? color.primary
-                                    : color.secondaryContainer,
+                                backgroundColor:
+                                    index.isEven ? color.primary : color.secondaryContainer,
                                 child: const CustomText(
                                   'A',
                                   fontSize: AppFontSize.labelMediumFont,

@@ -8,7 +8,6 @@ import '../../../domain/consts/font_size.dart';
 import '../../../domain/consts/global_var.dart';
 import '../../../domain/consts/styles.dart';
 import '../../../domain/consts/validation.dart';
-
 import '../../widgets/buttons/custom_elevated_button.dart';
 import '../../widgets/buttons/custom_elevated_text_button.dart';
 import '../../widgets/form_field/custom_formfield.dart';
@@ -52,10 +51,10 @@ class SignupView extends StatelessWidget {
                   borderColor: color.outlineVariant,
                   borderRadius: AppStyle.buttonBorderRadius,
                   focusNode: context.read<SignupBloc>().emailFocus,
-                  onFieldSubmitted: (value) => FocusScope.of(context)
-                      .requestFocus(context.read<SignupBloc>().passwordFocus),
-                  validator: (p0) => Validation.psdValidation(
-                      context.read<SignupBloc>().emailController),
+                  onFieldSubmitted: (value) =>
+                      FocusScope.of(context).requestFocus(context.read<SignupBloc>().passwordFocus),
+                  validator: (p0) =>
+                      Validation.psdValidation(context.read<SignupBloc>().emailController),
                 ),
                 20.height(),
                 const CustomText(
@@ -72,8 +71,7 @@ class SignupView extends StatelessWidget {
                       borderColor: color.outlineVariant,
                       borderRadius: AppStyle.buttonBorderRadius,
                       focusNode: context.read<SignupBloc>().passwordFocus,
-                      onFieldSubmitted: (value) =>
-                          FocusScope.of(context).requestFocus(
+                      onFieldSubmitted: (value) => FocusScope.of(context).requestFocus(
                         context.read<SignupBloc>().cnfPsdFocus,
                       ),
                       validator: (p0) => Validation.psdValidation(
@@ -82,14 +80,10 @@ class SignupView extends StatelessWidget {
                       suffix: IconButton(
                           icon: Icon(
                             color: color.outlineVariant,
-                            bloc.state.isShowPassword
-                                ? Icons.visibility_off
-                                : Icons.visibility,
+                            bloc.state.isShowPassword ? Icons.visibility_off : Icons.visibility,
                           ),
                           onPressed: () {
-                            context
-                                .read<SignupBloc>()
-                                .add(TogglePasswordVisibility());
+                            context.read<SignupBloc>().add(TogglePasswordVisibility());
                           }),
                     );
                   },
@@ -120,9 +114,7 @@ class SignupView extends StatelessWidget {
                                 : Icons.visibility,
                           ),
                           onPressed: () {
-                            context
-                                .read<SignupBloc>()
-                                .add(ToggleConfirmPasswordVisibility());
+                            context.read<SignupBloc>().add(ToggleConfirmPasswordVisibility());
                           }),
                     );
                   },

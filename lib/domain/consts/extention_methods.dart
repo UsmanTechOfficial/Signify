@@ -5,3 +5,10 @@ extension SpacingExtensions on int {
 
   Widget width() => SizedBox(width: toDouble());
 }
+
+extension StringExtension on String {
+  String capitalizeFirst() {
+    if (isEmpty) return this;
+    return this[0].toUpperCase() + substring(1);
+  }
+}

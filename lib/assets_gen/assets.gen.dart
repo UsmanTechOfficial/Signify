@@ -3,12 +3,12 @@
 ///  FlutterGen
 /// *****************************************************
 
+import 'package:flutter/services.dart';
 // coverage:ignore-file
 // ignore_for_file: type=lint
 // ignore_for_file: directives_ordering,unnecessary_import,implicit_dynamic_list_literal,deprecated_member_use
 
 import 'package:flutter/widgets.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:vector_graphics/vector_graphics.dart';
 
@@ -19,36 +19,29 @@ class $AssetsIconsGen {
   SvgGenImage get docIcon => const SvgGenImage('assets/icons/doc_icon.svg');
 
   /// File path: assets/icons/google_icon.svg
-  SvgGenImage get googleIcon =>
-      const SvgGenImage('assets/icons/google_icon.svg');
+  SvgGenImage get googleIcon => const SvgGenImage('assets/icons/google_icon.svg');
 
   /// File path: assets/icons/ic_agreements_filled.svg
-  SvgGenImage get icAgreementsFilled =>
-      const SvgGenImage('assets/icons/ic_agreements_filled.svg');
+  SvgGenImage get icAgreementsFilled => const SvgGenImage('assets/icons/ic_agreements_filled.svg');
 
   /// File path: assets/icons/ic_agreements_outlined.svg
   SvgGenImage get icAgreementsOutlined =>
       const SvgGenImage('assets/icons/ic_agreements_outlined.svg');
 
   /// File path: assets/icons/ic_home_filled.svg
-  SvgGenImage get icHomeFilled =>
-      const SvgGenImage('assets/icons/ic_home_filled.svg');
+  SvgGenImage get icHomeFilled => const SvgGenImage('assets/icons/ic_home_filled.svg');
 
   /// File path: assets/icons/ic_home_outlined.svg
-  SvgGenImage get icHomeOutlined =>
-      const SvgGenImage('assets/icons/ic_home_outlined.svg');
+  SvgGenImage get icHomeOutlined => const SvgGenImage('assets/icons/ic_home_outlined.svg');
 
   /// File path: assets/icons/ic_profile_filled.svg
-  SvgGenImage get icProfileFilled =>
-      const SvgGenImage('assets/icons/ic_profile_filled.svg');
+  SvgGenImage get icProfileFilled => const SvgGenImage('assets/icons/ic_profile_filled.svg');
 
   /// File path: assets/icons/ic_profile_outlined.svg
-  SvgGenImage get icProfileOutlined =>
-      const SvgGenImage('assets/icons/ic_profile_outlined.svg');
+  SvgGenImage get icProfileOutlined => const SvgGenImage('assets/icons/ic_profile_outlined.svg');
 
   /// File path: assets/icons/ic_templates_filled.svg
-  SvgGenImage get icTemplatesFilled =>
-      const SvgGenImage('assets/icons/ic_templates_filled.svg');
+  SvgGenImage get icTemplatesFilled => const SvgGenImage('assets/icons/ic_templates_filled.svg');
 
   /// File path: assets/icons/ic_templates_outlined.svg
   SvgGenImage get icTemplatesOutlined =>
@@ -58,12 +51,10 @@ class $AssetsIconsGen {
   SvgGenImage get moreIcon => const SvgGenImage('assets/icons/more_icon.svg');
 
   /// File path: assets/icons/more_vert_icon.svg
-  SvgGenImage get moreVertIcon =>
-      const SvgGenImage('assets/icons/more_vert_icon.svg');
+  SvgGenImage get moreVertIcon => const SvgGenImage('assets/icons/more_vert_icon.svg');
 
   /// File path: assets/icons/pencil_icon.svg
-  SvgGenImage get pencilIcon =>
-      const SvgGenImage('assets/icons/pencil_icon.svg');
+  SvgGenImage get pencilIcon => const SvgGenImage('assets/icons/pencil_icon.svg');
 
   /// List of all assets
   List<SvgGenImage> get values => [
@@ -87,12 +78,10 @@ class $AssetsImagesGen {
   const $AssetsImagesGen();
 
   /// File path: assets/images/onBoard_img.png
-  AssetGenImage get onBoardImg =>
-      const AssetGenImage('assets/images/onBoard_img.png');
+  AssetGenImage get onBoardImg => const AssetGenImage('assets/images/onBoard_img.png');
 
   /// File path: assets/images/splash_img.png
-  AssetGenImage get splashImg =>
-      const AssetGenImage('assets/images/splash_img.png');
+  AssetGenImage get splashImg => const AssetGenImage('assets/images/splash_img.png');
 
   /// List of all assets
   List<AssetGenImage> get values => [onBoardImg, splashImg];
@@ -251,8 +240,7 @@ class SvgGenImage {
       placeholderBuilder: placeholderBuilder,
       semanticsLabel: semanticsLabel,
       excludeFromSemantics: excludeFromSemantics,
-      colorFilter: colorFilter ??
-          (color == null ? null : ColorFilter.mode(color, colorBlendMode)),
+      colorFilter: colorFilter ?? (color == null ? null : ColorFilter.mode(color, colorBlendMode)),
       clipBehavior: clipBehavior,
       cacheColorFilter: cacheColorFilter,
     );

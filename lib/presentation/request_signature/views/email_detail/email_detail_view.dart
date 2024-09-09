@@ -100,8 +100,8 @@ class EmailDetailView extends StatelessWidget {
                                     child: Card(
                                       color: color.primary,
                                       shape: RoundedRectangleBorder(
-                                          borderRadius: BorderRadius.circular(
-                                              AppStyle.outlinedBtnRadius)),
+                                          borderRadius:
+                                              BorderRadius.circular(AppStyle.outlinedBtnRadius)),
                                       child: Center(
                                         child: CustomText(
                                           '${index + 1}',
@@ -114,9 +114,8 @@ class EmailDetailView extends StatelessWidget {
                                     ),
                                   ),
                                   CircleAvatar(
-                                    backgroundColor: index.isEven
-                                        ? color.primary
-                                        : color.primaryContainer,
+                                    backgroundColor:
+                                        index.isEven ? color.primary : color.primaryContainer,
                                     child: const CustomText(
                                       'A',
                                       fontSize: AppFontSize.labelMediumFont,

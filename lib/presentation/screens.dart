@@ -7,7 +7,6 @@ export 'package:dyno_sign/presentation/dashboard/views/settings/settings_view.da
 export 'package:dyno_sign/presentation/onboarding/onboarding_view.dart';
 export 'package:dyno_sign/presentation/onboarding/view/get_started_view.dart';
 export 'package:dyno_sign/presentation/request_signature/request_signature_view.dart';
-export 'package:dyno_sign/presentation/signature_manager/signature_manager_view.dart';
 export 'package:dyno_sign/presentation/request_signature/views/agreement_detail_added/agreement_detail_added_view.dart';
 export 'package:dyno_sign/presentation/request_signature/views/agreement_overview/agreement_overview_view.dart';
 export 'package:dyno_sign/presentation/request_signature/views/assign_fields/assign_fields_view.dart';
@@ -15,4 +14,5 @@ export 'package:dyno_sign/presentation/request_signature/views/document_preview/
 export 'package:dyno_sign/presentation/request_signature/views/email_detail/email_detail_view.dart';
 export 'package:dyno_sign/presentation/request_signature/views/recipients_detail/recipients_detail_view.dart';
 export 'package:dyno_sign/presentation/request_signature/views/selected_document/selected_document_view.dart';
+export 'package:dyno_sign/presentation/signature_manager/signature_manager_view.dart';
 export 'package:dyno_sign/presentation/splash/splash_view.dart';

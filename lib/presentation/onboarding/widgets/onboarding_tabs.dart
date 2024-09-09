@@ -14,10 +14,7 @@ class OnboardingTab extends StatelessWidget {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        SizedBox(
-            width: double.maxFinite,
-            height: appHeight(context) * 0.4,
-            child: image),
+        SizedBox(width: double.maxFinite, height: appHeight(context) * 0.4, child: image),
         CustomText(label),
       ],
     );
