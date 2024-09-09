@@ -113,8 +113,8 @@ class AppPages {
             settings: settings);
       case Routes.DOCUMENT_PREVIEW:
         return MaterialPageRoute(
-            builder: (context) => BlocProvider.value(
-                  value: getIt<SigningProcessCubit>(),
+            builder: (context) => BlocProvider(
+                  create: (context) => getIt<SigningProcessCubit>(),
                   child: const DocumentPreviewView(),
                 ),
             settings: settings);
