@@ -10,6 +10,8 @@ import 'package:dyno_sign/presentation/dashboard/views/profile/bloc/profile_bloc
 import 'package:dyno_sign/presentation/dashboard/views/profile/profile_view.dart';
 import 'package:dyno_sign/presentation/dashboard/views/templates/bloc/templates_bloc.dart';
 import 'package:dyno_sign/presentation/dashboard/views/templates/templates_view.dart';
+import 'package:dyno_sign/presentation/signing_process/bloc/signing_process_cubit.dart';
+import 'package:dyno_sign/presentation/signing_process/document_preview_view.01.dart';
 import 'package:dyno_sign/presentation/widgets/bottom_sheets/bottom_sheets.dart';
 import 'package:dyno_sign/presentation/widgets/bottom_sheets/custom_bottom_sheet/sheets_widget/add_documents/add_document.sheet.dart';
 import 'package:dyno_sign/presentation/widgets/bottom_sheets/custom_bottom_sheet/sheets_widget/sign_selection/sign_selection.sheet.dart';
@@ -260,7 +262,7 @@ class DashboardView extends StatelessWidget {
       subtitle: 'Documents that you want to sign for yourself or sent by others',
       onTap: () {
         Go.back();
-        _showSignSelectedSheet(context);
+        _showSignSelectionSheet(context);
       },
     );
   }
@@ -279,23 +281,30 @@ class DashboardView extends StatelessWidget {
 
 // Method to show the Add Document Sheet
   void _showAddDocumentSheet(BuildContext context) {
+    final cubit = getIt<SigningProcessCubit>();
     CustomModelSheet.showBottomSheet(
       context: context,
       title: "Add a Document",
       content: AddDocumentSheet(
-        onTap: () {
-          // Handle Add Document action
-          Go.toNamed(
-            Routes.DOCUMENT_PREVIEW,
-            arguments: 'assets/flow.pdf',
-          );
+        onTap: (source) async {
+          Go.back();
+
+          switch (source) {
+            case DocumentSource.files:
+              {
+                await cubit.pickFiles();
+                Go.toNamed(Routes.DOCUMENT_PREVIEW, arguments: cubit);
+              }
+            default:
+              break;
+          }
         },
       ),
     );
   }
 
 // Method to show the Sign Selected Sheet
-  void _showSignSelectedSheet(BuildContext context) {
+  void _showSignSelectionSheet(BuildContext context) {
     CustomModelSheet.showBottomSheet(
       context: context,
       title: "Sign",

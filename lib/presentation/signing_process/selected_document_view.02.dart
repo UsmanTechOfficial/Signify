@@ -8,7 +8,9 @@ import '../../infrastructure/navigation/app_routes/navigation.dart';
 import '../../infrastructure/navigation/app_routes/routes.dart';
 
 class DocumentSelectedView extends StatelessWidget {
-  const DocumentSelectedView({super.key});
+  final SigningProcessCubit cubit;
+
+  const DocumentSelectedView({super.key, required this.cubit});
 
   @override
   Widget build(BuildContext context) {
@@ -18,20 +20,18 @@ class DocumentSelectedView extends StatelessWidget {
         centerTitle: true,
       ),
       body: Padding(
-        padding: EdgeInsets.symmetric(horizontal: MediaQuery.of(context).size.width * .05),
+        padding: EdgeInsets.symmetric(horizontal: appWidth(context) * .05),
         child: SingleChildScrollView(
-          scrollDirection: Axis.vertical,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Align(
                 alignment: Alignment.centerRight,
                 child: CustomOutlinedTextButton(
+                  text: 'Next',
                   onPressed: () {
                     Go.toNamed(Routes.AGREEMENT_DETAIL_ADDED);
                   },
-                  text: 'Next',
-                  borderRadius: AppStyle.outlinedBtnRadius,
                 ),
               ),
               const CustomText(
@@ -40,67 +40,70 @@ class DocumentSelectedView extends StatelessWidget {
                 fontWeight: FontWeight.w500,
               ),
               BlocBuilder<SigningProcessCubit, SigningProcessState>(
+                bloc: cubit,
                 builder: (context, state) {
-                  final files = context.watch<SigningProcessCubit>().files;
-                  if (state is OnAddAnotherDocumentState && files.isNotEmpty) {
-                    return ListView.builder(
-                      physics: const NeverScrollableScrollPhysics(),
-                      shrinkWrap: true,
-                      itemCount: files.length,
-                      itemBuilder: (context, index) {
-                        final file = files[index];
-                        return Card(
-                          child: Row(
-                            children: [
-                              Expanded(
-                                child: ListTile(
-                                  leading: const CircleAvatar(
-                                    child: Icon(Icons.picture_as_pdf),
-                                  ),
-                                  title: CustomText(
-                                    file.name,
-                                    fontSize: AppFontSize.titleXSmallFont,
-                                    fontWeight: FontWeight.w500,
-                                  ),
-                                  subtitle: CustomText(
-                                    file.toString(),
-                                    fontSize: AppFontSize.labelSmallFont,
-                                    color: Theme.of(context).colorScheme.outline,
-                                  ),
-                                ),
+                  final files = state is FileSelectedState ? state.files : cubit.pickedFiles;
+                  return files.isNotEmpty
+                      ? ListView.builder(
+                          shrinkWrap: true,
+                          physics: const NeverScrollableScrollPhysics(),
+                          itemCount: files.length,
+                          itemBuilder: (context, index) {
+                            return Card(
+                              elevation: 5,
+                              margin: const EdgeInsets.symmetric(vertical: 8),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(12),
                               ),
-                              PopupMenuButton(
-                                icon: const Icon(Icons.more_vert_rounded),
-                                onSelected: (value) {
-                                  if (value == 0) {
-                                    // bloc.deleteFile(index); // Delete the selected file
-                                  }
-                                },
-                                itemBuilder: (BuildContext context) => [
-                                  const PopupMenuItem<int>(
-                                    value: 0,
-                                    child: Text('Delete'),
+                              child: Row(
+                                children: [
+                                  Expanded(
+                                    child: ListTile(
+                                      leading: const CircleAvatar(
+                                        backgroundColor: Colors.redAccent,
+                                        child: Icon(Icons.picture_as_pdf, color: Colors.white),
+                                      ),
+                                      title: CustomText(
+                                        files[index].name,
+                                        fontSize: AppFontSize.titleXSmallFont,
+                                        fontWeight: FontWeight.w500,
+                                      ),
+                                      subtitle: CustomText(
+                                        files[index].date.toIso8601String(),
+                                        fontSize: AppFontSize.labelSmallFont,
+                                        color: Theme.of(context).colorScheme.outline,
+                                      ),
+                                    ),
+                                  ),
+                                  PopupMenuButton<int>(
+                                    icon: const Icon(Icons.more_vert_rounded),
+                                    onSelected: (value) {
+                                      if (value == 0) {
+                                        cubit.removeFile(index);
+                                      }
+                                    },
+                                    itemBuilder: (BuildContext context) => const [
+                                      PopupMenuItem(
+                                        value: 0,
+                                        child: Text('Delete'),
+                                      ),
+                                    ],
                                   ),
                                 ],
                               ),
-                            ],
-                          ),
-                        );
-                      },
-                    );
-                  } else {
-                    return const CustomText('No documents added yet.');
-                  }
+                            );
+                          },
+                        )
+                      : const CustomText('No documents added yet.');
                 },
               ),
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: 20.0),
                 child: CustomElevatedTextButton(
-                  width: double.maxFinite,
+                  width: double.infinity,
                   text: "Add another document",
-                  borderRadius: AppStyle.buttonBorderRadius,
                   onPressed: () {
-                    context.read<SigningProcessCubit>().selectFile();
+                    cubit.pickFiles(allowMultiple: true);
                   },
                 ),
               ),

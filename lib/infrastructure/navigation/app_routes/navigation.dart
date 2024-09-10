@@ -1,5 +1,4 @@
 import 'package:dyno_sign/presentation/signing_process/bloc/signing_process_cubit.dart';
-import 'package:dyno_sign/presentation/signing_process/selected_document_view.02.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -7,6 +6,7 @@ import '../../../domain/consts/consts.dart';
 import '../../../presentation/blocs.dart';
 import '../../../presentation/screens.dart';
 import '../../../presentation/signing_process/document_preview_view.01.dart';
+import '../../../presentation/signing_process/selected_document_view.02.dart';
 import 'routes.dart';
 
 class Go {
@@ -106,18 +106,18 @@ class AppPages {
             settings: settings);
       case Routes.SELECTED_DOCUMENT:
         return MaterialPageRoute(
-            builder: (context) => BlocProvider(
-                  create: (context) => getIt<SigningProcessCubit>(),
-                  child: const DocumentSelectedView(),
-                ),
-            settings: settings);
+          builder: (context) => DocumentSelectedView(
+            cubit: settings.arguments as SigningProcessCubit,
+          ),
+          settings: settings,
+        );
       case Routes.DOCUMENT_PREVIEW:
         return MaterialPageRoute(
-            builder: (context) => BlocProvider(
-                  create: (context) => getIt<SigningProcessCubit>(),
-                  child: const DocumentPreviewView(),
-                ),
-            settings: settings);
+          builder: (context) => DocumentPreviewView(
+            cubit: settings.arguments as SigningProcessCubit,
+          ),
+          settings: settings,
+        );
       case Routes.EMAIL_DETAIL_VIEW:
         return MaterialPageRoute(
             builder: (context) => BlocProvider(

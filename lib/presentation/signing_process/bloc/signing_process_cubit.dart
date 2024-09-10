@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:dyno_sign/infrastructure/dal/models/picked_file.model.dart';
 import 'package:equatable/equatable.dart';
 import 'package:file_selector/file_selector.dart';
 import 'package:flutter/services.dart';
@@ -10,49 +11,65 @@ import 'package:pdfx/pdfx.dart';
 part 'signing_process_state.dart';
 
 class SigningProcessCubit extends Cubit<SigningProcessState> {
-  List<XFile> files = [];
-  Uint8List? pdfThumbnail;
+  List<PickedFileModel> pickedFiles = [];
 
   SigningProcessCubit() : super(const SigningProcessInitialState());
 
-  Future<void> selectFile() async {
-    final XFile? file = await openFile();
-    if (file != null) {
-      files.add(file);
-      emit(const OnAddAnotherDocumentState());
-    }
-  }
-
-  Future<void> getPdfFirstPageImage() async {
+  Future<void> generatePdfThumbnail() async {
     try {
-      emit(const PdfLoadingState());
-      // Load the PDF file from assets
-      ByteData pdfData = await rootBundle.load('assets/flow.pdf');
-      Uint8List pdfBytes = pdfData.buffer.asUint8List();
+      emit(const PdfThumbnailLoadingState());
 
-      // Save the PDF temporarily to the file system
+      final Uint8List pdfBytes = pickedFiles.first.bytes;
       final tempDir = await getTemporaryDirectory();
       final tempPdfPath = '${tempDir.path}/temp_pdf.pdf';
       final pdfFile = File(tempPdfPath);
       await pdfFile.writeAsBytes(pdfBytes);
 
-      // Open the PDF document
       final pdfDocument = await PdfDocument.openFile(tempPdfPath);
-
-      // Get the first page
       final page = await pdfDocument.getPage(1);
 
-      // Render the first page as an image
       final pdfPageImage = await page.render(
         width: page.width,
         height: page.height,
       );
 
-      pdfThumbnail = pdfPageImage?.bytes;
-      emit(const PdfLoadedState());
+      emit(PdfThumbnailLoadedState(pdfPageImage!.bytes));
     } catch (e) {
-      emit(const PdfErrorState());
-      print('Error loading PDF: $e');
+      emit(PdfThumbnailErrorState(errorMessage: e.toString()));
     }
   }
+
+  Future<void> pickFiles({bool allowMultiple = false}) async {
+    const XTypeGroup typeGroup = XTypeGroup(
+      label: 'PDFs',
+      extensions: ['pdf'],
+    );
+
+    final List<XFile> selectedFiles = await openFiles(
+      acceptedTypeGroups: [typeGroup],
+    );
+
+    if (selectedFiles.isNotEmpty) {
+      for (var file in selectedFiles) {
+        final model = PickedFileModel(
+          name: file.name,
+          date: await file.lastModified(),
+          bytes: await file.readAsBytes(),
+        );
+        pickedFiles.add(model);
+      }
+
+      emit(FileSelectedState(files: List.unmodifiable(pickedFiles)));
+
+      if (allowMultiple) {
+        emit(MultipleFilesAddedState(files: List.unmodifiable(pickedFiles)));
+      }
+    }
+  }
+
+  void removeFile(int index) {
+    pickedFiles.removeAt(index);
+    emit(FileSelectedState(files: List.unmodifiable(pickedFiles)));
+  }
+
 }

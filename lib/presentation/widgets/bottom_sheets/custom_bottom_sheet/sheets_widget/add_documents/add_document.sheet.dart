@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import '../../../../../../assets_gen/assets.gen.dart';
 
 class AddDocumentSheet extends StatelessWidget {
-  final VoidCallback onTap;
+  final void Function(DocumentSource index) onTap;
 
   const AddDocumentSheet({super.key, required this.onTap});
 
@@ -30,7 +30,9 @@ class AddDocumentSheet extends StatelessWidget {
             mainAxisSize: MainAxisSize.min,
             children: [
               InkWell(
-                onTap: onTap,
+                onTap: () {
+                  onTap(docType);
+                },
                 borderRadius: BorderRadius.circular(30),
                 splashColor: colorScheme.primary.withOpacity(0.2),
                 child: CircleAvatar(
