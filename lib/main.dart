@@ -23,7 +23,7 @@ class Main extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      debugShowCheckedModeBanner: true,
+      debugShowCheckedModeBanner: false,
       title: 'DynoSign',
       theme: AppTheme.instance.light,
       darkTheme: AppTheme.instance.dark,

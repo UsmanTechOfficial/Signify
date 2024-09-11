@@ -6,6 +6,7 @@ class CustomIconButton extends StatelessWidget {
   final Color backgroundColor;
   final double borderRadius;
   final double padding;
+  final bool clickEffect;
 
   const CustomIconButton({
     super.key,
@@ -14,6 +15,7 @@ class CustomIconButton extends StatelessWidget {
     this.backgroundColor = Colors.transparent,
     this.borderRadius = 8.0,
     this.padding = 0,
+    this.clickEffect = true,
   });
 
   @override
@@ -22,6 +24,7 @@ class CustomIconButton extends StatelessWidget {
       padding: EdgeInsets.symmetric(horizontal: padding),
       child: IconButton(
         style: IconButton.styleFrom(
+          overlayColor: clickEffect ? null : Colors.transparent,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(borderRadius),
           ),

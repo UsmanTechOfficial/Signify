@@ -1,3 +1,4 @@
+import 'package:dyno_sign/domain/utils/utils.dart';
 import 'package:dyno_sign/presentation/signing_process/bloc/signing_process_cubit.dart';
 import 'package:dyno_sign/presentation/widgets/widgets.dart';
 import 'package:flutter/material.dart';
@@ -8,9 +9,9 @@ import '../../infrastructure/navigation/app_routes/navigation.dart';
 import '../../infrastructure/navigation/app_routes/routes.dart';
 
 class DocumentSelectedView extends StatelessWidget {
-  final SigningProcessCubit cubit;
+  final SigningProcessCubit signingCubit;
 
-  const DocumentSelectedView({super.key, required this.cubit});
+  const DocumentSelectedView({super.key, required this.signingCubit});
 
   @override
   Widget build(BuildContext context) {
@@ -40,61 +41,77 @@ class DocumentSelectedView extends StatelessWidget {
                 fontWeight: FontWeight.w500,
               ),
               BlocBuilder<SigningProcessCubit, SigningProcessState>(
-                bloc: cubit,
+                bloc: signingCubit,
+                buildWhen: (_, current) => current is FileSelectedState,
                 builder: (context, state) {
-                  final files = state is FileSelectedState ? state.files : cubit.pickedFiles;
-                  return files.isNotEmpty
-                      ? ListView.builder(
-                          shrinkWrap: true,
-                          physics: const NeverScrollableScrollPhysics(),
-                          itemCount: files.length,
-                          itemBuilder: (context, index) {
-                            return Card(
-                              elevation: 5,
-                              margin: const EdgeInsets.symmetric(vertical: 8),
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(12),
-                              ),
-                              child: Row(
-                                children: [
-                                  Expanded(
-                                    child: ListTile(
-                                      leading: const CircleAvatar(
-                                        backgroundColor: Colors.redAccent,
-                                        child: Icon(Icons.picture_as_pdf, color: Colors.white),
-                                      ),
-                                      title: CustomText(
-                                        files[index].name,
-                                        fontSize: AppFontSize.titleXSmallFont,
-                                        fontWeight: FontWeight.w500,
-                                      ),
-                                      subtitle: CustomText(
-                                        files[index].date.toIso8601String(),
-                                        fontSize: AppFontSize.labelSmallFont,
-                                        color: Theme.of(context).colorScheme.outline,
+                  if (signingCubit.pickedFiles.isNotEmpty) {
+                    final files = signingCubit.pickedFiles;
+                    return files.isNotEmpty
+                        ? ListView.builder(
+                            shrinkWrap: true,
+                            physics: const NeverScrollableScrollPhysics(),
+                            itemCount: files.length,
+                            itemBuilder: (context, index) {
+                              return Card(
+                                elevation: 5,
+                                margin: const EdgeInsets.symmetric(vertical: 8),
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(12),
+                                ),
+                                child: Row(
+                                  children: [
+                                    Expanded(
+                                      child: ListTile(
+                                        leading: const CircleAvatar(
+                                          backgroundColor: Colors.redAccent,
+                                          child: Icon(Icons.picture_as_pdf, color: Colors.white),
+                                        ),
+                                        title: CustomText(
+                                          files[index].name,
+                                          fontSize: AppFontSize.titleXSmallFont,
+                                          fontWeight: FontWeight.w500,
+                                        ),
+                                        subtitle: CustomText(
+                                          files[index].date.toIso8601String(),
+                                          fontSize: AppFontSize.labelSmallFont,
+                                          color: Theme.of(context).colorScheme.outline,
+                                        ),
                                       ),
                                     ),
-                                  ),
-                                  PopupMenuButton<int>(
-                                    icon: const Icon(Icons.more_vert_rounded),
-                                    onSelected: (value) {
-                                      if (value == 0) {
-                                        cubit.removeFile(index);
-                                      }
-                                    },
-                                    itemBuilder: (BuildContext context) => const [
-                                      PopupMenuItem(
-                                        value: 0,
-                                        child: Text('Delete'),
-                                      ),
-                                    ],
-                                  ),
-                                ],
-                              ),
-                            );
-                          },
-                        )
-                      : const CustomText('No documents added yet.');
+                                    PopupMenuButton<int>(
+                                      icon: const Icon(Icons.more_vert_rounded),
+                                      onSelected: (value) async {
+                                        switch (value) {
+                                          case 0:
+                                            final pdf = await PdfToThumbnail.generate(
+                                                pdf: files[index].xFile);
+
+                                            break;
+                                          case 1:
+                                            signingCubit.removeFile(index);
+                                            break;
+                                        }
+                                      },
+                                      itemBuilder: (BuildContext context) => const [
+                                        PopupMenuItem(
+                                          value: 0,
+                                          child: Text('Preview'),
+                                        ),
+                                        PopupMenuItem(
+                                          value: 1,
+                                          child: Text('Delete'),
+                                        ),
+                                      ],
+                                    ),
+                                  ],
+                                ),
+                              );
+                            },
+                          )
+                        : const CustomText('No documents added yet.');
+                  } else {
+                    return const CustomText('No documents added yet.');
+                  }
                 },
               ),
               Padding(
@@ -103,7 +120,7 @@ class DocumentSelectedView extends StatelessWidget {
                   width: double.infinity,
                   text: "Add another document",
                   onPressed: () {
-                    cubit.pickFiles(allowMultiple: true);
+                    signingCubit.addNewFile();
                   },
                 ),
               ),

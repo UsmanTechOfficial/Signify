@@ -38,6 +38,7 @@ class CustomElevatedIconButton extends StatelessWidget {
       child: ElevatedButton(
         onPressed: onPressed,
         style: ElevatedButton.styleFrom(
+          padding: const EdgeInsets.symmetric(horizontal: double.minPositive),
           elevation: elevation,
           backgroundColor: fillColor ?? appColorScheme(context).primary,
           shape: RoundedRectangleBorder(
@@ -45,10 +46,13 @@ class CustomElevatedIconButton extends StatelessWidget {
             side: BorderSide(color: borderColor ?? Colors.transparent, width: borderWidth ?? 1.0),
           ),
         ),
-        child: Icon(
-          icon,
-          color: iconColor ?? Colors.white,
-          size: iconSize ?? 24.0,
+        child: Center(
+          // Added Center widget here
+          child: Icon(
+            icon,
+            color: iconColor ?? Colors.white,
+            size: iconSize ?? 24.0,
+          ),
         ),
       ),
     );

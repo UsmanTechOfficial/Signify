@@ -21,83 +21,117 @@ class TemplatesView extends StatelessWidget {
     final bloc = getIt<TemplatesBloc>();
 
     return NestedScrollView(
-        key: const PageStorageKey<String>("TemplateScrollPosition"),
-        physics: const AlwaysScrollableScrollPhysics(),
-        floatHeaderSlivers: true,
-        headerSliverBuilder: (context, _) {
-          return [
-            CustomAppbar(
-              title: "Templates",
-              action: CustomIconButton(
-                padding: 10,
-                icon: Icon(Icons.add, color: color.surface),
-                backgroundColor: color.primary,
-                onPressed: () {},
-              ),
-              bottom: PreferredSize(
-                preferredSize: const Size.fromHeight(kToolbarHeight),
-                child: Padding(
-                  padding: const EdgeInsets.all(10.0),
-                  child: Row(
-                    children: [
-                      Expanded(
-                        child: CustomTextFormField(
-                          height: 40,
-                          controller: searchController,
-                          hint: "Search here",
-                          borderColor: Colors.transparent,
-                          filled: true,
-                          readOnly: true,
-                          prefix: Icons.search_rounded,
-                          fillColor: color.outlineVariant.withOpacity(0.5),
-                          borderRadius: AppStyle.buttonBorderRadius,
-                          focusBorderColor: Colors.transparent,
-                          onTap: () {
-                            showSearch(
-                              context: context,
-                              delegate: TemplatesSearchDelegate(
-                                templatesBloc: BlocProvider.of<TemplatesBloc>(context),
-                              ),
-                            );
-                          },
-                        ),
-                      ),
-                      CustomIconButton(
-                        padding: 10,
-                        icon: const Icon(Icons.bar_chart),
-                        onPressed: () {
-                          showModalBottomSheet(
-                            showDragHandle: true,
-                            isScrollControlled: true,
+      key: const PageStorageKey<String>("TemplateScrollPosition"),
+      physics: const AlwaysScrollableScrollPhysics(),
+      floatHeaderSlivers: true,
+      headerSliverBuilder: (context, _) {
+        return [
+          CustomAppbar(
+            title: "Templates",
+            action: CustomIconButton(
+              padding: 10,
+              icon: Icon(Icons.add, color: color.surface),
+              backgroundColor: color.primary,
+              onPressed: () {},
+            ),
+            bottom: PreferredSize(
+              preferredSize: const Size.fromHeight(kToolbarHeight),
+              child: Padding(
+                padding: const EdgeInsets.all(10.0),
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: CustomTextFormField(
+                        height: 40,
+                        controller: searchController,
+                        hint: "Search here",
+                        borderColor: Colors.transparent,
+                        filled: true,
+                        readOnly: true,
+                        prefix: Icons.search_rounded,
+                        fillColor: color.outlineVariant.withOpacity(0.5),
+                        borderRadius: AppStyle.buttonBorderRadius,
+                        focusBorderColor: Colors.transparent,
+                        onTap: () {
+                          showSearch(
                             context: context,
-                            builder: (context) {
-                              return BlocProvider.value(
-                                value: bloc,
-                                child: FilterSheet(bloc: bloc),
-                              );
-                            },
+                            delegate: TemplatesSearchDelegate(
+                              templatesBloc: BlocProvider.of<TemplatesBloc>(context),
+                            ),
                           );
                         },
                       ),
-                    ],
-                  ),
+                    ),
+                    CustomIconButton(
+                      padding: 10,
+                      icon: const Icon(Icons.bar_chart),
+                      onPressed: () {
+                        showModalBottomSheet(
+                          showDragHandle: true,
+                          isScrollControlled: true,
+                          context: context,
+                          builder: (context) {
+                            return BlocProvider.value(
+                              value: bloc,
+                              child: FilterSheet(bloc: bloc),
+                            );
+                          },
+                        );
+                      },
+                    ),
+                  ],
                 ),
               ),
             ),
-          ];
-        },
-        body: Padding(
-          padding: EdgeInsets.symmetric(horizontal: appWidth(context) * 0.05),
-          child: const CustomScrollView(
-            slivers: [
-              SliverToBoxAdapter(
-                child: SizedBox(
-                  height: 2000,
-                ),
-              )
-            ],
           ),
-        ));
+        ];
+      },
+      body: Padding(
+        padding: EdgeInsets.symmetric(horizontal: appWidth(context) * 0.05),
+        child: CustomScrollView(
+          slivers: [
+            SliverList(
+                delegate: SliverChildBuilderDelegate(
+              childCount: 10,
+              (context, index) {
+                return SizedBox(
+                    height: 80,
+                    width: double.maxFinite,
+                    child: Card(
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(
+                            AppStyle.tileBorderRadius,
+                          ),
+                        ),
+                        child: ListTile(
+                          leading: Column(
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            children: [
+                              CustomText(
+                                "Template ${index + 1}",
+                                fontSize: AppFontSize.titleXSmallFont,
+                                fontWeight: FontWeight.w500,
+                              ),
+                              CustomText(
+                                "Amir",
+                                fontSize: AppFontSize.labelSmallFont,
+                                color: color.outline,
+                              ),
+                            ],
+                          ),
+                          subtitle: CustomText(
+                            "05/03/2024",
+                            color: color.outline,
+                            fontSize: AppFontSize.labelSmallFont,
+                            textAlign: TextAlign.center,
+                          ),
+                        )));
+              },
+            ))
+          ],
+        ),
+      ),
+    );
   }
 }
 

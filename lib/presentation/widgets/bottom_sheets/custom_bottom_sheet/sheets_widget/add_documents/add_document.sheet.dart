@@ -10,7 +10,7 @@ class AddDocumentSheet extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final colorScheme = Theme.of(context).colorScheme;
+    final color = Theme.of(context).colorScheme;
 
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16.0),
@@ -34,14 +34,17 @@ class AddDocumentSheet extends StatelessWidget {
                   onTap(docType);
                 },
                 borderRadius: BorderRadius.circular(30),
-                splashColor: colorScheme.primary.withOpacity(0.2),
+                splashColor: color.primary.withOpacity(0.2),
                 child: CircleAvatar(
                   radius: 20, // Smaller size for CircleAvatar
-                  backgroundColor: colorScheme.primary.withOpacity(0.1),
+                  backgroundColor: color.primary.withOpacity(0.1),
                   child: Padding(
                     padding: const EdgeInsets.all(6.0),
                     child: Assets.icons.docIcon.svg(
-                      color: colorScheme.primary,
+                      colorFilter: ColorFilter.mode(
+                        color.primary,
+                        BlendMode.srcIn,
+                      ),
                     ),
                   ),
                 ),
@@ -52,7 +55,7 @@ class AddDocumentSheet extends StatelessWidget {
                 style: TextStyle(
                   fontSize: 11,
                   fontWeight: FontWeight.w500,
-                  color: colorScheme.onSurface,
+                  color: color.onSurface,
                 ),
                 textAlign: TextAlign.center,
               ),

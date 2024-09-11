@@ -1,49 +1,108 @@
+import 'dart:io';
+import 'dart:typed_data';
+
 import 'package:dyno_sign/domain/consts/consts.dart';
 import 'package:dyno_sign/infrastructure/navigation/app_routes/navigation.dart';
-import 'package:dyno_sign/infrastructure/navigation/app_routes/routes.dart';
-import 'package:dyno_sign/presentation/signing_process/bloc/signing_process_cubit.dart';
-import 'package:dyno_sign/presentation/signing_process/selected_document_view.02.dart';
-import 'package:dyno_sign/presentation/widgets/buttons/custom_outlined_text_button.dart';
+import 'package:file_selector/file_selector.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:pdfx/pdfx.dart';
 
-class DocumentPreviewView extends StatelessWidget {
-  final SigningProcessCubit cubit;
+import '../widgets/widgets.dart';
 
-  const DocumentPreviewView({super.key, required this.cubit});
+class DocumentPreviewView extends StatefulWidget {
+  final XFile pdfFile;
+
+  final Function(PreviewCheck check) result;
+
+  const DocumentPreviewView({
+    super.key,
+    required this.pdfFile,
+    required this.result,
+  });
+
+  @override
+  State<DocumentPreviewView> createState() => _DocumentPreviewViewState();
+}
+
+class _DocumentPreviewViewState extends State<DocumentPreviewView> {
+  PdfPageImage? pdfPageImage;
+
+  @override
+  void initState() {
+    generatePdfThumbnail();
+    super.initState();
+  }
+
+  Future<void> generatePdfThumbnail() async {
+    try {
+      final Uint8List pdfBytes = await widget.pdfFile.readAsBytes();
+      final tempDir = await getTemporaryDirectory();
+      final tempPdfPath = '${tempDir.path}/temp_pdf.pdf';
+      final pdfFile = File(tempPdfPath);
+      await pdfFile.writeAsBytes(pdfBytes);
+
+      final pdfDocument = await PdfDocument.openFile(tempPdfPath);
+      final page = await pdfDocument.getPage(1);
+
+      pdfPageImage = await page.render(
+        width: page.width,
+        height: page.height,
+      );
+      setState(() {});
+    } catch (e) {}
+  }
 
   @override
   Widget build(BuildContext context) {
-    cubit.generatePdfThumbnail();
-
+    final color = appColorScheme(context);
+    final width = appWidth(context);
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Document Preview'),
-        actions: [
-          CustomOutlinedTextButton(
-            text: 'Next',
-            onPressed: () {
-              Go.toNamed(Routes.SELECTED_DOCUMENT, arguments: cubit);
-            },
+        automaticallyImplyLeading: false,
+        centerTitle: true,
+        leading: CustomIconButton(
+          clickEffect: false,
+          onPressed: () {
+            Go.back();
+            widget.result(PreviewCheck.discard);
+          },
+          icon: const Icon(
+            Icons.close,
+            size: 25,
           ),
+        ),
+        title: const CustomText(
+          'Sale Invoice',
+          fontSize: AppFontSize.titleMediumFont,
+        ),
+        actions: [
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: width * .05),
+            child: CustomElevatedIconButton(
+              width: 44,
+              height: 44,
+              elevation: 0,
+              icon: Icons.check,
+              iconColor: color.onSurface,
+              borderRadius: AppStyle.buttonBorderRadius,
+              iconSize: 20,
+              fillColor: color.outlineVariant.withOpacity(0.5),
+              onPressed: () {
+                Go.back();
+                widget.result(PreviewCheck.keep);
+              },
+            ),
+          )
         ],
       ),
       body: Center(
-        child: BlocBuilder<SigningProcessCubit, SigningProcessState>(
-          bloc: cubit,
-          builder: (context, state) {
-            if (state is PdfThumbnailLoadingState) {
-              return const CircularProgressIndicator();
-            } else if (state is PdfThumbnailLoadedState) {
-              return Image.memory(state.pdfThumbnail);
-            } else if (state is PdfThumbnailErrorState) {
-              return Center(child: Text(state.errorMessage));
-            } else {
-              return const Center(child: Text("No File Found"));
-            }
-          },
-        ),
+        child: pdfPageImage != null
+            ? Image.memory(pdfPageImage!.bytes)
+            : const CircularProgressIndicator(),
       ),
     );
   }
 }
+
+enum PreviewCheck { keep, discard }

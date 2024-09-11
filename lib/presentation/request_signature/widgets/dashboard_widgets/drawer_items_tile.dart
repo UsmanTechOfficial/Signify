@@ -26,7 +26,11 @@ class DrawerItemsTile extends StatelessWidget {
       selected: isSelected,
       dense: true,
       shape: const RoundedRectangleBorder(),
-      leading: SvgGenImage(icon).svg(color: isSelected ? color.surface : color.onSurface),
+      leading: SvgGenImage(icon).svg(
+          colorFilter: ColorFilter.mode(
+        isSelected ? color.surface : color.onSurface,
+        BlendMode.srcIn,
+      )),
       title: CustomText(
         title,
         color: isSelected ? color.surface : color.onSurface,

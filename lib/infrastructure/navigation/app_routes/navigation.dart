@@ -5,7 +5,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../domain/consts/consts.dart';
 import '../../../presentation/blocs.dart';
 import '../../../presentation/screens.dart';
-import '../../../presentation/signing_process/document_preview_view.01.dart';
 import '../../../presentation/signing_process/selected_document_view.02.dart';
 import 'routes.dart';
 
@@ -107,17 +106,17 @@ class AppPages {
       case Routes.SELECTED_DOCUMENT:
         return MaterialPageRoute(
           builder: (context) => DocumentSelectedView(
-            cubit: settings.arguments as SigningProcessCubit,
+            signingCubit: settings.arguments as SigningProcessCubit,
           ),
           settings: settings,
         );
-      case Routes.DOCUMENT_PREVIEW:
-        return MaterialPageRoute(
-          builder: (context) => DocumentPreviewView(
-            cubit: settings.arguments as SigningProcessCubit,
-          ),
-          settings: settings,
-        );
+      // case Routes.DOCUMENT_PREVIEW:
+      //   return MaterialPageRoute(
+      //     builder: (context) => DocumentPreviewView(
+      //       cubit: settings.arguments as SigningProcessCubit,
+      //     ),
+      //     settings: settings,
+      //   );
       case Routes.EMAIL_DETAIL_VIEW:
         return MaterialPageRoute(
             builder: (context) => BlocProvider(
