@@ -13,7 +13,9 @@ class AddTemplate extends StatelessWidget {
         headerSliverBuilder: (context, innerBoxIsScrolled) {
           return [
             CustomAppbar(
-              title: "Templates",
+              leading: CustomIconButton(
+                  onPressed: () => Navigator.pop(context), icon: Icon(Icons.adaptive.arrow_back)),
+              title: "Add Templates",
               action: CustomIconButton(
                 padding: 10,
                 icon: Icon(Icons.add, color: color.surface),

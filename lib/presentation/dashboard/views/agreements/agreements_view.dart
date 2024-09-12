@@ -72,7 +72,7 @@ class AgreementsView extends StatelessWidget {
                             builder: (context) {
                               return BlocProvider.value(
                                 value: bloc,
-                                child: FilterSheet(bloc: bloc),
+                                child: AgreementsFilterSheet(bloc: bloc),
                               );
                             },
                           );
@@ -137,10 +137,10 @@ class AgreementsView extends StatelessWidget {
   }
 }
 
-class FilterSheet extends StatelessWidget {
+class AgreementsFilterSheet extends StatelessWidget {
   final AgreementsBloc bloc;
 
-  const FilterSheet({super.key, required this.bloc});
+  const AgreementsFilterSheet({super.key, required this.bloc});
 
   @override
   Widget build(BuildContext context) {

@@ -55,7 +55,7 @@ class TemplatesView extends StatelessWidget {
                         onTap: () {
                           showSearch(
                             context: context,
-                            delegate: TemplatesSearchDelegate(
+                            delegate: _TemplatesSearchDelegate(
                               templatesBloc: BlocProvider.of<TemplatesBloc>(context),
                             ),
                           );
@@ -73,7 +73,7 @@ class TemplatesView extends StatelessWidget {
                           builder: (context) {
                             return BlocProvider.value(
                               value: bloc,
-                              child: FilterSheet(bloc: bloc),
+                              child: TemplatesFilterSheet(bloc: bloc),
                             );
                           },
                         );
@@ -135,10 +135,10 @@ class TemplatesView extends StatelessWidget {
   }
 }
 
-class FilterSheet extends StatelessWidget {
+class TemplatesFilterSheet extends StatelessWidget {
   final TemplatesBloc bloc;
 
-  const FilterSheet({super.key, required this.bloc});
+  const TemplatesFilterSheet({super.key, required this.bloc});
 
   @override
   Widget build(BuildContext context) {
@@ -271,10 +271,10 @@ class FilterSheet extends StatelessWidget {
   }
 }
 
-class TemplatesSearchDelegate extends SearchDelegate<String> {
+class _TemplatesSearchDelegate extends SearchDelegate<String> {
   final TemplatesBloc templatesBloc;
 
-  TemplatesSearchDelegate({required this.templatesBloc});
+  _TemplatesSearchDelegate({required this.templatesBloc});
 
   @override
   List<Widget> buildActions(BuildContext context) {

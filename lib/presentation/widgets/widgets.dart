@@ -11,3 +11,4 @@ export 'buttons/custom_outlined_text_button.dart';
 export 'buttons/custom_rouded_button.dart';
 export 'form_field/custom_formfield.dart';
 export 'text/custom_text.dart';
+export 'bottom_nav_bar/bottom_nav_bar.dart';

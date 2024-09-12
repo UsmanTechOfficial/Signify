@@ -7,10 +7,10 @@ sealed class DashboardEvent extends Equatable {
   List<Object> get props => [];
 }
 
-class DashboardPageChangedEvent extends DashboardEvent {
+class PageChangEvent extends DashboardEvent {
   final int index;
 
-  const DashboardPageChangedEvent(this.index);
+  const PageChangEvent(this.index);
 
   @override
   List<Object> get props => [index];
