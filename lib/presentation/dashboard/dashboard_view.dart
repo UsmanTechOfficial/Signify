@@ -1,6 +1,5 @@
 import 'package:dyno_sign/domain/consts/global_var.dart';
 import 'package:dyno_sign/domain/consts/styles.dart';
-import 'package:dyno_sign/domain/utils/utils.dart';
 import 'package:dyno_sign/infrastructure/navigation/app_routes/navigation.dart';
 import 'package:dyno_sign/infrastructure/navigation/app_routes/routes.dart';
 import 'package:dyno_sign/presentation/dashboard/views/agreements/agreements_view.dart';
@@ -16,14 +15,15 @@ import 'package:dyno_sign/presentation/signing_process/document_preview_view.01.
 import 'package:dyno_sign/presentation/widgets/bottom_sheets/bottom_sheets.dart';
 import 'package:dyno_sign/presentation/widgets/bottom_sheets/custom_bottom_sheet/sheets_widget/add_documents/add_document.sheet.dart';
 import 'package:dyno_sign/presentation/widgets/bottom_sheets/custom_bottom_sheet/sheets_widget/sign_selection/sign_selection.sheet.dart';
-import 'package:dyno_sign/presentation/widgets/dialogs/pdf_preview.dialog.dart';
 import 'package:file_selector/file_selector.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../assets_gen/assets.gen.dart';
+import '../../domain/utils/utils.dart';
 import '../request_signature/widgets/dashboard_widgets/custom_nav_bar_item.dart';
 import '../request_signature/widgets/dashboard_widgets/drawer_items_tile.dart';
+import '../widgets/dialogs/pdf_preview.dialog.dart';
 import 'bloc/dashboard_bloc.dart';
 
 class DashboardView extends StatelessWidget {
@@ -31,6 +31,7 @@ class DashboardView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final bloc = context.read<DashboardBloc>();
     final color = appColorScheme(context);
     final width = appWidth(context);
 
@@ -43,13 +44,13 @@ class DashboardView extends StatelessWidget {
       ],
       child: BlocBuilder<DashboardBloc, DashboardState>(
         buildWhen: (previous, current) => previous != current,
-        builder: (_, state) {
+        builder: (context, state) {
           int currentPage = _getCurrentPage(state);
 
           return Scaffold(
             resizeToAvoidBottomInset: false,
             key: scaffoldKey,
-            drawer: _buildDrawer(width, color, getIt<DashboardBloc>()),
+            drawer: _buildDrawer(width, color, bloc),
 
             /// [Body]
             body: IndexedStack(
@@ -73,7 +74,7 @@ class DashboardView extends StatelessWidget {
             ),
 
             /// [BottomNavigationBar]
-            bottomNavigationBar: _buildBottomNavigationBar(getIt<DashboardBloc>(), currentPage),
+            bottomNavigationBar: _buildBottomNavigationBar(bloc, currentPage),
           );
         },
       ),
@@ -115,13 +116,7 @@ class DashboardView extends StatelessWidget {
                   onPressed: () {
                     scaffoldKey.currentState?.closeDrawer();
                   },
-                  // ignore
-                  icon: Assets.icons.moreIcon.svg(
-                    colorFilter: ColorFilter.mode(
-                      color.primary,
-                      BlendMode.srcIn,
-                    ),
-                  ),
+                  icon: Assets.icons.moreIcon.svg(color: color.primary),
                 ),
               ],
             ),
@@ -230,117 +225,111 @@ class DashboardView extends StatelessWidget {
   }
 
   void _navigateToNewPage(int index) {
-    switch (index) {
-      case 4:
-        Go.toNamed(Routes.FOLDERS);
-      case 5:
-        Go.toNamed(Routes.SETTINGS);
-        break;
-      default:
-    }
+    if (index == 4) Go.toNamed(Routes.FOLDERS);
+    if (index == 5) Go.toNamed(Routes.SETTINGS);
   }
-}
 
-/// show first Bottom Sheet on [FloatingActionButton] click
-void _bottomSheet(BuildContext context) {
-  CustomModelSheet.showBottomSheet(
-    context: context,
-    title: "Add",
-    content: Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        CustomBottomSheetTile(
-          isSelected: false,
-          title: "Request Signature",
-          subtitle: 'Request anyone to add signatures in your document',
-          onTap: () {
-            Go.back();
-            _showAddDocumentSheet(context);
-          },
-        ),
-        CustomBottomSheetTile(
-          isSelected: false,
-          title: "Sign Documents",
-          subtitle: 'Documents that you want to sign for yourself or sent by others',
-          onTap: () {
-            Go.back();
-            _showSignSelectionSheet(context);
-          },
-        ),
-        CustomBottomSheetTile(
-          isSelected: false,
-          title: "Add Templates",
-          subtitle: 'Make templates and use them again and again.',
-          onTap: () {
-            Go.toNamed(Routes.AGREEMENT_DETAIL_ADDED);
-          },
-        ),
-      ],
-    ),
-  );
-}
+  /// show first Bottom Sheet on [FloatingActionButton] click
+  void _bottomSheet(BuildContext context) {
+    CustomModelSheet.showBottomSheet(
+      context: context,
+      title: "Add",
+      content: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          CustomBottomSheetTile(
+            isSelected: false,
+            title: "Request Signature",
+            subtitle: 'Request anyone to add signatures in your document',
+            onTap: () {
+              Go.back();
+              _showAddDocumentSheet(context);
+            },
+          ),
+          CustomBottomSheetTile(
+            isSelected: false,
+            title: "Sign Documents",
+            subtitle: 'Documents that you want to sign for yourself or sent by others',
+            onTap: () {
+              Go.back();
+              _showSignSelectionSheet(context);
+            },
+          ),
+          CustomBottomSheetTile(
+            isSelected: false,
+            title: "Add Templates",
+            subtitle: 'Make templates and use them again and again.',
+            onTap: () {
+              Go.toNamed(Routes.AGREEMENT_DETAIL_ADDED);
+            },
+          ),
+        ],
+      ),
+    );
+  }
 
-///  Method to show the Document Source [Selection] Sheet
-void _showAddDocumentSheet(BuildContext context) {
-  final signingCubit = getIt<SigningProcessCubit>();
-  CustomModelSheet.showBottomSheet(
-    context: context,
-    title: "Add a Document",
-    content: AddDocumentSheet(
-      onTap: (source) async {
-        Go.back();
+  ///  Method to show the Document Source [Selection] Sheet
+  void _showAddDocumentSheet(BuildContext context) {
+    final signingCubit = getIt<SigningProcessCubit>();
+    CustomModelSheet.showBottomSheet(
+      context: context,
+      title: "Add a Document",
+      content: AddDocumentSheet(
+        onTap: (source) async {
+          Go.back();
 
-        switch (source) {
-          case DocumentSource.files:
-            FilePicker.pick().then(
-              (file) async {
-                final pdf = await PdfToThumbnail.generate(pdf: file.first);
+          switch (source) {
+            case DocumentSource.files:
+              FilePicker.pick().then(
+                (file) async {
+                  _preview(signingCubit, file: file.first);
+                },
+              );
 
-                _preview(signingCubit, file: pdf);
-              },
-            );
+              break;
+            case DocumentSource.camera:
+              break;
+            default:
+              break;
+          }
+        },
+      ),
+    );
+  }
 
-            break;
-          case DocumentSource.camera:
-            break;
-          default:
-            break;
+  /// Method to show the SignSheet for [me] or from [other]
+  void _showSignSelectionSheet(BuildContext context) {
+    CustomModelSheet.showBottomSheet(
+      context: context,
+      title: "Sign",
+      content: SignSelectedSheet(
+        onForMe: () {
+          // close previous sheet
+          Go.back();
+          _showAddDocumentSheet(context);
+        },
+        onByOthers: () {
+          // close previous sheet
+          Go.back();
+          // Handle "Sign by Others" action
+        },
+      ),
+    );
+  }
+
+  /// [Preview] and check the for [keep] for [discard]
+
+  void _preview(SigningProcessCubit signingCubit, {required XFile file}) {
+    PdfPreviewDialog.show(
+      file,
+      check: (result) async {
+        if (result == PreviewCheck.keep) {
+          final model = await FileToModel.convert(file);
+          signingCubit.pickedFiles.add(model);
+
+          Go.toNamed(Routes.SELECTED_DOCUMENT, arguments: signingCubit);
         }
       },
-    ),
-  );
-}
-
-/// Method to show the SignSheet for [me] or from [other]
-void _showSignSelectionSheet(BuildContext context) {
-  CustomModelSheet.showBottomSheet(
-    context: context,
-    title: "Sign",
-    content: SignSelectedSheet(
-      onForMe: () {
-        // close previous sheet
-        Go.back();
-        _showAddDocumentSheet(context);
-      },
-      onByOthers: () {
-        // close previous sheet
-        Go.back();
-        // Handle "Sign by Others" action
-      },
-    ),
-  );
-}
-
-/// [Preview] and check the for [keep] for [discard]
-void _preview(SigningProcessCubit signingCubit, {required XFile file}) {
-  PdfPreviewDialog.show(
-    file,
-    check: (PreviewCheck result) async {
-      if (result == PreviewCheck.keep) {
-        final model = await FileToModel.convert();
-        signingCubit.pickedFiles.add(model);
-        Go.toNamed(Routes.SELECTED_DOCUMENT, arguments: signingCubit);
-      }
-    },
-  );
+    );
+  }
 }

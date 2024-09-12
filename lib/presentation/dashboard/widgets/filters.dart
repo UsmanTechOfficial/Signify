@@ -1,5 +1,5 @@
 enum StatusFilters {
-  all('All Agreements'),
+  all('All '),
   onlyForMe('Only for me'),
   sendOther('Send by others'),
   waitingOther('Waiting for others'),
@@ -15,7 +15,7 @@ enum StatusFilters {
 }
 
 enum DateFilters {
-  all('All Agreements'),
+  all('All '),
   last12Mon('Last 12 Months'),
   last6Mon('Last 06 Months'),
   last30Day('Last 30 Days'),

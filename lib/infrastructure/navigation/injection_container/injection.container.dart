@@ -2,6 +2,7 @@ import 'package:dyno_sign/infrastructure/navigation/injection_container/dashboar
 import 'package:dyno_sign/infrastructure/navigation/injection_container/signing_process_cubit.container.dart';
 
 import 'agreements_bloc.container.dart';
+import 'folder_bloc.container.dart';
 import 'home_bloc.container.dart';
 import 'profile_bloc.container.dart';
 import 'template_bloc.container.dart';
@@ -19,5 +20,7 @@ class InjectionContainer {
     ProfileBlocContainer.inject();
 
     SigningProcessCubitContainer.inject();
+
+    FoldersBlocContainer.inject();
   }
 }

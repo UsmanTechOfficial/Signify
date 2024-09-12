@@ -1,5 +1,6 @@
 import 'package:dyno_sign/domain/utils/utils.dart';
 import 'package:dyno_sign/presentation/signing_process/bloc/signing_process_cubit.dart';
+import 'package:dyno_sign/presentation/widgets/dialogs/pdf_preview.dialog.dart';
 import 'package:dyno_sign/presentation/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -80,11 +81,14 @@ class DocumentSelectedView extends StatelessWidget {
                                     ),
                                     PopupMenuButton<int>(
                                       icon: const Icon(Icons.more_vert_rounded),
-                                      onSelected: (value) async {
+                                      onSelected: (value) {
                                         switch (value) {
                                           case 0:
-                                            final pdf = await PdfToThumbnail.generate(
-                                                pdf: files[index].xFile);
+                                            PdfPreviewDialog.show(
+                                                context: context,
+                                                previewOnly: true,
+                                                files[index].xFile,
+                                                check: (result) {});
 
                                             break;
                                           case 1:

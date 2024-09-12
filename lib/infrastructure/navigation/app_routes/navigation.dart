@@ -169,7 +169,7 @@ class AppPages {
       case Routes.FOLDERS:
         return MaterialPageRoute(
             builder: (context) => BlocProvider(
-                  create: (context) => FoldersBloc(),
+                  create: (context) => getIt<FoldersBloc>(),
                   child: const FoldersView(),
                 ),
             settings: settings);

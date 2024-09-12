@@ -1,22 +1,17 @@
 import 'package:equatable/equatable.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 part 'dashboard_event.dart';
 part 'dashboard_state.dart';
 
 class DashboardBloc extends Bloc<DashboardEvent, DashboardState> {
+  PageController pageController = PageController();
+
   DashboardBloc() : super(const DashboardInitialState()) {
     on<DashboardPageChangedEvent>((event, emit) {
-      // Only emit state if the new page index is different from the current one
-      if (state is DashboardPageChangeState) {
-        if ((state as DashboardPageChangeState).newIndex != event.index) {
-          emit(DashboardPageChangeState(newIndex: event.index));
-        }
-      } else if (state is DashboardInitialState) {
-        if ((state as DashboardInitialState).currentIndex != event.index) {
-          emit(DashboardPageChangeState(newIndex: event.index));
-        }
-      }
+      emit(DashboardPageChangeState(newIndex: event.index));
+      pageController.jumpToPage(event.index);
     });
   }
 }

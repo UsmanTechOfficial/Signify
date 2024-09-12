@@ -5,13 +5,14 @@ import '../../../domain/consts/global_var.dart';
 import '../../signing_process/document_preview_view.01.dart';
 
 class PdfPreviewDialog {
-  static show(XFile pdfFile, {required Function(PreviewCheck) check, BuildContext? context}) {
+  static show(XFile file,
+      {required Function(PreviewCheck) check, BuildContext? context, bool previewOnly = false}) {
     showGeneralDialog(
       context: context ?? navigatorKey.currentContext!,
       barrierDismissible: false,
       pageBuilder: (BuildContext context, Animation<double> animation,
           Animation<double> secondaryAnimation) {
-        return DocumentPreviewView(pdfFile: pdfFile, result: check);
+        return DocumentPreviewWidget(pdfFile: file, result: check, previewOnly: previewOnly);
       },
       transitionDuration: const Duration(milliseconds: 300),
       transitionBuilder: (BuildContext context, Animation<double> animation,

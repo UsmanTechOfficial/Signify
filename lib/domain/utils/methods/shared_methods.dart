@@ -15,15 +15,15 @@ class FilePicker {
   }
 }
 
-class PdfToThumbnail {
-  static Future<Uint8List?> generate({required XFile pdf}) async {
+class PdfSinglePage {
+  static Future<PdfPageImage?> get(XFile pdf, {int pageNumber = 1}) async {
     try {
       final Uint8List pdfBytes = await pdf.readAsBytes();
 
       final pdfDocument = await PdfDocument.openData(pdfBytes);
 
       if (pdfDocument.pagesCount > 0) {
-        final page = await pdfDocument.getPage(1);
+        final page = await pdfDocument.getPage(pageNumber);
 
         final pdfPageImage = await page.render(
           width: page.width,
@@ -33,7 +33,7 @@ class PdfToThumbnail {
         await page.close();
         await pdfDocument.close();
 
-        return pdfPageImage?.bytes;
+        return pdfPageImage;
       } else {
         throw Exception("PDF has no pages.");
       }

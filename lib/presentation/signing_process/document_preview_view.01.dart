@@ -1,32 +1,31 @@
-import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:dyno_sign/domain/consts/consts.dart';
+import 'package:dyno_sign/domain/utils/utils.dart';
 import 'package:dyno_sign/infrastructure/navigation/app_routes/navigation.dart';
 import 'package:file_selector/file_selector.dart';
 import 'package:flutter/material.dart';
-import 'package:path_provider/path_provider.dart';
-import 'package:pdfx/pdfx.dart';
 
 import '../widgets/widgets.dart';
 
-class DocumentPreviewView extends StatefulWidget {
+class DocumentPreviewWidget extends StatefulWidget {
+  final bool previewOnly;
   final XFile pdfFile;
-
   final Function(PreviewCheck check) result;
 
-  const DocumentPreviewView({
+  const DocumentPreviewWidget({
     super.key,
     required this.pdfFile,
     required this.result,
+    required this.previewOnly,
   });
 
   @override
-  State<DocumentPreviewView> createState() => _DocumentPreviewViewState();
+  State<DocumentPreviewWidget> createState() => _DocumentPreviewWidgetState();
 }
 
-class _DocumentPreviewViewState extends State<DocumentPreviewView> {
-  PdfPageImage? pdfPageImage;
+class _DocumentPreviewWidgetState extends State<DocumentPreviewWidget> {
+  Uint8List? pdfPageImage;
 
   @override
   void initState() {
@@ -36,21 +35,15 @@ class _DocumentPreviewViewState extends State<DocumentPreviewView> {
 
   Future<void> generatePdfThumbnail() async {
     try {
-      final Uint8List pdfBytes = await widget.pdfFile.readAsBytes();
-      final tempDir = await getTemporaryDirectory();
-      final tempPdfPath = '${tempDir.path}/temp_pdf.pdf';
-      final pdfFile = File(tempPdfPath);
-      await pdfFile.writeAsBytes(pdfBytes);
-
-      final pdfDocument = await PdfDocument.openFile(tempPdfPath);
-      final page = await pdfDocument.getPage(1);
-
-      pdfPageImage = await page.render(
-        width: page.width,
-        height: page.height,
-      );
-      setState(() {});
-    } catch (e) {}
+      final firstPage = await PdfSinglePage.get(widget.pdfFile);
+      if (firstPage != null) {
+        setState(() {
+          pdfPageImage = firstPage.bytes;
+        });
+      }
+    } catch (e) {
+      ///
+    }
   }
 
   @override
@@ -77,8 +70,9 @@ class _DocumentPreviewViewState extends State<DocumentPreviewView> {
           fontSize: AppFontSize.titleMediumFont,
         ),
         actions: [
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: width * .05),
+          !widget.previewOnly
+              ? Padding(
+                  padding: EdgeInsets.symmetric(horizontal: width * .05),
             child: CustomElevatedIconButton(
               width: 44,
               height: 44,
@@ -93,13 +87,13 @@ class _DocumentPreviewViewState extends State<DocumentPreviewView> {
                 widget.result(PreviewCheck.keep);
               },
             ),
-          )
+                )
+              : const SizedBox.shrink()
         ],
       ),
       body: Center(
-        child: pdfPageImage != null
-            ? Image.memory(pdfPageImage!.bytes)
-            : const CircularProgressIndicator(),
+        child:
+            pdfPageImage != null ? Image.memory(pdfPageImage!) : const CircularProgressIndicator(),
       ),
     );
   }
