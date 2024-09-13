@@ -11,12 +11,18 @@ class CustomAppbar extends StatelessWidget {
     required this.title,
     this.action,
     this.bottom,
+    this.pinned = false,
+    this.floating = true,
+    this.snap = true,
   });
 
   final Widget? leading;
   final String title;
   final Widget? action;
   final PreferredSize? bottom;
+  final bool pinned;
+  final bool floating;
+  final bool snap;
 
   @override
   Widget build(BuildContext context) {
@@ -26,9 +32,9 @@ class CustomAppbar extends StatelessWidget {
             onTap: () => scaffoldKey.currentState?.openDrawer(),
             child: const Icon(Icons.menu_outlined),
           ),
-      pinned: false,
-      floating: true,
-      snap: true,
+      pinned: pinned,
+      floating: floating,
+      snap: snap,
       expandedHeight: 60.0,
       centerTitle: true,
       title: CustomText(

@@ -5,6 +5,6 @@ class AppStyle {
   static const double outlinedBtnRadius = 8;
   static const double roundedBorder = 100;
   static const double sheetRadius = 35;
-  static const double tileBorderRadius = 15.0;
+  static const double tileBorderRadius = 16.0;
   static const Color transparent = Colors.transparent;
 }

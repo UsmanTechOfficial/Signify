@@ -5,29 +5,25 @@ import '../theme.dart';
 CheckboxThemeData get checkboxTheme => CheckboxThemeData(
       fillColor: WidgetStateProperty.resolveWith<Color>((Set<WidgetState> states) {
         if (states.contains(WidgetState.selected)) {
-          return colorSchemeLight.primary; // Use the primary color when the checkbox is selected
+          return colorSchemeLight.primary;
         }
-        return colorSchemeLight.onSurface.withOpacity(
-            0.6); // Use the onSurface color with opacity when the checkbox is not selected
+        return colorSchemeLight.outlineVariant.withOpacity(0.5);
       }),
-      checkColor: WidgetStateProperty.all<Color>(
-          colorSchemeLight.onPrimary), // Use the onPrimary color for the check icon
-      overlayColor: WidgetStateProperty.all<Color>(
-          colorSchemeLight.secondaryContainer), // Use the secondaryContainer color for the overlay
-// You can add other properties as needed
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
+      side: BorderSide(width: 1, color: colorSchemeLight.outline),
+      checkColor: WidgetStateProperty.all<Color>(colorSchemeLight.onPrimary),
+      overlayColor: WidgetStateProperty.all<Color>(colorSchemeLight.secondaryContainer),
     );
 
 CheckboxThemeData get darkCheckboxTheme => CheckboxThemeData(
       fillColor: WidgetStateProperty.resolveWith<Color>((Set<WidgetState> states) {
         if (states.contains(WidgetState.selected)) {
-          return colorSchemeLight.primary; // Use the primary color when the checkbox is selected
+          return colorSchemeDark.primary;
         }
-        return colorSchemeLight.onSurface.withOpacity(
-            0.6); // Use the onSurface color with opacity when the checkbox is not selected
+        return colorSchemeDark.outlineVariant.withOpacity(0.5);
       }),
-      checkColor: WidgetStateProperty.all<Color>(
-          colorSchemeLight.onPrimary), // Use the onPrimary color for the check icon
-      overlayColor: WidgetStateProperty.all<Color>(
-          colorSchemeLight.secondaryContainer), // Use the secondaryContainer color for the overlay
-// You can add other properties as needed
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
+      side: BorderSide(width: 1, color: colorSchemeDark.outline),
+      checkColor: WidgetStateProperty.all<Color>(colorSchemeDark.onPrimary),
+      overlayColor: WidgetStateProperty.all<Color>(colorSchemeDark.secondaryContainer),
     );

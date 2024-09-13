@@ -16,7 +16,6 @@ class CustomBottomNavBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print("$currentPage");
     return BottomAppBar(
       shape: const CircularNotchedRectangle(),
       notchMargin: 10,

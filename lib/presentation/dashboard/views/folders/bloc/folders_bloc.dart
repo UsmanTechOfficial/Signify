@@ -10,11 +10,20 @@ part 'folders_event.dart';
 
 part 'folders_state.dart';
 
+Set<int> selectedTemplates = <int>{};
+
 class FoldersBloc extends Bloc<FoldersEvent, FoldersState> {
   StatusFilters selectedStatusFilter = StatusFilters.all;
   DateFilters selectedDateFilters = DateFilters.all;
 
-  final List<NewFolderModel> foldersList = [];
+  final List<FolderModel> foldersList = [];
+  final List<TemplatesModel> templateList = [];
+
+  final List<TemplatesModel> allTemplates = List.generate(
+    10,
+    (index) =>
+        TemplatesModel(name: 'My Template ${index + 1}', desc: DateTime.now().toUtc().toString()),
+  );
 
   FoldersBloc() : super(const FoldersInitialState()) {
     /// [SearchFoldersEvent]
@@ -60,11 +69,9 @@ class FoldersBloc extends Bloc<FoldersEvent, FoldersState> {
     final template = List<TemplatesModel>.generate(
       2,
       (index) {
-        return TemplatesModel(name: 'Invoice Temp $index', description: 'none');
+        return TemplatesModel(name: 'Invoice Temp $index', desc: 'none');
       },
     );
-    final folder = NewFolderModel(name: event.folderName.name, slug: 'Amir', templates: template);
 
-    emit(CreateFolderState(folder));
   }
 }

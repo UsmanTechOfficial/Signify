@@ -27,7 +27,7 @@ class Main extends StatelessWidget {
       title: 'DynoSign',
       theme: AppTheme.instance.light,
       darkTheme: AppTheme.instance.dark,
-      themeMode: ThemeMode.system,
+      themeMode: ThemeMode.light,
       onGenerateRoute: AppPages.onGenerateRoute,
       scaffoldMessengerKey: scaffoldMessengerKey,
       initialRoute: Routes.DASHBOARD,

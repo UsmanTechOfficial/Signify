@@ -35,7 +35,7 @@ final class DateFilterSelectionEvent extends FoldersEvent {
 }
 
 final class OnNewFolderEvent extends FoldersEvent {
-  final NewFolderModel folderName;
+  final FolderModel folderName;
 
   const OnNewFolderEvent(this.folderName);
 

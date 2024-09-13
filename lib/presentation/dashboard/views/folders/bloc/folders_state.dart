@@ -58,7 +58,7 @@ final class DateFilterSelectionState extends FoldersState {
 }
 
 final class CreateFolderState extends FoldersState {
-  final NewFolderModel folder;
+  final FolderModel folder;
 
   const CreateFolderState(this.folder);
 

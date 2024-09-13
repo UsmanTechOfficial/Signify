@@ -12,6 +12,7 @@ class AppFontSize {
   static const titleLargeFont = 24.0;
   static const titleMediumFont = 20.0;
   static const titleSmallFont = 18.0;
+  static const titleMSmallFont = 16.0;
   static const titleXSmallFont = 14.0;
 
   static const bodyXLargeFont = 18.0;

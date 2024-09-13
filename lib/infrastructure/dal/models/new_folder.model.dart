@@ -1,14 +1,47 @@
-class NewFolderModel {
-  final String name;
-  final String slug;
-  final List<TemplatesModel> templates;
+import 'package:equatable/equatable.dart';
 
-  NewFolderModel({required this.name, required this.slug, required this.templates});
+class FolderModel extends Equatable {
+  final String name;
+  final String desc;
+
+  const FolderModel({
+    required this.name,
+    required this.desc,
+  });
+
+  FolderModel copyWith({
+    String? name,
+    String? desc,
+  }) {
+    return FolderModel(
+      name: name ?? this.name,
+      desc: desc ?? this.desc,
+    );
+  }
+
+  @override
+  List<Object?> get props => [name, desc];
 }
 
-class TemplatesModel {
+class TemplatesModel extends Equatable {
   final String name;
-  final String description;
+  final String desc;
 
-  TemplatesModel({required this.name, required this.description});
+  const TemplatesModel({
+    required this.name,
+    required this.desc,
+  });
+
+  TemplatesModel copyWith({
+    String? name,
+    String? desc,
+  }) {
+    return TemplatesModel(
+      name: name ?? this.name,
+      desc: desc ?? this.desc,
+    );
+  }
+
+  @override
+  List<Object?> get props => [name, desc];
 }

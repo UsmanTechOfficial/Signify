@@ -22,16 +22,15 @@ import '../request_signature/widgets/dashboard_widgets/drawer_items_tile.dart';
 import '../widgets/dialogs/pdf_preview.dialog.dart';
 import 'bloc/dashboard_bloc.dart';
 
+final PageController pageController = PageController();
+
 class DashboardView extends StatelessWidget {
   const DashboardView({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final PageController pageController = PageController();
-    final bloc = context.read<DashboardBloc>();
     final color = appColorScheme(context);
     final width = appWidth(context);
-
     return MultiBlocProvider(
         providers: [
           BlocProvider(create: (context) => getIt<HomeBloc>()),
@@ -42,16 +41,13 @@ class DashboardView extends StatelessWidget {
         child: Scaffold(
           resizeToAvoidBottomInset: false,
           key: scaffoldKey,
-          drawer: _buildDrawer(width, color, bloc),
+          drawer: _buildDrawer(width, color, context),
 
           /// [Body]
           body: PageView(
             controller: pageController,
             physics: const NeverScrollableScrollPhysics(),
             children: pages,
-            // onPageChanged: (index) {
-            //   context.read<DashboardBloc>().add(PageChangEvent(index));
-            // },
           ),
 
           /// [BottomNavigationBar]
@@ -82,7 +78,7 @@ class DashboardView extends StatelessWidget {
         ));
   }
 
-  Widget _buildDrawer(double width, ColorScheme color, DashboardBloc bloc) {
+  Widget _buildDrawer(double width, ColorScheme color, BuildContext context) {
     return Drawer(
       width: width * 0.75,
       child: Column(
@@ -123,8 +119,6 @@ class DashboardView extends StatelessWidget {
 
                   if (state is PageChangedState) {
                     selectedTab = state.currentIndex;
-                  } else if (state is DashboardInitialState) {
-                    // selectedTab = state.currentIndex;
                   }
 
                   return DrawerItemsTile(
@@ -135,7 +129,8 @@ class DashboardView extends StatelessWidget {
                       scaffoldKey.currentState?.closeDrawer();
                       selectedTab = tab.index;
                       if (tab.index < 4) {
-                        bloc.add(PageChangEvent(selectedTab));
+                        pageController.jumpToPage(selectedTab);
+                        context.read<DashboardBloc>().add(PageChangEvent(selectedTab));
                       } else {
                         _navigateToNewPage(tab.index);
                       }

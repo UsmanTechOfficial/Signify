@@ -7,6 +7,8 @@ class CreateFolderView extends StatelessWidget {
   Widget build(BuildContext context) {
     final color = appColorScheme(context);
     final width = appWidth(context);
+    TextEditingController controller = TextEditingController();
+    final GlobalKey<FormState> formKey = GlobalKey<FormState>();
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
@@ -19,41 +21,50 @@ class CreateFolderView extends StatelessWidget {
           ),
         ],
       ),
-      body: Padding(
-        padding: EdgeInsets.symmetric(horizontal: width * 0.05, vertical: width * 0.05),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                CustomOutlinedTextButton(
-                  text: 'Next',
-                  onPressed: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const AddTemplate(),
-                        ));
-                  },
-                )
-              ],
-            ),
-            const CustomText(
-              "Enter Folder Name",
-              fontSize: AppFontSize.titleXSmallFont,
-              fontWeight: FontWeight.w500,
-            ),
-            CustomTextFormField(
-                hint: "eg: folder",
-                keyboardType: TextInputType.emailAddress,
-                borderColor: color.outlineVariant,
-                borderRadius: AppStyle.tileBorderRadius,
-                onFieldSubmitted: (value) {},
-                validator: (p0) {
-                  return null;
-                }),
-          ],
+      body: Form(
+        key: formKey,
+        child: Padding(
+          padding: EdgeInsets.symmetric(horizontal: width * 0.05, vertical: width * 0.05),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  CustomOutlinedTextButton(
+                    text: 'Next',
+                    onPressed: () {
+                      if (formKey.currentState!.validate()) {
+                        var folder = FolderModel(name: controller.text, desc: 'amir');
+                        getIt<FoldersBloc>().foldersList.add(folder);
+                      }
+
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const FolderTemplatesList(),
+                          ));
+                    },
+                  )
+                ],
+              ),
+              const CustomText(
+                "Enter Folder Name",
+                fontSize: AppFontSize.titleXSmallFont,
+                fontWeight: FontWeight.w500,
+              ),
+              CustomTextFormField(
+                  controller: controller,
+                  hint: "eg: folder",
+                  keyboardType: TextInputType.text,
+                  borderColor: color.outlineVariant,
+                  borderRadius: AppStyle.tileBorderRadius,
+                  onFieldSubmitted: (value) {},
+                  validator: (p0) {
+                    return Validation.validate(controller, 'Folder Name');
+                  }),
+            ],
+          ),
         ),
       ),
     );
