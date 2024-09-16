@@ -93,6 +93,7 @@ class FoldersView extends StatelessWidget {
                 return CustomFolderTile(
                   index: index,
                   title: 'Folder',
+                  onTap: () {},
                   subTitle: 'Amir',
                 );
               },

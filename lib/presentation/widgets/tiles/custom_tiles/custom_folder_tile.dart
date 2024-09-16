@@ -6,11 +6,13 @@ class CustomFolderTile extends StatelessWidget {
   final int index;
   final String title;
   final String subTitle;
+  final VoidCallback onTap;
 
   const CustomFolderTile({
     super.key,
     required this.title,
     required this.subTitle,
+    required this.onTap,
     required this.index,
   });
 
@@ -24,7 +26,7 @@ class CustomFolderTile extends StatelessWidget {
         child: Container(
           decoration: BoxDecoration(
             color: color.surface,
-            backgroundBlendMode: BlendMode.values[index],
+            backgroundBlendMode: BlendMode.dstIn,
             boxShadow: [
               BoxShadow(
                 color: color.shadow,
@@ -35,9 +37,7 @@ class CustomFolderTile extends StatelessWidget {
             borderRadius: BorderRadius.circular(AppStyle.tileBorderRadius),
           ),
           child: ListTile(
-            onTap: () {
-              print(BlendMode.values[index]);
-            },
+            onTap: () {},
             contentPadding: const EdgeInsets.all(15),
             leading: Column(
               mainAxisSize: MainAxisSize.max,

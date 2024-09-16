@@ -151,7 +151,7 @@ class AgreementOverviewView extends StatelessWidget {
                                       textAlign: TextAlign.center,
                                       fontWeight: FontWeight.w600,
                                       color: color.surface,
-                                      fontSize: AppFontSize.labelXLargeFont,
+                                      fontSize: AppFontSize.labelXMediumFont,
                                     ),
                                   ),
                                 ),
