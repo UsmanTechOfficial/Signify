@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
 
+import '../../domain/consts/app_consts/sign_process_types.dart';
 import '../../domain/consts/consts.dart';
 import '../../infrastructure/navigation/app_routes/navigation.dart';
 import '../../infrastructure/navigation/app_routes/routes.dart';
 import '../widgets/widgets.dart';
 
 class AgreementDetailAddedView extends StatelessWidget {
-  const AgreementDetailAddedView({super.key});
+  final SignProcessTypes signProcessTypes;
+
+  const AgreementDetailAddedView({super.key, required this.signProcessTypes});
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +30,14 @@ class AgreementDetailAddedView extends StatelessWidget {
                 alignment: Alignment.centerRight,
                 child: CustomOutlinedTextButton(
                   onPressed: () {
-                    Go.toNamed(Routes.RECIPIENTS_DETAIL);
+                    if (signProcessTypes == SignProcessTypes.requestSignatures) {
+                      Go.toNamed(
+                        Routes.RECIPIENTS_DETAIL,
+                        arguments: {
+                          'signProcessTypes': SignProcessTypes.requestSignatures,
+                        },
+                      );
+                    }
                   },
                   text: 'Next',
                   borderRadius: AppStyle.outlinedBtnRadius,

@@ -1,3 +1,4 @@
+import 'package:dyno_sign/domain/consts/app_consts/sign_process_types.dart';
 import 'package:dyno_sign/presentation/signing_process/bloc/signing_process_cubit.dart';
 import 'package:dyno_sign/presentation/widgets/dialogs/pdf_preview.dialog.dart';
 import 'package:dyno_sign/presentation/widgets/widgets.dart';
@@ -9,9 +10,11 @@ import '../../infrastructure/navigation/app_routes/navigation.dart';
 import '../../infrastructure/navigation/app_routes/routes.dart';
 
 class DocumentSelectedView extends StatelessWidget {
+  final SignProcessTypes signProcessTypes;
   final SigningProcessCubit signingCubit;
 
-  const DocumentSelectedView({super.key, required this.signingCubit});
+  const DocumentSelectedView(
+      {super.key, required this.signingCubit, required this.signProcessTypes});
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +34,22 @@ class DocumentSelectedView extends StatelessWidget {
                 child: CustomOutlinedTextButton(
                   text: 'Next',
                   onPressed: () {
-                    Go.toNamed(Routes.AGREEMENT_DETAIL_ADDED);
+                    if (signProcessTypes == SignProcessTypes.requestSignatures) {
+                      Go.toNamed(
+                        Routes.AGREEMENT_DETAIL_ADDED,
+                        arguments: {
+                          'signProcessTypes': SignProcessTypes.requestSignatures,
+                        },
+                      );
+                    }
+                    if (signProcessTypes == SignProcessTypes.onlyForMe) {
+                      Go.toNamed(
+                        Routes.ASSIGN_FIELDS,
+                        arguments: {
+                          'signProcessTypes': SignProcessTypes.onlyForMe,
+                        },
+                      );
+                    }
                   },
                 ),
               ),

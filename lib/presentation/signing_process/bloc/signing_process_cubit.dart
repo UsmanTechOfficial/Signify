@@ -1,6 +1,8 @@
 import 'dart:typed_data';
 
+import 'package:dyno_sign/domain/consts/extention_methods.dart';
 import 'package:dyno_sign/domain/utils/utils.dart';
+import 'package:dyno_sign/infrastructure/dal/models/docs_model.dart';
 import 'package:dyno_sign/infrastructure/dal/models/picked_file.model.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -16,11 +18,13 @@ class SigningProcessCubit extends Cubit<SigningProcessState> {
     emit(DocumentPreviewLoading());
 
     try {
-      final firstPage = await PdfSinglePage.get(pickedFiles.first.xFile);
-      final imageBytes = firstPage?.bytes;
+      for (var file in pickedFiles) {
+        final firstPage = await PdfSinglePage.get(file.xFile);
+        final imageBytes = firstPage?.bytes;
 
-      if (imageBytes != null) {
-        emit(DocumentPreviewLoaded(imageBytes));
+        if (imageBytes != null) {
+          emit(DocumentPreviewLoaded(imageBytes));
+        }
       }
     } catch (e) {
       emit(DocumentPreviewError(e.toString()));

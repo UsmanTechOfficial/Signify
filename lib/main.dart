@@ -30,7 +30,7 @@ class Main extends StatelessWidget {
       themeMode: ThemeMode.light,
       onGenerateRoute: AppPages.onGenerateRoute,
       scaffoldMessengerKey: scaffoldMessengerKey,
-      initialRoute: Routes.DASHBOARD,
+      initialRoute: Routes.INITIALS_MANAGER,
       navigatorKey: navigatorKey,
     );
   }

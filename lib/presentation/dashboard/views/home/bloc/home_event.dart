@@ -4,14 +4,14 @@ abstract class HomeEvent extends Equatable {
   const HomeEvent();
 }
 
-class SelectTile extends HomeEvent {
-  final int index;
-
-  const SelectTile(this.index);
-
-  @override
-  List<Object?> get props => [index];
-}
+// class SelectTile extends HomeEvent {
+//   final int index;
+//
+//   const SelectTile(this.index);
+//
+//   @override
+//   List<Object?> get props => [index];
+// }
 
 class SelectCategory extends HomeEvent {
   final int index;

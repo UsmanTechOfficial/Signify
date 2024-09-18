@@ -5,17 +5,25 @@ part 'home_event.dart';
 part 'home_state.dart';
 
 class HomeBloc extends Bloc<HomeEvent, HomeState> {
-  HomeBloc() : super(const HomeState()) {
-    on<SelectTile>((event, emit) {
-      emit(state.copyWith(selectedTileIndex: event.index));
-    });
+  List<String> agreementsList = [];
+  List<String> templateList = [];
+  List<String> foldersList = [];
 
+  HomeBloc() : super(const HomeInitialState(0)) {
     on<SelectCategory>((event, emit) {
-      emit(state.copyWith(selectedCategoryIndex: event.index));
+      if (state is HomeCategorySelectedState) {
+        emit((state as HomeCategorySelectedState).copyWith(selectedCategoryIndex: event.index));
+      } else {
+        emit(HomeCategorySelectedState(selectedCategoryIndex: event.index));
+      }
     });
 
     on<SelectDoc>((event, emit) {
-      emit(state.copyWith(selectedDocIndex: event.index));
+      if (state is HomeDocSelectedState) {
+        emit((state as HomeDocSelectedState).copyWith(selectedDocIndex: event.index));
+      } else {
+        emit(HomeDocSelectedState(selectedDocIndex: event.index));
+      }
     });
   }
 }

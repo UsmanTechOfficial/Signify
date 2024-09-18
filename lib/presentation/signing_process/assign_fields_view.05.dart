@@ -1,3 +1,4 @@
+import 'package:dyno_sign/domain/consts/app_consts/sign_process_types.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -9,7 +10,9 @@ import '../widgets/widgets.dart';
 import 'bloc/signing_process_cubit.dart';
 
 class AssignFieldsView extends StatelessWidget {
-  const AssignFieldsView({super.key});
+  final SignProcessTypes signProcessTypes;
+
+  const AssignFieldsView({super.key, required this.signProcessTypes});
 
   @override
   Widget build(BuildContext context) {
@@ -32,7 +35,14 @@ class AssignFieldsView extends StatelessWidget {
                 alignment: Alignment.centerRight,
                 child: CustomOutlinedTextButton(
                   onPressed: () {
-                    Go.toNamed(Routes.EMAIL_DETAIL_VIEW);
+                    if (signProcessTypes == SignProcessTypes.requestSignatures) {
+                      Go.toNamed(
+                        Routes.EMAIL_DETAIL_VIEW,
+                        arguments: {
+                          'signProcessTypes': SignProcessTypes.requestSignatures,
+                        },
+                      );
+                    }
                   },
                   text: 'Next',
                   borderRadius: AppStyle.outlinedBtnRadius,
@@ -50,27 +60,44 @@ class AssignFieldsView extends StatelessWidget {
                 ),
               ),
             ),
-            SizedBox(
-              height: 200,
-              child: ListView.builder(
-                scrollDirection: Axis.horizontal,
-                itemCount: 10, // Number of items
-                itemBuilder: (context, index) {
-                  return SizedBox(
-                    width: 150,
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 8),
-                      child: DocCard(
-                        isSelected: index.isOdd,
-                        child: Container(
-                          color: color.primaryContainer,
+            BlocBuilder<SigningProcessCubit, SigningProcessState>(
+              bloc: cubit,
+              builder: (context, state) {
+                return SizedBox(
+                  height: 200,
+                  child: ListView.builder(
+                    scrollDirection: Axis.horizontal,
+                    itemCount: cubit.pickedFiles.length,
+                    itemBuilder: (context, index) {
+                      if (state is DocumentPreviewLoaded) {
+                        return SizedBox(
+                          width: 150,
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 8),
+                            child: DocCard(
+                              isSelected: index.isOdd,
+                              bottomChild: "2024-09-18",
+                              onTap: () {},
+                              child: Image.memory(state.imageBytes),
+                            ),
+                          ),
+                        );
+                      }
+                      return SizedBox(
+                        width: 150,
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 8),
+                          child: DocCard(
+                            // isSelected: index.isOdd,
+                            child: const Center(child: Icon(Icons.error)),
+                            onTap: () {},
+                          ),
                         ),
-                        onTap: () {},
-                      ),
-                    ),
-                  );
-                },
-              ),
+                      );
+                    },
+                  ),
+                );
+              },
             ),
             const SizedBox(height: 50),
             Align(
@@ -86,9 +113,8 @@ class AssignFieldsView extends StatelessWidget {
             ),
             // Use the cubit directly with BlocBuilder
             BlocBuilder<SigningProcessCubit, SigningProcessState>(
-              bloc: cubit, // Use cubit from getIt directly
+              bloc: cubit,
               builder: (context, state) {
-                print("current state $state");
                 if (state is DocumentPreviewLoading) {
                   return const Center(child: CircularProgressIndicator());
                 } else if (state is DocumentPreviewLoaded) {

@@ -1,12 +1,19 @@
+import 'package:dyno_sign/presentation/Initials_manager/bloc/initials_manager_bloc.dart';
+import 'package:dyno_sign/presentation/Initials_manager/initials_manager_view.dart';
+import 'package:dyno_sign/presentation/signing_process/agreements_from_other.dart';
 import 'package:dyno_sign/presentation/signing_process/bloc/signing_process_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../domain/consts/app_consts/sign_process_types.dart';
 import '../../../domain/consts/consts.dart';
 import '../../../presentation/blocs.dart';
 import '../../../presentation/screens.dart';
 import '../../../presentation/signing_process/agreement_detail_view.03.dart';
+import '../../../presentation/signing_process/agreement_overview_view.07.dart';
 import '../../../presentation/signing_process/assign_fields_view.05.dart';
+import '../../../presentation/signing_process/email_detail_view.06.dart';
+import '../../../presentation/signing_process/recipients_detail_view.04.dart';
 import '../../../presentation/signing_process/selected_document_view.02.dart';
 import 'routes.dart';
 
@@ -106,9 +113,14 @@ class AppPages {
                 ),
             settings: settings);
       case Routes.SELECTED_DOCUMENT:
+        final args = settings.arguments as Map<String, dynamic>;
+        final signingCubit = args['signingCubit'] as SigningProcessCubit;
+        final signProcessTypes = args['signProcessTypes'] as SignProcessTypes;
+
         return MaterialPageRoute(
           builder: (context) => DocumentSelectedView(
-            signingCubit: settings.arguments as SigningProcessCubit,
+            signProcessTypes: signProcessTypes,
+            signingCubit: signingCubit,
           ),
           settings: settings,
         );
@@ -120,34 +132,55 @@ class AppPages {
       //     settings: settings,
       //   );
       case Routes.EMAIL_DETAIL_VIEW:
+        final args = settings.arguments as Map<String, dynamic>;
+        final signProcessTypes = args['signProcessTypes'] as SignProcessTypes;
         return MaterialPageRoute(
-            builder: (context) => BlocProvider(
-                  create: (context) => EmailDetailViewBloc(),
-                  child: const EmailDetailView(),
-                ),
-            settings: settings);
+          builder: (context) => EmailDetailView(
+            signProcessTypes: signProcessTypes,
+          ),
+          settings: settings,
+        );
       case Routes.RECIPIENTS_DETAIL:
+        final args = settings.arguments as Map<String, dynamic>;
+        final signProcessTypes = args['signProcessTypes'] as SignProcessTypes;
         return MaterialPageRoute(
-            builder: (context) => BlocProvider(
-                  create: (context) => RecipientsDetailBloc(),
-                  child: const RecipientsDetailView(),
-                ),
-            settings: settings);
+            builder: (context) => RecipientsDetailView(
+                  signProcessTypes: signProcessTypes,
+                ));
       case Routes.ASSIGN_FIELDS:
+        final args = settings.arguments as Map<String, dynamic>;
+        final signProcessTypes = args['signProcessTypes'] as SignProcessTypes;
         return MaterialPageRoute(
-          builder: (context) => const AssignFieldsView(),
+          builder: (context) => AssignFieldsView(
+            signProcessTypes: signProcessTypes,
+          ),
+          settings: settings,
+        );
+      case Routes.AGGREMENTS_FROM_OTHER:
+        final args = settings.arguments as Map<String, dynamic>;
+        final signProcessTypes = args['signProcessTypes'] as SignProcessTypes;
+        return MaterialPageRoute(
+          builder: (context) => AgreementsFromOthers(
+            signProcessTypes: signProcessTypes,
+          ),
           settings: settings,
         );
       case Routes.AGREEMENT_OVERVIEW:
+        final args = settings.arguments as Map<String, dynamic>;
+        final signProcessTypes = args['signProcessTypes'] as SignProcessTypes;
         return MaterialPageRoute(
-            builder: (context) => BlocProvider(
-                  create: (context) => AgreementOverviewBloc(),
-                  child: const AgreementOverviewView(),
-                ),
-            settings: settings);
+          builder: (context) => AgreementOverviewView(
+            signProcessTypes: signProcessTypes,
+          ),
+          settings: settings,
+        );
       case Routes.AGREEMENT_DETAIL_ADDED:
+        final args = settings.arguments as Map<String, dynamic>;
+        final signProcessTypes = args['signProcessTypes'] as SignProcessTypes;
         return MaterialPageRoute(
-          builder: (context) => const AgreementDetailAddedView(),
+          builder: (context) => AgreementDetailAddedView(
+            signProcessTypes: signProcessTypes,
+          ),
           settings: settings,
         );
       case Routes.SIGNATURE_MANAGER:
@@ -155,6 +188,13 @@ class AppPages {
             builder: (context) => BlocProvider(
                   create: (context) => SignatureManagerBloc(),
                   child: const SignatureManagerView(),
+                ),
+            settings: settings);
+      case Routes.INITIALS_MANAGER:
+        return MaterialPageRoute(
+            builder: (context) => BlocProvider(
+                  create: (context) => InitialsManagerBloc(),
+                  child: const InitialsManagerView(),
                 ),
             settings: settings);
       case Routes.SETTINGS:

@@ -15,6 +15,7 @@ class HomeView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
+
     return NestedScrollView(
       floatHeaderSlivers: true,
       physics: const AlwaysScrollableScrollPhysics(),
@@ -33,15 +34,11 @@ class HomeView extends StatelessWidget {
               delegate: SliverChildBuilderDelegate(
                 childCount: 3,
                 (context, index) {
-                  return BlocBuilder<HomeBloc, HomeState>(
-                    builder: (context, state) {
-                      return CategoryTile(
-                        title: "Doc",
-                        icon: Assets.icons.docIcon.svg(),
-                        subtitle: "${index + 5}",
-                        onTap: () => context.read<HomeBloc>().add(SelectTile(index)),
-                      );
-                    },
+                  return CategoryTile(
+                    title: "Doc",
+                    icon: Assets.icons.docIcon.svg(),
+                    subtitle: "${index + 5}",
+                    onTap: () {},
                   );
                 },
               ),
@@ -56,24 +53,36 @@ class HomeView extends StatelessWidget {
                     color: colorScheme.onSurface,
                     fontSize: AppFontSize.titleSmallFont,
                     fontWeight: FontWeight.w600,
-                  )
+                  ),
                 ],
               ),
             ),
             SliverGrid(
               gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 3,
-                  mainAxisSpacing: 5.0,
-                  crossAxisSpacing: 5.0,
-                  mainAxisExtent: 100),
+                crossAxisCount: 3,
+                mainAxisSpacing: 5.0,
+                crossAxisSpacing: 5.0,
+                mainAxisExtent: 100,
+              ),
               delegate: SliverChildBuilderDelegate(
-                childCount: 3,
+                childCount: SelectedDocumentType.values.length,
                 (BuildContext context, int index) {
                   return BlocBuilder<HomeBloc, HomeState>(
+                    buildWhen: (previous, current) => current is HomeCategorySelectedState,
                     builder: (context, state) {
+                      if (state is HomeCategorySelectedState) {
+                        return CategoryCard(
+                          isSelected: state.selectedCategoryIndex == index,
+                          title: SelectedDocumentType.values[index].type,
+                          icon: Assets.icons.docIcon.svg(),
+                          onTap: () {
+                            context.read<HomeBloc>().add(SelectCategory(index));
+                          },
+                        );
+                      }
                       return CategoryCard(
-                        isSelected: state.selectedCategoryIndex == index,
-                        title: "Agreements",
+                        isSelected: index == 0,
+                        title: SelectedDocumentType.values[index].type,
                         icon: Assets.icons.docIcon.svg(),
                         onTap: () => context.read<HomeBloc>().add(SelectCategory(index)),
                       );
@@ -90,11 +99,24 @@ class HomeView extends StatelessWidget {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      CustomText(
-                        "Agreements",
-                        color: colorScheme.onSurface,
-                        fontSize: AppFontSize.titleSmallFont,
-                        fontWeight: FontWeight.w600,
+                      BlocBuilder<HomeBloc, HomeState>(
+                        buildWhen: (previous, current) => current is HomeCategorySelectedState,
+                        builder: (context, state) {
+                          if (state is HomeCategorySelectedState) {
+                            return CustomText(
+                              SelectedDocumentType.values[state.selectedCategoryIndex].type,
+                              color: colorScheme.onSurface,
+                              fontSize: AppFontSize.titleSmallFont,
+                              fontWeight: FontWeight.w600,
+                            );
+                          }
+                          return CustomText(
+                            "Agreements",
+                            color: colorScheme.onSurface,
+                            fontSize: AppFontSize.titleSmallFont,
+                            fontWeight: FontWeight.w600,
+                          );
+                        },
                       ),
                       TextButton(
                         onPressed: () {},
@@ -110,30 +132,123 @@ class HomeView extends StatelessWidget {
                 ],
               ),
             ),
-            SliverGrid(
-              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 2,
-                mainAxisSpacing: 10.0,
-                crossAxisSpacing: 10.0,
-                mainAxisExtent: 200,
-              ),
-              delegate: SliverChildBuilderDelegate(
-                (BuildContext context, int index) {
-                  return BlocBuilder<HomeBloc, HomeState>(
-                    builder: (context, state) {
-                      return DocCard(
-                        isSelected: state.selectedDocIndex == index,
-                        child: Container(
-                          color: Colors.green,
+            BlocBuilder<HomeBloc, HomeState>(
+              builder: (context, state) {
+                int currentIndex = 0;
+
+                // Check if the current state is HomeCategorySelectedState
+                if (state is HomeCategorySelectedState) {
+                  currentIndex = state.selectedCategoryIndex;
+                }
+
+                return SliverToBoxAdapter(
+                  child: IndexedStack(
+                    index: currentIndex,
+                    children: [
+                      if (context.read<HomeBloc>().agreementsList.isEmpty)
+                        const Center(
+                          child: Text(
+                            "No agreements found",
+                          ),
+                        )
+                      else
+                        GridView.builder(
+                          shrinkWrap: true,
+                          physics: const NeverScrollableScrollPhysics(),
+                          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 2,
+                            mainAxisSpacing: 10.0,
+                            crossAxisSpacing: 10.0,
+                            mainAxisExtent: 200,
+                          ),
+                          itemCount: context.read<HomeBloc>().agreementsList.length,
+                          itemBuilder: (BuildContext context, int index) {
+                            bool isSelected = false;
+                            if (state is HomeDocSelectedState) {
+                              isSelected = state.selectedDocIndex == index;
+                            }
+                            return DocCard(
+                              isSelected: isSelected,
+                              child: Container(
+                                color: Colors.green,
+                              ),
+                              onTap: () {
+                                context.read<HomeBloc>().add(SelectDoc(index));
+                              },
+                            );
+                          },
                         ),
-                        onTap: () => context.read<HomeBloc>().add(SelectDoc(index)),
-                      );
-                    },
-                  );
-                },
-                childCount: 8,
-              ),
-            ),
+                      if (context.read<HomeBloc>().templateList.isEmpty)
+                        const Center(
+                          child: Text(
+                            "No templates found",
+                          ),
+                        )
+                      else
+                        GridView.builder(
+                          shrinkWrap: true,
+                          physics: const NeverScrollableScrollPhysics(),
+                          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 2,
+                            mainAxisSpacing: 10.0,
+                            crossAxisSpacing: 10.0,
+                            mainAxisExtent: 200,
+                          ),
+                          itemCount: context.read<HomeBloc>().templateList.length,
+                          itemBuilder: (BuildContext context, int index) {
+                            bool isSelected = false;
+                            if (state is HomeDocSelectedState) {
+                              isSelected = state.selectedDocIndex == index;
+                            }
+                            return DocCard(
+                              isSelected: isSelected,
+                              child: Container(
+                                color: Colors.green,
+                              ),
+                              onTap: () {
+                                context.read<HomeBloc>().add(SelectDoc(index));
+                              },
+                            );
+                          },
+                        ),
+                      if (context.read<HomeBloc>().foldersList.isEmpty)
+                        const Center(
+                          child: Text(
+                            "No folders found",
+                          ),
+                        )
+                      else
+                        GridView.builder(
+                          shrinkWrap: true,
+                          physics: const NeverScrollableScrollPhysics(),
+                          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 2,
+                            mainAxisSpacing: 10.0,
+                            crossAxisSpacing: 10.0,
+                            mainAxisExtent: 200,
+                          ),
+                          itemCount: context.read<HomeBloc>().foldersList.length,
+                          itemBuilder: (BuildContext context, int index) {
+                            bool isSelected = false;
+                            if (state is HomeDocSelectedState) {
+                              isSelected = state.selectedDocIndex == index;
+                            }
+                            return DocCard(
+                              isSelected: isSelected,
+                              child: Container(
+                                color: Colors.green,
+                              ),
+                              onTap: () {
+                                context.read<HomeBloc>().add(SelectDoc(index));
+                              },
+                            );
+                          },
+                        ),
+                    ],
+                  ),
+                );
+              },
+            )
           ],
         ),
       ),
@@ -256,6 +371,7 @@ class DocCard extends StatelessWidget {
   final bool isSelected;
   final Widget? child;
   final VoidCallback onTap;
+  final String? bottomChild;
 
   const DocCard({
     super.key,
@@ -264,6 +380,7 @@ class DocCard extends StatelessWidget {
     required this.onTap,
     this.width,
     this.height,
+    this.bottomChild,
   });
 
   @override
@@ -331,9 +448,9 @@ class DocCard extends StatelessWidget {
                             ),
                             const SizedBox(width: 5),
                             CustomText(
-                              "Completed",
+                              bottomChild ?? "Completed",
                               fontSize: AppFontSize.labelSmallFont,
-                              color: isSelected ? colorScheme.onPrimary : colorScheme.onSurface,
+                              color: isSelected ? colorScheme.onPrimary : colorScheme.outline,
                             ),
                           ],
                         ),
@@ -346,4 +463,14 @@ class DocCard extends StatelessWidget {
       ),
     );
   }
+}
+
+enum SelectedDocumentType {
+  agreements('Agreements'),
+  templates('Templates'),
+  folders('Folders');
+
+  final String type;
+
+  const SelectedDocumentType(this.type);
 }

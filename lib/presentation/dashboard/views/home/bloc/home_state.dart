@@ -1,32 +1,59 @@
 part of 'home_bloc.dart';
 
-class HomeState extends Equatable {
-  final int selectedTileIndex;
+abstract class HomeState extends Equatable {
+  const HomeState();
+
+  @override
+  List<Object?> get props => [];
+}
+
+class HomeInitialState extends HomeState {
+  final int index;
+
+  const HomeInitialState(this.index);
+}
+
+// class HomeTileSelectedState extends HomeState {
+//   final int selectedTileIndex;
+//
+//   const HomeTileSelectedState({required this.selectedTileIndex});
+//
+//   HomeTileSelectedState copyWith({int? selectedTileIndex}) {
+//     return HomeTileSelectedState(
+//       selectedTileIndex: selectedTileIndex ?? this.selectedTileIndex,
+//     );
+//   }
+//
+//   @override
+//   List<Object?> get props => [selectedTileIndex];
+// }
+
+class HomeCategorySelectedState extends HomeState {
   final int selectedCategoryIndex;
+
+  const HomeCategorySelectedState({required this.selectedCategoryIndex});
+
+  HomeCategorySelectedState copyWith({int? selectedCategoryIndex}) {
+    return HomeCategorySelectedState(
+      selectedCategoryIndex: selectedCategoryIndex ?? this.selectedCategoryIndex,
+    );
+  }
+
+  @override
+  List<Object?> get props => [selectedCategoryIndex];
+}
+
+class HomeDocSelectedState extends HomeState {
   final int selectedDocIndex;
 
-  const HomeState({
-    this.selectedTileIndex = -1,
-    this.selectedCategoryIndex = -1,
-    this.selectedDocIndex = -1,
-  });
+  const HomeDocSelectedState({required this.selectedDocIndex});
 
-  HomeState copyWith({
-    int? selectedTileIndex,
-    int? selectedCategoryIndex,
-    int? selectedDocIndex,
-  }) {
-    return HomeState(
-      selectedTileIndex: selectedTileIndex ?? this.selectedTileIndex,
-      selectedCategoryIndex: selectedCategoryIndex ?? this.selectedCategoryIndex,
+  HomeDocSelectedState copyWith({int? selectedDocIndex}) {
+    return HomeDocSelectedState(
       selectedDocIndex: selectedDocIndex ?? this.selectedDocIndex,
     );
   }
 
   @override
-  List<Object?> get props => [
-        selectedTileIndex,
-        selectedCategoryIndex,
-        selectedDocIndex,
-      ];
+  List<Object?> get props => [selectedDocIndex];
 }

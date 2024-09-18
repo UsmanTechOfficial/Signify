@@ -14,6 +14,8 @@ class Routes {
   static const AGREEMENT_OVERVIEW = '/agreement_overview';
   static const AGREEMENT_DETAIL_ADDED = '/agreement_detail_added';
   static const SIGNATURE_MANAGER = '/signature_manager';
+  static const INITIALS_MANAGER = '/initials_manager';
+  static const AGGREMENTS_FROM_OTHER = '/agreement_from_other';
   static const PROFILE = '/profile';
   static const SETTINGS = '/settings';
   static const TEMPLATES = '/templates';

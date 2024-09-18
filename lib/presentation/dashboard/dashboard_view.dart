@@ -17,6 +17,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../assets_gen/assets.gen.dart';
+import '../../domain/consts/app_consts/sign_process_types.dart';
 import '../../domain/utils/utils.dart';
 import '../request_signature/widgets/dashboard_widgets/drawer_items_tile.dart';
 import '../widgets/dialogs/pdf_preview.dialog.dart';
@@ -168,7 +169,7 @@ class DashboardView extends StatelessWidget {
             subtitle: 'Request anyone to add signatures in your document',
             onTap: () {
               Go.back();
-              _showAddDocumentSheet(context);
+              _showAddDocumentSheet(context, SignProcessTypes.requestSignatures);
             },
           ),
           CustomBottomSheetTile(
@@ -194,9 +195,9 @@ class DashboardView extends StatelessWidget {
   }
 
   ///  Method to show the Document Source [Selection] Sheet
-  void _showAddDocumentSheet(BuildContext context) {
+  void _showAddDocumentSheet(BuildContext context, SignProcessTypes signProcessTypes) {
     final signingCubit = getIt<SigningProcessCubit>();
-    CustomModelSheet.showBottomSheet(
+    CustomModelSheet.showScrolledBottomSheet(
       context: context,
       title: "Add a Document",
       content: AddDocumentSheet(
@@ -207,7 +208,7 @@ class DashboardView extends StatelessWidget {
             case DocumentSource.files:
               FilePicker.pick().then(
                 (file) async {
-                  _preview(signingCubit, file: file.first);
+                  _preview(signingCubit, file: file.first, signProcessTypes: signProcessTypes);
                 },
               );
 
@@ -231,12 +232,14 @@ class DashboardView extends StatelessWidget {
         onForMe: () {
           // close previous sheet
           Go.back();
-          _showAddDocumentSheet(context);
+          _showAddDocumentSheet(context, SignProcessTypes.onlyForMe);
         },
         onByOthers: () {
           // close previous sheet
           Go.back();
-          // Handle "Sign by Others" action
+          Go.toNamed(Routes.AGGREMENTS_FROM_OTHER, arguments: {
+            'signProcessTypes': SignProcessTypes.sendByOthers,
+          });
         },
       ),
     );
@@ -244,7 +247,8 @@ class DashboardView extends StatelessWidget {
 
   /// [Preview] and check the for [keep] for [discard]
 
-  void _preview(SigningProcessCubit signingCubit, {required XFile file}) {
+  void _preview(SigningProcessCubit signingCubit,
+      {required XFile file, required SignProcessTypes signProcessTypes}) {
     PdfPreviewDialog.show(
       file,
       check: (result) async {
@@ -252,7 +256,13 @@ class DashboardView extends StatelessWidget {
           final model = await FileToModel.convert(file);
           signingCubit.pickedFiles.add(model);
 
-          Go.toNamed(Routes.SELECTED_DOCUMENT, arguments: signingCubit);
+          Go.toNamed(
+            Routes.SELECTED_DOCUMENT,
+            arguments: {
+              'signingCubit': signingCubit,
+              'signProcessTypes': signProcessTypes,
+            },
+          );
         }
       },
     );
