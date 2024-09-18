@@ -1,3 +1,5 @@
+import 'dart:typed_data';
+
 import 'package:dyno_sign/domain/utils/utils.dart';
 import 'package:dyno_sign/infrastructure/dal/models/picked_file.model.dart';
 import 'package:equatable/equatable.dart';
@@ -9,6 +11,21 @@ class SigningProcessCubit extends Cubit<SigningProcessState> {
   List<PickedFileModel> pickedFiles = [];
 
   SigningProcessCubit() : super(const SigningProcessInitialState());
+
+  void documentPreview() async {
+    emit(DocumentPreviewLoading());
+
+    try {
+      final firstPage = await PdfSinglePage.get(pickedFiles.first.xFile);
+      final imageBytes = firstPage?.bytes;
+
+      if (imageBytes != null) {
+        emit(DocumentPreviewLoaded(imageBytes));
+      }
+    } catch (e) {
+      emit(DocumentPreviewError(e.toString()));
+    }
+  }
 
   void addNewFile() async {
     final selectedFile = await FilePicker.pick();

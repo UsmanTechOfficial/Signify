@@ -5,6 +5,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../domain/consts/consts.dart';
 import '../../../presentation/blocs.dart';
 import '../../../presentation/screens.dart';
+import '../../../presentation/signing_process/agreement_detail_view.03.dart';
+import '../../../presentation/signing_process/assign_fields_view.05.dart';
 import '../../../presentation/signing_process/selected_document_view.02.dart';
 import 'routes.dart';
 
@@ -133,11 +135,9 @@ class AppPages {
             settings: settings);
       case Routes.ASSIGN_FIELDS:
         return MaterialPageRoute(
-            builder: (context) => BlocProvider(
-                  create: (context) => AssignFieldsBloc(),
-                  child: const AssignFieldsView(),
-                ),
-            settings: settings);
+          builder: (context) => const AssignFieldsView(),
+          settings: settings,
+        );
       case Routes.AGREEMENT_OVERVIEW:
         return MaterialPageRoute(
             builder: (context) => BlocProvider(
@@ -147,12 +147,10 @@ class AppPages {
             settings: settings);
       case Routes.AGREEMENT_DETAIL_ADDED:
         return MaterialPageRoute(
-            builder: (context) => BlocProvider(
-                  create: (context) => AgreementDetailAddedBloc(),
-                  child: const AgreementDetailAddedView(),
-                ),
-            settings: settings);
-      case Routes.ADD_SIGNATURE:
+          builder: (context) => const AgreementDetailAddedView(),
+          settings: settings,
+        );
+      case Routes.SIGNATURE_MANAGER:
         return MaterialPageRoute(
             builder: (context) => BlocProvider(
                   create: (context) => SignatureManagerBloc(),

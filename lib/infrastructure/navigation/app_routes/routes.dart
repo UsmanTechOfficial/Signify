@@ -13,7 +13,7 @@ class Routes {
   static const ASSIGN_FIELDS = '/assign_fields';
   static const AGREEMENT_OVERVIEW = '/agreement_overview';
   static const AGREEMENT_DETAIL_ADDED = '/agreement_detail_added';
-  static const ADD_SIGNATURE = '/add_signature';
+  static const SIGNATURE_MANAGER = '/signature_manager';
   static const PROFILE = '/profile';
   static const SETTINGS = '/settings';
   static const TEMPLATES = '/templates';

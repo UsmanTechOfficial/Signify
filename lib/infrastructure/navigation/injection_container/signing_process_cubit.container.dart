@@ -4,6 +4,6 @@ import '../../../domain/consts/consts.dart';
 
 class SigningProcessCubitContainer {
   static inject() async {
-    getIt.registerFactory<SigningProcessCubit>(() => SigningProcessCubit());
+    getIt.registerSingleton<SigningProcessCubit>(SigningProcessCubit());
   }
 }

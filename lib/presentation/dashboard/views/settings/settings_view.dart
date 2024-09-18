@@ -14,7 +14,8 @@ class SettingsView extends StatelessWidget {
     return Scaffold(
       body: NestedScrollView(
         floatHeaderSlivers: false,
-        physics: const NeverScrollableScrollPhysics(),
+        // Allow the nested scroll view to scroll
+        physics: const BouncingScrollPhysics(),
         key: const PageStorageKey<String>("homeScrollPosition"),
         headerSliverBuilder: (BuildContext context, bool _) {
           return <Widget>[
@@ -27,20 +28,24 @@ class SettingsView extends StatelessWidget {
           ];
         },
         body: SingleChildScrollView(
-          padding: EdgeInsets.symmetric(horizontal: width * 0.05),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const CustomText(
-                "General Settings",
-                fontSize: AppFontSize.titleSmallFont,
-                fontWeight: FontWeight.w700,
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: width * 0.05),
+                child: const CustomText(
+                  "General Settings",
+                  fontSize: AppFontSize.titleXSmallFont,
+                  fontWeight: FontWeight.w700,
+                ),
               ),
               ListView.builder(
+                padding: EdgeInsets.symmetric(horizontal: width * 0.05),
                 shrinkWrap: true,
-                physics: const NeverScrollableScrollPhysics(),
+                // Allow scrolling for the ListView
+                physics: const ClampingScrollPhysics(),
                 itemCount: GeneralSettings.values.length,
                 itemBuilder: (context, index) {
                   final item = GeneralSettings.values[index].settingName;
@@ -50,7 +55,7 @@ class SettingsView extends StatelessWidget {
                       dense: true,
                       title: CustomText(
                         item,
-                        fontSize: AppFontSize.bodyLargeFont,
+                        fontSize: AppFontSize.bodyMediumFont,
                         fontWeight: FontWeight.w400,
                       ),
                       trailing: const Icon(
@@ -61,12 +66,88 @@ class SettingsView extends StatelessWidget {
                   );
                 },
               ),
-              Divider(),
-              const CustomText(
-                "General Settings",
-                fontSize: AppFontSize.titleSmallFont,
-                fontWeight: FontWeight.w700,
+              const SizedBox(height: 20),
+              const Divider(),
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: width * 0.05, vertical: 15),
+                child: const CustomText(
+                  "Security Settings",
+                  fontSize: AppFontSize.titleXSmallFont,
+                  fontWeight: FontWeight.w700,
+                ),
               ),
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: width * 0.05),
+                child: ListTile(
+                  dense: true,
+                  title: const CustomText(
+                    'Enable Biometrics',
+                    fontSize: AppFontSize.bodyMediumFont,
+                    fontWeight: FontWeight.w400,
+                  ),
+                  trailing: Switch.adaptive(
+                    value: true,
+                    onChanged: (value) {},
+                  ),
+                ),
+              ),
+              const SizedBox(height: 20),
+              const Divider(),
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: width * 0.05, vertical: 15),
+                child: const CustomText(
+                  "Signing Settings",
+                  fontSize: AppFontSize.titleXSmallFont,
+                  fontWeight: FontWeight.w700,
+                ),
+              ),
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: width * 0.05),
+                child: ListTile(
+                  dense: true,
+                  title: const CustomText(
+                    'Key Terms',
+                    fontSize: AppFontSize.bodyMediumFont,
+                    fontWeight: FontWeight.w400,
+                  ),
+                  trailing: Switch.adaptive(
+                    value: false,
+                    onChanged: (value) {},
+                  ),
+                ),
+              ),
+              const SizedBox(height: 20),
+              const Divider(),
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: width * 0.05, vertical: 15),
+                child: const CustomText(
+                  "Push Notification Settings",
+                  fontSize: AppFontSize.titleXSmallFont,
+                  fontWeight: FontWeight.w700,
+                ),
+              ),
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: width * 0.05),
+                child: ListTile(
+                  dense: true,
+                  title: const CustomText(
+                    'Notify for document changes',
+                    fontSize: AppFontSize.bodyMediumFont,
+                    fontWeight: FontWeight.w400,
+                  ),
+                  trailing: Switch.adaptive(
+                    value: false,
+                    onChanged: (value) {},
+                  ),
+                ),
+              ),
+              CustomOutlinedTextButton(
+                text: 'Signout',
+                borderColor: Colors.transparent,
+                textSize: AppFontSize.labelMediumFont,
+                fontWeight: FontWeight.w500,
+                onPressed: () {},
+              )
             ],
           ),
         ),
@@ -89,8 +170,29 @@ enum GeneralSettings {
   const GeneralSettings(this.settingName);
 }
 
-enum BiometricSetting { enable, disable }
+enum BiometricSetting {
+  enable(true),
+  disable(false);
 
-enum KeyTerms { enable, disable }
+  final bool value;
 
-enum NotifyDocumentChanges { enable, disable }
+  const BiometricSetting(this.value);
+}
+
+enum KeyTerms {
+  enable(true),
+  disable(false);
+
+  final bool value;
+
+  const KeyTerms(this.value);
+}
+
+enum NotifyDocumentChanges {
+  enable(true),
+  disable(false);
+
+  final bool value;
+
+  const NotifyDocumentChanges(this.value);
+}
