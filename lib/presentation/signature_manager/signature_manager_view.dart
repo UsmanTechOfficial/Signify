@@ -47,12 +47,30 @@ class SignatureManagerView extends StatelessWidget {
     return AppBar(
       title: const Text('Add Signature'),
       centerTitle: true,
-      bottom: const TabBar(
-        tabs: <Widget>[
-          Tab(text: "Choose"),
-          Tab(text: "Draw"),
-          Tab(text: "Upload"),
-        ],
+      bottom: PreferredSize(
+        preferredSize: const Size.fromHeight(100),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Align(
+              alignment: Alignment.centerRight,
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+                child: CustomOutlinedTextButton(
+                  text: 'Next',
+                  onPressed: () {},
+                ),
+              ),
+            ),
+            const TabBar(
+              tabs: <Widget>[
+                Tab(text: "Choose"),
+                Tab(text: "Draw"),
+                Tab(text: "Upload"),
+              ],
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -72,27 +90,42 @@ class ChooseTab extends StatelessWidget {
           context.read<SignatureManagerBloc>().selectedSign = state.selectedSignature;
         }
 
-        return GridView.builder(
-          itemCount: 10,
-          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 2,
-            mainAxisSpacing: 10,
-            crossAxisSpacing: 10,
-          ),
-          itemBuilder: (_, index) {
-            return SignatureChoiceCard(
-              indicator: true,
-              isSelected: context.read<SignatureManagerBloc>().selectedSign == index,
-              child: Center(
-                child: Image.asset('assets/images/splash_img.png', fit: BoxFit.scaleDown),
+        return Column(
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                Checkbox(
+                  value: true,
+                  onChanged: (value) {},
+                ),
+                const CustomText('Set as Default')
+              ],
+            ),
+            GridView.builder(
+              shrinkWrap: true,
+              itemCount: 1,
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 2,
+                mainAxisSpacing: 10,
+                crossAxisSpacing: 10,
               ),
-              onTap: () {
-                context
-                    .read<SignatureManagerBloc>()
-                    .add(OnSignatureSelectionEvent(selectedSign: index));
+              itemBuilder: (_, index) {
+                return SignatureChoiceCard(
+                  indicator: true,
+                  isSelected: context.read<SignatureManagerBloc>().selectedSign == index,
+                  child: Center(
+                    child: Image.asset('assets/images/splash_img.png', fit: BoxFit.scaleDown),
+                  ),
+                  onTap: () {
+                    context
+                        .read<SignatureManagerBloc>()
+                        .add(OnSignatureSelectionEvent(selectedSign: index));
+                  },
+                );
               },
-            );
-          },
+            ),
+          ],
         );
       },
     );
@@ -144,164 +177,169 @@ class _DrawTabState extends State<DrawTab> {
     final color = appColorScheme(context);
     final bloc = context.read<SignatureManagerBloc>();
     return Scaffold(
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          Padding(
-            padding: const EdgeInsets.all(10),
-            child: Container(
-              height: 400,
-              decoration: BoxDecoration(
-                border: Border.all(color: color.outline),
-                borderRadius: BorderRadius.circular(AppStyle.buttonBorderRadius),
-              ),
-              child: BlocBuilder<SignatureManagerBloc, SignatureManagerState>(
-                buildWhen: (previous, current) {
-                  return current is OnPenColorSelectionState ||
-                      current is OnPenStrokeSelectionState;
-                },
-                builder: (context, state) {
-                  if (state is OnPenColorSelectionState) {
-                    bloc.selectedColor = state.selectedColor;
-                  }
-                  if (state is OnPenStrokeSelectionState) {
-                    bloc.selectedStroke = state.selectedStroke;
-                  }
-                  return SfSignaturePad(
-                    key: signatureGlobalKey,
-                    strokeColor: bloc.selectedColor.color,
-                    minimumStrokeWidth: bloc.selectedStroke.stroke.toDouble(),
-                    maximumStrokeWidth: PenStroke.bold.stroke.toDouble(),
-                  );
-                },
-              ),
-            ),
-          ),
-          const SizedBox(height: 10),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(vertical: 20),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              const CustomText(
-                "Make This sign as default",
-                fontSize: AppFontSize.titleSmallFont,
-                fontWeight: ui.FontWeight.w500,
-              ),
-              Switch.adaptive(
-                value: false,
-                onChanged: (value) {},
-              )
-            ],
-          ),
-          const SizedBox(height: 20),
-          SizedBox(
-            height: 60,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Expanded(
-                  child: Column(
-                    children: [
-                      CustomText(
-                        "Pen Stroke",
-                        fontWeight: ui.FontWeight.w500,
-                        color: color.outline,
-                      ),
-                      Expanded(
-                        child: BlocBuilder<SignatureManagerBloc, SignatureManagerState>(
-                          buildWhen: (previous, current) {
-                            return current is OnPenStrokeSelectionState;
-                          },
-                          builder: (_, state) {
-                            if (state is OnPenStrokeSelectionState) {
-                              bloc.selectedStroke = state.selectedStroke;
-                            }
-                            return Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                              children: List.generate(
-                                3,
-                                (index) => InkWell(
-                                  onTap: () {
-                                    bloc.add(OnPenStrokeSelectionEvent(
-                                        penStroke: PenStroke.values[index]));
-                                  },
-                                  child: CustomPenStroke(
-                                    selectedStroke: bloc.selectedStroke.index,
-                                    penStroke: PenStroke.values[index],
-                                  ),
-                                ),
-                              ),
-                            );
-                          },
-                        ),
-                      ),
-                    ],
+              Padding(
+                padding: const EdgeInsets.all(10),
+                child: Container(
+                  height: 400,
+                  decoration: BoxDecoration(
+                    border: Border.all(color: color.outline),
+                    borderRadius: BorderRadius.circular(AppStyle.buttonBorderRadius),
+                  ),
+                  child: BlocBuilder<SignatureManagerBloc, SignatureManagerState>(
+                    buildWhen: (previous, current) {
+                      return current is OnPenColorSelectionState ||
+                          current is OnPenStrokeSelectionState;
+                    },
+                    builder: (context, state) {
+                      if (state is OnPenColorSelectionState) {
+                        bloc.selectedColor = state.selectedColor;
+                      }
+                      if (state is OnPenStrokeSelectionState) {
+                        bloc.selectedStroke = state.selectedStroke;
+                      }
+                      return SfSignaturePad(
+                        key: signatureGlobalKey,
+                        strokeColor: bloc.selectedColor.color,
+                        minimumStrokeWidth: bloc.selectedStroke.stroke.toDouble(),
+                        maximumStrokeWidth: PenStroke.bold.stroke.toDouble(),
+                      );
+                    },
                   ),
                 ),
-                const VerticalDivider(),
-                Expanded(
-                  child: Column(
-                    children: [
-                      CustomText(
-                        "Pen Color",
-                        fontWeight: ui.FontWeight.w500,
-                        color: color.outline,
-                      ),
-                      Expanded(
-                        child: BlocBuilder<SignatureManagerBloc, SignatureManagerState>(
-                          buildWhen: (previous, current) {
-                            return current is OnPenColorSelectionState;
-                          },
-                          builder: (_, state) {
-                            if (state is OnPenColorSelectionState) {
-                              bloc.selectedColor = state.selectedColor;
-                            }
-                            return Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                              children: List.generate(
-                                4,
-                                (index) => InkWell(
-                                  onTap: () {
-                                    bloc.add(OnPenColorSelectionEvent(
-                                        penColor: PenColors.values[index]));
-                                  },
-                                  child: CustomPenColor(
-                                    selectedColor: bloc.selectedColor.index,
-                                    penColors: PenColors.values[index],
-                                  ),
-                                ),
-                              ),
-                            );
-                          },
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ],
-            ),
-          ),
-          const SizedBox(height: 10),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: <Widget>[
-              CustomOutlinedTextButton(
-                width: 100,
-                borderRadius: AppStyle.buttonBorderRadius,
-                borderColor: color.outlineVariant,
-                onPressed: _handleClearButtonPressed,
-                text: 'Clear',
-                textColor: color.onSurface,
               ),
-              CustomElevatedTextButton(
-                width: 100,
-                borderRadius: AppStyle.buttonBorderRadius,
-                onPressed: _handleSaveButtonPressed,
-                text: 'Create',
-              )
+              const SizedBox(height: 10),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  const CustomText(
+                    "Make This sign as default",
+                    fontSize: AppFontSize.titleSmallFont,
+                    fontWeight: ui.FontWeight.w500,
+                  ),
+                  Switch.adaptive(
+                    value: false,
+                    onChanged: (value) {},
+                  )
+                ],
+              ),
+              const SizedBox(height: 20),
+              SizedBox(
+                height: 60,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Expanded(
+                      child: Column(
+                        children: [
+                          CustomText(
+                            "Pen Stroke",
+                            fontWeight: ui.FontWeight.w500,
+                            color: color.outline,
+                          ),
+                          Expanded(
+                            child: BlocBuilder<SignatureManagerBloc, SignatureManagerState>(
+                              buildWhen: (previous, current) {
+                                return current is OnPenStrokeSelectionState;
+                              },
+                              builder: (_, state) {
+                                if (state is OnPenStrokeSelectionState) {
+                                  bloc.selectedStroke = state.selectedStroke;
+                                }
+                                return Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                  children: List.generate(
+                                    3,
+                                    (index) => InkWell(
+                                      onTap: () {
+                                        bloc.add(OnPenStrokeSelectionEvent(
+                                            penStroke: PenStroke.values[index]));
+                                      },
+                                      child: CustomPenStroke(
+                                        selectedStroke: bloc.selectedStroke.index,
+                                        penStroke: PenStroke.values[index],
+                                      ),
+                                    ),
+                                  ),
+                                );
+                              },
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    const VerticalDivider(),
+                    Expanded(
+                      child: Column(
+                        children: [
+                          CustomText(
+                            "Pen Color",
+                            fontWeight: ui.FontWeight.w500,
+                            color: color.outline,
+                          ),
+                          Expanded(
+                            child: BlocBuilder<SignatureManagerBloc, SignatureManagerState>(
+                              buildWhen: (previous, current) {
+                                return current is OnPenColorSelectionState;
+                              },
+                              builder: (_, state) {
+                                if (state is OnPenColorSelectionState) {
+                                  bloc.selectedColor = state.selectedColor;
+                                }
+                                return Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                  children: List.generate(
+                                    4,
+                                    (index) => InkWell(
+                                      onTap: () {
+                                        bloc.add(OnPenColorSelectionEvent(
+                                            penColor: PenColors.values[index]));
+                                      },
+                                      child: CustomPenColor(
+                                        selectedColor: bloc.selectedColor.index,
+                                        penColors: PenColors.values[index],
+                                      ),
+                                    ),
+                                  ),
+                                );
+                              },
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              const SizedBox(height: 10),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[
+                  CustomOutlinedTextButton(
+                    width: 100,
+                    borderRadius: AppStyle.buttonBorderRadius,
+                    borderColor: color.outlineVariant,
+                    onPressed: _handleClearButtonPressed,
+                    text: 'Clear',
+                    textColor: color.onSurface,
+                  ),
+                  CustomElevatedTextButton(
+                    width: 100,
+                    borderRadius: AppStyle.buttonBorderRadius,
+                    onPressed: _handleSaveButtonPressed,
+                    text: 'Create',
+                  )
+                ],
+              ),
             ],
           ),
-        ],
+        ),
       ),
     );
   }
@@ -312,6 +350,6 @@ class UploadTab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    return const SizedBox.shrink();
   }
 }

@@ -49,4 +49,9 @@ class AgreementsBloc extends Bloc<AgreementsEvent, AgreementsState> {
         .where((agreement) => agreement.toLowerCase().contains(event.query.toLowerCase()))
         .toList();
   }
+
+  @override
+  void onChange(Change<AgreementsState> change) {
+    super.onChange(change);
+  }
 }

@@ -21,21 +21,10 @@ class CustomFolderTile extends StatelessWidget {
     final color = appColorScheme(context);
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 8),
-      child: SizedBox(
-        height: 80,
-        child: Container(
-          decoration: BoxDecoration(
-            color: color.surface,
-            backgroundBlendMode: BlendMode.dstIn,
-            boxShadow: [
-              BoxShadow(
-                color: color.shadow,
-                blurRadius: 6,
-                spreadRadius: 1,
-              )
-            ],
-            borderRadius: BorderRadius.circular(AppStyle.tileBorderRadius),
-          ),
+      child: Card(
+        clipBehavior: Clip.hardEdge,
+        child: SizedBox(
+          height: 80,
           child: ListTile(
             onTap: () {},
             contentPadding: const EdgeInsets.all(15),

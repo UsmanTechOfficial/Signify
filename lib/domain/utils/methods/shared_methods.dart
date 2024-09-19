@@ -5,6 +5,7 @@ class FilePicker {
     const XTypeGroup typeGroup = XTypeGroup(
       label: 'PDFs',
       extensions: ['pdf'],
+      uniformTypeIdentifiers: ['public.pdf'],
     );
 
     final List<XFile> selectedFiles = await openFiles(
@@ -12,6 +13,76 @@ class FilePicker {
     );
 
     return selectedFiles;
+  }
+}
+
+class GalleryImageToPdf {
+  static Future<XFile?> convert() async {
+    final picker = ImagePicker();
+    final pickedFile = await picker.pickImage(source: ImageSource.gallery);
+
+    if (pickedFile == null) {
+      return null;
+    }
+
+    final imageFile = File(pickedFile.path);
+
+    final pdf = pw.Document();
+
+    final image = pw.MemoryImage(imageFile.readAsBytesSync());
+
+    pdf.addPage(
+      pw.Page(
+        build: (pw.Context context) {
+          return pw.Center(
+            child: pw.Image(image),
+          );
+        },
+      ),
+    );
+
+    final outputDir = await getTemporaryDirectory();
+    final pdfFilePath = path.join(outputDir.path, 'converted_image.pdf');
+    final pdfFile = File(pdfFilePath);
+
+    await pdfFile.writeAsBytes(await pdf.save());
+
+    return XFile(pdfFilePath);
+  }
+}
+
+class CameraImageToPdf {
+  static Future<XFile?> convert() async {
+    final picker = ImagePicker();
+    final pickedFile = await picker.pickImage(source: ImageSource.camera);
+
+    if (pickedFile == null) {
+      return null;
+    }
+
+    final imageFile = File(pickedFile.path);
+
+    final pdf = pw.Document();
+
+    final image = pw.MemoryImage(imageFile.readAsBytesSync());
+
+    pdf.addPage(
+      pw.Page(
+        build: (pw.Context context) {
+          return pw.Center(
+            child: pw.Image(image),
+          );
+        },
+      ),
+    );
+
+    final outputDir = await getTemporaryDirectory();
+    final pdfFilePath = path.join(outputDir.path, 'converted_image.pdf');
+    final pdfFile = File(pdfFilePath);
+
+    await pdfFile.writeAsBytes(await pdf.save());
+
+    return XFile(pdfFilePath);
   }
 }
 
@@ -45,10 +116,11 @@ class PdfSinglePage {
 
 class FileToModel {
   static Future<PickedFileModel> convert(XFile file) async {
+    final firstPage = await PdfSinglePage.get(file);
     return PickedFileModel(
       name: file.name,
       date: await file.lastModified(),
-      bytes: await file.readAsBytes(),
+      bytes: firstPage!.bytes,
       xFile: file,
     );
   }

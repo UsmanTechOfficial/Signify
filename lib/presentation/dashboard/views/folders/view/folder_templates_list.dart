@@ -132,6 +132,7 @@ class FolderTemplatesList extends StatelessWidget {
         ));
   }
 }
+
 class TemplateFilterSheet extends StatelessWidget {
   const TemplateFilterSheet({super.key});
 

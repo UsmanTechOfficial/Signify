@@ -7,7 +7,6 @@ import '../../../../../infrastructure/dal/models/new_folder.model.dart';
 import '../../../widgets/filters.dart';
 
 part 'folders_event.dart';
-
 part 'folders_state.dart';
 
 Set<int> selectedTemplates = <int>{};
@@ -72,6 +71,5 @@ class FoldersBloc extends Bloc<FoldersEvent, FoldersState> {
         return TemplatesModel(name: 'Invoice Temp $index', desc: 'none');
       },
     );
-
   }
 }

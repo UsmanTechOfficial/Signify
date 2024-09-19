@@ -5,7 +5,6 @@ import 'package:dyno_sign/presentation/dashboard/views/profile/bloc/profile_bloc
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../../assets_gen/assets.gen.dart';
 import '../../../widgets/widgets.dart';
 
 class ProfileView extends StatelessWidget {

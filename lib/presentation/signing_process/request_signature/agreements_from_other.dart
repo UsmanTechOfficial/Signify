@@ -5,8 +5,8 @@ import 'package:dyno_sign/presentation/signing_process/bloc/signing_process_cubi
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../domain/consts/consts.dart';
-import '../widgets/widgets.dart';
+import '../../../domain/consts/consts.dart';
+import '../../widgets/widgets.dart';
 
 class AgreementsFromOthers extends StatelessWidget {
   final SignProcessTypes signProcessTypes;

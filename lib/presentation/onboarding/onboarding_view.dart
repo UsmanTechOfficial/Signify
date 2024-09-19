@@ -71,6 +71,7 @@ class OnboardingView extends StatelessWidget {
                         return OnboardingTab(
                           image: bloc.tabImages[index],
                           label: bloc.tabLabels[index],
+                          subTitle: bloc.tabSubTitle[index],
                         );
                       },
                     ),

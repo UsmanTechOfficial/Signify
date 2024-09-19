@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
-import '../../domain/consts/app_consts/sign_process_types.dart';
-import '../../domain/consts/consts.dart';
-import '../../infrastructure/navigation/app_routes/navigation.dart';
-import '../../infrastructure/navigation/app_routes/routes.dart';
-import '../widgets/widgets.dart';
+import '../../../domain/consts/app_consts/sign_process_types.dart';
+import '../../../domain/consts/consts.dart';
+import '../../../infrastructure/navigation/app_routes/navigation.dart';
+import '../../../infrastructure/navigation/app_routes/routes.dart';
+import '../../widgets/widgets.dart';
 
 class AgreementDetailAddedView extends StatelessWidget {
   final SignProcessTypes signProcessTypes;

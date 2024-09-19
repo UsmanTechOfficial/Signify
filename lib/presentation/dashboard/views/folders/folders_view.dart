@@ -9,7 +9,6 @@ import '../../../widgets/widgets.dart';
 import '../../widgets/filters.dart';
 
 part 'view/create_folder_view.dart';
-
 part 'view/folder_templates_list.dart';
 
 class FoldersView extends StatelessWidget {
@@ -19,13 +18,26 @@ class FoldersView extends StatelessWidget {
   Widget build(BuildContext context) {
     final color = Theme.of(context).colorScheme;
     final searchController = TextEditingController();
-    final bloc = getIt<FoldersBloc>();
     final width = appWidth(context);
     return Scaffold(
       appBar: AppBar(
         leading: CustomIconButton(
             onPressed: () => Navigator.pop(context), icon: Icon(Icons.adaptive.arrow_back)),
         title: const Text("Folders"),
+        actions: [
+          CustomIconButton(
+            padding: 10,
+            icon: Icon(Icons.add, color: color.surface),
+            backgroundColor: color.primary,
+            onPressed: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const CreateFolderView(),
+                  ));
+            },
+          ),
+        ],
         bottom: PreferredSize(
           preferredSize: const Size.fromHeight(kTextTabBarHeight),
           child: Padding(
@@ -88,7 +100,7 @@ class FoldersView extends StatelessWidget {
             ),
             SliverList(
                 delegate: SliverChildBuilderDelegate(
-              childCount: 28,
+              childCount: 10,
               (context, index) {
                 return CustomFolderTile(
                   index: index,

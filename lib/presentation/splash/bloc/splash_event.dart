@@ -1,4 +1,4 @@
-import 'package:equatable/equatable.dart';
+part of 'splash_bloc.dart';
 
 sealed class SplashEvent extends Equatable {
   @override

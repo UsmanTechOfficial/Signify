@@ -45,7 +45,7 @@ class OnboardingBloc extends Bloc<OnboardingEvent, OnboardingState> {
   bool _isFirstPage() => state.page <= 0;
 
   void _navigate() {
-    Go.offAllToNamed(Routes.DASHBOARD);
+    Go.offAllAndToNamed(Routes.LOGIN);
   }
 
   List<Widget> tabImages = [
@@ -55,9 +55,14 @@ class OnboardingBloc extends Bloc<OnboardingEvent, OnboardingState> {
   ];
 
   List<String> tabLabels = [
-    'Page 1',
-    'Page 2',
-    'Page 3',
+    'The location of the vgehicle',
+    'The location of the vgehicle',
+    'The location of the vgehicle',
+  ];
+  List<String> tabSubTitle = [
+    'Call mobile refills using. Call mobile refills using the Call mobile refills using the Call mobile refills using the.',
+    'Call mobile refills using. Call mobile refills using the Call mobile refills using the Call mobile refills using the.',
+    'Call mobile refills using. Call mobile refills using the Call mobile refills using the Call mobile refills using the.',
   ];
 
   @override

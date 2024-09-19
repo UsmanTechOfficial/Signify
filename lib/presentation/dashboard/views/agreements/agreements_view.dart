@@ -124,11 +124,32 @@ class AgreementsView extends StatelessWidget {
                   } else if (state is AgreementsErrorState) {
                     return const SliverFillRemaining(
                       child: Center(
-                        child: Text('An error occurred. Please try again later.'),
+                        child: CustomText('An error occurred. Please try again later.'),
                       ),
                     );
                   }
-                  return const SliverFillRemaining(child: SizedBox.shrink());
+                  return SliverGrid(
+                    gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 2,
+                      mainAxisSpacing: 10.0,
+                      crossAxisSpacing: 10.0,
+                      mainAxisExtent: 200, // Adjust this as needed
+                    ),
+                    delegate: SliverChildBuilderDelegate((BuildContext context, int index) {
+                      return DocCard(
+                        onTap: () {},
+                        child: SizedBox(
+                          height: double.maxFinite,
+                          width: double.maxFinite,
+                          child: Image.asset(
+                            'assets/images/img.png',
+                            fit: BoxFit.fill,
+                          ),
+                        ),
+                      );
+                    }, childCount: 10),
+                  );
+                  // return const SliverFillRemaining(child: SizedBox.shrink());
                 },
               )
             ],

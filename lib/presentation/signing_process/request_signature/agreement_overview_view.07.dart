@@ -2,10 +2,10 @@ import 'package:dyno_sign/domain/consts/app_consts/sign_process_types.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../domain/consts/consts.dart';
-import '../dashboard/views/home/home_view.dart';
-import '../widgets/widgets.dart';
-import 'bloc/signing_process_cubit.dart';
+import '../../../domain/consts/consts.dart';
+import '../../dashboard/views/home/home_view.dart';
+import '../../widgets/widgets.dart';
+import '../bloc/signing_process_cubit.dart';
 
 class AgreementOverviewView extends StatelessWidget {
   final SignProcessTypes signProcessTypes;
@@ -108,7 +108,7 @@ class AgreementOverviewView extends StatelessWidget {
               ),
             ),
             SliverGrid.builder(
-              itemCount: cubit.pickedFiles.length,
+              itemCount: cubit.selectedPdfFileList.length,
               gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
               itemBuilder: (context, index) {
                 return DocCard(

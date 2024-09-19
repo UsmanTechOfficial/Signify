@@ -24,7 +24,6 @@ class AddDocumentSheet extends StatelessWidget {
         GridView.builder(
           shrinkWrap: true,
           physics: const NeverScrollableScrollPhysics(),
-          // Disable internal scrolling
           itemCount: DocumentSource.values.length,
           gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
             crossAxisCount: 4,
@@ -104,12 +103,8 @@ class AddDocumentSheet extends StatelessWidget {
 }
 
 enum DocumentSource {
-  scan,
   camera,
-  templates,
   gallery,
-  drive,
   files,
   library,
-  media,
 }

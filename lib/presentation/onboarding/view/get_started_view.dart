@@ -3,20 +3,17 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../assets_gen/assets.gen.dart';
 import '../../../domain/consts/consts.dart';
-import '../../../infrastructure/navigation/app_routes/navigation.dart';
-import '../../../infrastructure/navigation/app_routes/routes.dart';
 import '../../widgets/buttons/custom_elevated_text_button.dart';
 import '../../widgets/text/custom_text.dart';
 import '../bloc/onboarding_bloc.dart';
 import '../bloc/onboarding_state.dart';
+import '../onboarding_view.dart';
 
 class GetStartedView extends StatelessWidget {
   const GetStartedView({super.key});
 
   @override
   Widget build(BuildContext context) {
-    // final color = appColorScheme(context);
-    // final bloc = context.read<OnboardingBloc>();
     final height = appHeight(context);
     final width = appWidth(context);
     return Scaffold(
@@ -46,9 +43,14 @@ class GetStartedView extends StatelessWidget {
                   width: width * 0.9,
                   text: "Get Started",
                   onPressed: () => {
-                    Go.offAllToNamed(
-                      Routes.LOGIN,
-                    ),
+                    Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => BlocProvider.value(
+                            value: OnboardingBloc(),
+                            child: const OnboardingView(),
+                          ),
+                        ))
                   },
                 ),
               )

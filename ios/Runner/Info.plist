@@ -45,5 +45,16 @@
 	<true/>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
+
+	<!-- Describe why your app needs permission for the photo library -->
+    <key>NSPhotoLibraryUsageDescription</key>
+    <string>To Access the photo from library for signature.</string>
+
+    <!-- Describe why your app needs access to the camera -->
+    <key>NSCameraUsageDescription</key>
+    <string>To Access the photo from camera for signature.</string>
+
+    <key>NSDocumentTypeUsageDescription</key>
+    <string>Your app needs access to documents on your device.</string>
 </dict>
 </plist>

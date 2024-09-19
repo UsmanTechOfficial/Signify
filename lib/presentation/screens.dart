@@ -16,7 +16,8 @@ export 'package:dyno_sign/presentation/request_signature/views/recipients_detail
 export 'package:dyno_sign/presentation/request_signature/views/selected_document/selected_document_view.dart';
 export 'package:dyno_sign/presentation/signature_manager/signature_manager_view.dart';
 export 'package:dyno_sign/presentation/splash/splash_view.dart';
+
+export 'dashboard/views/agreements/agreements_view.dart';
 export 'dashboard/views/home/home_view.dart';
 export 'dashboard/views/profile/profile_view.dart';
-export 'dashboard/views/agreements/agreements_view.dart';
 export 'dashboard/views/templates/templates_view.dart';

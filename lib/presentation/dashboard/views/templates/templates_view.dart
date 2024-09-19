@@ -94,24 +94,30 @@ class TemplatesView extends StatelessWidget {
                 delegate: SliverChildBuilderDelegate(
               childCount: 10,
               (context, index) {
-                return SizedBox(
-                    height: 80,
+                return Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 5),
+                  child: SizedBox(
+                    height: 95,
                     width: double.maxFinite,
                     child: Card(
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(
-                            AppStyle.tileBorderRadius,
-                          ),
-                        ),
-                        child: ListTile(
-                          leading: Column(
-                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      clipBehavior: Clip.hardEdge,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(AppStyle.tileBorderRadius),
+                      ),
+                      child: ListTile(
+                        contentPadding: const EdgeInsets.symmetric(horizontal: 16.0),
+                        // Add horizontal padding
+                        leading: SizedBox(
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               CustomText(
                                 "Template ${index + 1}",
                                 fontSize: AppFontSize.titleXSmallFont,
-                                fontWeight: FontWeight.w500,
+                                fontWeight: FontWeight.w600,
                               ),
+                              const SizedBox(height: 10), // Add space between texts
                               CustomText(
                                 "Amir",
                                 fontSize: AppFontSize.labelSmallFont,
@@ -119,13 +125,20 @@ class TemplatesView extends StatelessWidget {
                               ),
                             ],
                           ),
-                          subtitle: CustomText(
+                        ),
+                        title: Center(
+                          // Center the title
+                          child: CustomText(
                             "05/03/2024",
                             color: color.outline,
                             fontSize: AppFontSize.labelSmallFont,
                             textAlign: TextAlign.center,
                           ),
-                        )));
+                        ),
+                      ),
+                    ),
+                  ),
+                );
               },
             ))
           ],

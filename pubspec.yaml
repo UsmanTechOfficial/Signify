@@ -23,6 +23,9 @@ dependencies:
   intl: any
   syncfusion_flutter_signaturepad: any
   pdfx: any
+  pdf: any
+  path: any
+
 
 dev_dependencies:
   flutter_test:

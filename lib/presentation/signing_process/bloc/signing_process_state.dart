@@ -1,6 +1,6 @@
 part of 'signing_process_cubit.dart';
 
-abstract class SigningProcessState extends Equatable {
+sealed class SigningProcessState extends Equatable {
   const SigningProcessState();
 
   @override
@@ -12,12 +12,7 @@ class SigningProcessInitialState extends SigningProcessState {
 }
 
 class FileSelectedState extends SigningProcessState {
-  final List<PickedFileModel> files;
-
-  const FileSelectedState({required this.files});
-
-  @override
-  List<Object?> get props => [files];
+  const FileSelectedState();
 }
 
 class DocumentPreviewLoading extends SigningProcessState {
@@ -41,4 +36,13 @@ class DocumentPreviewError extends SigningProcessState {
 
   @override
   List<Object?> get props => [msg];
+}
+
+class AssignFieldSelectedDoc extends SigningProcessState {
+  final int index;
+
+  const AssignFieldSelectedDoc({this.index = 0});
+
+  @override
+  List<Object?> get props => [index];
 }

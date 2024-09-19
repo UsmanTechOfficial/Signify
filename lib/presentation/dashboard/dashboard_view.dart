@@ -7,7 +7,7 @@ import 'package:dyno_sign/presentation/dashboard/views/home/bloc/home_bloc.dart'
 import 'package:dyno_sign/presentation/dashboard/views/profile/bloc/profile_bloc.dart';
 import 'package:dyno_sign/presentation/dashboard/views/templates/bloc/templates_bloc.dart';
 import 'package:dyno_sign/presentation/signing_process/bloc/signing_process_cubit.dart';
-import 'package:dyno_sign/presentation/signing_process/document_preview_view.01.dart';
+import 'package:dyno_sign/presentation/signing_process/request_signature/document_preview_view.01.dart';
 import 'package:dyno_sign/presentation/widgets/bottom_nav_bar/bottom_nav_bar.dart';
 import 'package:dyno_sign/presentation/widgets/bottom_sheets/bottom_sheets.dart';
 import 'package:dyno_sign/presentation/widgets/bottom_sheets/custom_bottom_sheet/sheets_widget/add_documents/add_document.sheet.dart';
@@ -213,8 +213,19 @@ class DashboardView extends StatelessWidget {
               );
 
               break;
-            case DocumentSource.camera:
+            case DocumentSource.gallery:
+              GalleryImageToPdf.convert().then(
+                (file) async {
+                  _preview(signingCubit, file: file!, signProcessTypes: signProcessTypes);
+                },
+              );
               break;
+            case DocumentSource.camera:
+              CameraImageToPdf.convert().then(
+                (file) {
+                  _preview(signingCubit, file: file!, signProcessTypes: signProcessTypes);
+                },
+              );
             default:
               break;
           }
@@ -237,7 +248,7 @@ class DashboardView extends StatelessWidget {
         onByOthers: () {
           // close previous sheet
           Go.back();
-          Go.toNamed(Routes.AGGREMENTS_FROM_OTHER, arguments: {
+          Go.toNamed(Routes.AGREEMENTS_FROM_OTHER, arguments: {
             'signProcessTypes': SignProcessTypes.sendByOthers,
           });
         },
@@ -254,7 +265,7 @@ class DashboardView extends StatelessWidget {
       check: (result) async {
         if (result == PreviewCheck.keep) {
           final model = await FileToModel.convert(file);
-          signingCubit.pickedFiles.add(model);
+          signingCubit.selectedPdfFileList.add(model);
 
           Go.toNamed(
             Routes.SELECTED_DOCUMENT,

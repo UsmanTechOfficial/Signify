@@ -2,12 +2,12 @@ import 'package:dyno_sign/domain/consts/app_consts/sign_process_types.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../domain/consts/consts.dart';
-import '../../infrastructure/navigation/app_routes/navigation.dart';
-import '../../infrastructure/navigation/app_routes/routes.dart';
-import '../dashboard/views/home/home_view.dart';
-import '../widgets/widgets.dart';
-import 'bloc/signing_process_cubit.dart';
+import '../../../domain/consts/consts.dart';
+import '../../../infrastructure/navigation/app_routes/navigation.dart';
+import '../../../infrastructure/navigation/app_routes/routes.dart';
+import '../../dashboard/views/home/home_view.dart';
+import '../../widgets/widgets.dart';
+import '../bloc/signing_process_cubit.dart';
 
 class AssignFieldsView extends StatelessWidget {
   final SignProcessTypes signProcessTypes;
@@ -42,6 +42,8 @@ class AssignFieldsView extends StatelessWidget {
                           'signProcessTypes': SignProcessTypes.requestSignatures,
                         },
                       );
+                    } else if (signProcessTypes == SignProcessTypes.onlyForMe) {
+                      Go.toNamed(Routes.SIGNATURE_MANAGER);
                     }
                   },
                   text: 'Next',
@@ -61,24 +63,27 @@ class AssignFieldsView extends StatelessWidget {
               ),
             ),
             BlocBuilder<SigningProcessCubit, SigningProcessState>(
+              buildWhen: (_, current) => current is AssignFieldSelectedDoc,
               bloc: cubit,
               builder: (context, state) {
                 return SizedBox(
                   height: 200,
                   child: ListView.builder(
                     scrollDirection: Axis.horizontal,
-                    itemCount: cubit.pickedFiles.length,
+                    itemCount: cubit.selectedPdfFileList.length,
                     itemBuilder: (context, index) {
-                      if (state is DocumentPreviewLoaded) {
+                      if (state is AssignFieldSelectedDoc) {
                         return SizedBox(
                           width: 150,
                           child: Padding(
                             padding: const EdgeInsets.symmetric(vertical: 8),
                             child: DocCard(
-                              isSelected: index.isOdd,
+                              isSelected: index == state.index,
                               bottomChild: "2024-09-18",
-                              onTap: () {},
-                              child: Image.memory(state.imageBytes),
+                              onTap: () {
+                                cubit.onDocSelection(index);
+                              },
+                              child: Image.memory(cubit.selectedPdfFileList[index].bytes),
                             ),
                           ),
                         );
@@ -88,9 +93,12 @@ class AssignFieldsView extends StatelessWidget {
                         child: Padding(
                           padding: const EdgeInsets.symmetric(vertical: 8),
                           child: DocCard(
-                            // isSelected: index.isOdd,
-                            child: const Center(child: Icon(Icons.error)),
-                            onTap: () {},
+                            isSelected: index == 0,
+                            bottomChild: "2024-09-18",
+                            onTap: () {
+                              cubit.onDocSelection(index);
+                            },
+                            child: Image.memory(cubit.selectedPdfFileList[index].bytes),
                           ),
                         ),
                       );
@@ -118,9 +126,11 @@ class AssignFieldsView extends StatelessWidget {
                 if (state is DocumentPreviewLoading) {
                   return const Center(child: CircularProgressIndicator());
                 } else if (state is DocumentPreviewLoaded) {
-                  return Image.memory(state.imageBytes);
+                  return Image.memory(cubit.selectedPdfFileList.first.bytes);
                 } else if (state is DocumentPreviewError) {
                   return CustomText(state.msg);
+                } else if (state is AssignFieldSelectedDoc) {
+                  return Image.memory(cubit.selectedPdfFileList[state.index].bytes);
                 }
                 return const CustomText("No Preview Found");
               },

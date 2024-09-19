@@ -6,7 +6,7 @@ import 'package:dyno_sign/infrastructure/navigation/app_routes/navigation.dart';
 import 'package:file_selector/file_selector.dart';
 import 'package:flutter/material.dart';
 
-import '../widgets/widgets.dart';
+import '../../widgets/widgets.dart';
 
 class DocumentPreviewWidget extends StatefulWidget {
   final bool previewOnly;
@@ -73,20 +73,20 @@ class _DocumentPreviewWidgetState extends State<DocumentPreviewWidget> {
           !widget.previewOnly
               ? Padding(
                   padding: EdgeInsets.symmetric(horizontal: width * .05),
-            child: CustomElevatedIconButton(
-              width: 44,
-              height: 44,
-              elevation: 0,
-              icon: Icons.check,
-              iconColor: color.onSurface,
-              borderRadius: AppStyle.buttonBorderRadius,
-              iconSize: 20,
-              fillColor: color.outlineVariant.withOpacity(0.5),
-              onPressed: () {
-                Go.back();
-                widget.result(PreviewCheck.keep);
-              },
-            ),
+                  child: CustomElevatedIconButton(
+                    width: 44,
+                    height: 44,
+                    elevation: 0,
+                    icon: Icons.check,
+                    iconColor: color.onSurface,
+                    borderRadius: AppStyle.buttonBorderRadius,
+                    iconSize: 20,
+                    fillColor: color.outlineVariant.withOpacity(0.5),
+                    onPressed: () {
+                      Go.back();
+                      widget.result(PreviewCheck.keep);
+                    },
+                  ),
                 )
               : const SizedBox.shrink()
         ],

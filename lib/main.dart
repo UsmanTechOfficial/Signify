@@ -1,4 +1,4 @@
-import 'package:dyno_sign/infrastructure/navigation/injection_container/injection.container.dart';
+import 'package:dyno_sign/infrastructure/navigation/bloc_bindings/bloc_bindings.dart';
 import 'package:flutter/material.dart';
 import 'package:get_storage/get_storage.dart';
 
@@ -10,8 +10,8 @@ import 'infrastructure/theme/app_theme.dart';
 
 void main() async {
   await GetStorage.init();
-  await ServiceLocator.init();
-  await InjectionContainer.init();
+  ServiceLocator().dependencies();
+  BlocBindings().dependencies();
   runApp(
     const Main(),
   );
@@ -30,7 +30,7 @@ class Main extends StatelessWidget {
       themeMode: ThemeMode.light,
       onGenerateRoute: AppPages.onGenerateRoute,
       scaffoldMessengerKey: scaffoldMessengerKey,
-      initialRoute: Routes.INITIALS_MANAGER,
+      initialRoute: Routes.DASHBOARD,
       navigatorKey: navigatorKey,
     );
   }

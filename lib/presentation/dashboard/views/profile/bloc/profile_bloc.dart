@@ -4,13 +4,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
 
 part 'profile_event.dart';
-
 part 'profile_state.dart';
 
 class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
   ProfileBloc() : super(ProfileInitial()) {
-    on<ProfileEvent>((event, emit) {
-    });
+    on<ProfileEvent>((event, emit) {});
 
     on<UpdateProfileImage>(pickImage);
   }

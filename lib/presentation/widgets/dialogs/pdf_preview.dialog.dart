@@ -2,7 +2,7 @@ import 'package:file_selector/file_selector.dart';
 import 'package:flutter/material.dart';
 
 import '../../../domain/consts/global_var.dart';
-import '../../signing_process/document_preview_view.01.dart';
+import '../../signing_process/request_signature/document_preview_view.01.dart';
 
 class PdfPreviewDialog {
   static show(XFile file,

@@ -9,7 +9,6 @@ class SettingsView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final color = appColorScheme(context);
     final width = appWidth(context);
     return Scaffold(
       body: NestedScrollView(
