@@ -1,8 +1,4 @@
-export 'bottom_nav_bar/bottom_nav_bar.dart';
-export 'bottom_sheets/draft/add_sign_sheets/sign_request_sheet.dart';
-export 'bottom_sheets/draft/base_bottom_sheet.dart';
-export 'bottom_sheets/draft/req_sign/add_doc_sheet.dart';
-export 'bottom_sheets/draft/sign_docs/sign_docs_sheet.dart';
+export '../dashboard/widgets/bottom_nav_bar.dart';
 export 'buttons/custom_elevated_button.dart';
 export 'buttons/custom_elevated_icon_button.dart';
 export 'buttons/custom_elevated_text_button.dart';

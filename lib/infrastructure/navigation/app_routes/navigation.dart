@@ -110,16 +110,6 @@ class AppPages {
           settings: settings,
         );
 
-      /// RequestSignaturesView
-      case Routes.REQUEST_SIGNATURE:
-        return MaterialPageRoute(
-          builder: (context) => BlocProvider(
-            create: (context) => RequestSignaturesBloc(),
-            child: const RequestSignaturesView(),
-          ),
-          settings: settings,
-        );
-
       /// SplashView
       case Routes.SPLASH:
         return MaterialPageRoute(

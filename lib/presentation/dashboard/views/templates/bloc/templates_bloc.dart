@@ -1,7 +1,7 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../widgets/filters.dart';
+import '../../../../../domain/consts/app_consts/filters.dart';
 
 part 'templates_event.dart';
 part 'templates_state.dart';
@@ -44,7 +44,8 @@ class TemplatesBloc extends Bloc<TemplatesEvent, TemplatesState> {
     await Future.delayed(const Duration(seconds: 1));
 
     return ["Template 1", "Template 2", "Template 3"]
-        .where((template) => template.toLowerCase().contains(event.query.toLowerCase()))
+        .where((template) =>
+            template.toLowerCase().contains(event.query.toLowerCase()))
         .toList();
   }
 }

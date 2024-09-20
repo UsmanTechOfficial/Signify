@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
-import '../../../../assets_gen/assets.gen.dart';
-import '../../../../domain/consts/font_size.dart';
-import '../../../../domain/consts/global_var.dart';
-import '../../../widgets/text/custom_text.dart';
+import '../../../assets_gen/assets.gen.dart';
+import '../../../domain/consts/font_size.dart';
+import '../../../domain/consts/global_var.dart';
+import '../../widgets/text/custom_text.dart';
 
 class DrawerItemsTile extends StatelessWidget {
   final bool isSelected;

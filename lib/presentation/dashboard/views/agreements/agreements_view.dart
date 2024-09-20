@@ -8,7 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../widgets/custom_appbar.dart';
-import '../../widgets/filters.dart';
+import '../../../../domain/consts/app_consts/filters.dart';
 import '../home/home_view.dart';
 import 'bloc/agreements_bloc.dart';
 
@@ -97,7 +97,8 @@ class AgreementsView extends StatelessWidget {
                     );
                   } else if (state is AgreementsLoadedState) {
                     return SliverGrid(
-                      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                      gridDelegate:
+                          const SliverGridDelegateWithFixedCrossAxisCount(
                         crossAxisCount: 2,
                         mainAxisSpacing: 10.0,
                         crossAxisSpacing: 10.0,
@@ -124,18 +125,21 @@ class AgreementsView extends StatelessWidget {
                   } else if (state is AgreementsErrorState) {
                     return const SliverFillRemaining(
                       child: Center(
-                        child: CustomText('An error occurred. Please try again later.'),
+                        child: CustomText(
+                            'An error occurred. Please try again later.'),
                       ),
                     );
                   }
                   return SliverGrid(
-                    gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                    gridDelegate:
+                        const SliverGridDelegateWithFixedCrossAxisCount(
                       crossAxisCount: 2,
                       mainAxisSpacing: 10.0,
                       crossAxisSpacing: 10.0,
                       mainAxisExtent: 200, // Adjust this as needed
                     ),
-                    delegate: SliverChildBuilderDelegate((BuildContext context, int index) {
+                    delegate: SliverChildBuilderDelegate(
+                        (BuildContext context, int index) {
                       return DocCard(
                         onTap: () {},
                         child: SizedBox(
@@ -205,7 +209,8 @@ class AgreementsFilterSheet extends StatelessWidget {
                 fontSize: AppFontSize.titleSmallFont,
               ),
               BlocBuilder<AgreementsBloc, AgreementsState>(
-                buildWhen: (previous, current) => current is StatusFilterSelectionState,
+                buildWhen: (previous, current) =>
+                    current is StatusFilterSelectionState,
                 builder: (context, state) {
                   return ListView.builder(
                     shrinkWrap: true,
@@ -248,7 +253,8 @@ class AgreementsFilterSheet extends StatelessWidget {
                 fontSize: AppFontSize.titleSmallFont,
               ),
               BlocBuilder<AgreementsBloc, AgreementsState>(
-                buildWhen: (previous, current) => current is DateFilterSelectionState,
+                buildWhen: (previous, current) =>
+                    current is DateFilterSelectionState,
                 builder: (context, state) {
                   if (state is DateFilterSelectionState) {
                     bloc.selectedDateFilters = state.newFilter;

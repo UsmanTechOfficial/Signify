@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../../../domain/consts/styles.dart';
+import '../../../domain/consts/styles.dart';
 
 class SignatureChoiceCard extends StatelessWidget {
   final bool isSelected;
@@ -21,7 +21,8 @@ class SignatureChoiceCard extends StatelessWidget {
     final colorScheme = Theme.of(context).colorScheme;
 
     return Card(
-      shadowColor: isSelected ? colorScheme.primary : colorScheme.outlineVariant,
+      shadowColor:
+          isSelected ? colorScheme.primary : colorScheme.outlineVariant,
       elevation: 4,
       color: colorScheme.surface,
       child: InkWell(
@@ -49,7 +50,9 @@ class SignatureChoiceCard extends StatelessWidget {
                               ),
                             )
                           : null,
-                      color: isSelected ? colorScheme.primary : colorScheme.surface,
+                      color: isSelected
+                          ? colorScheme.primary
+                          : colorScheme.surface,
                       borderRadius: const BorderRadius.only(
                         bottomRight: Radius.circular(AppStyle.tileBorderRadius),
                         bottomLeft: Radius.circular(AppStyle.tileBorderRadius),
@@ -65,7 +68,8 @@ class SignatureChoiceCard extends StatelessWidget {
                             onPressed: () {},
                           ),
                           IconButton(
-                            icon: Icon(Icons.delete, color: colorScheme.surface),
+                            icon:
+                                Icon(Icons.delete, color: colorScheme.surface),
                             onPressed: () {},
                           ),
                         ],
@@ -83,10 +87,13 @@ class SignatureChoiceCard extends StatelessWidget {
                     color: AppStyle.transparent,
                     elevation: 0,
                     shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(AppStyle.roundedBorder),
+                      borderRadius:
+                          BorderRadius.circular(AppStyle.roundedBorder),
                       side: BorderSide(
                         width: 2,
-                        color: isSelected ? colorScheme.primary : colorScheme.outlineVariant,
+                        color: isSelected
+                            ? colorScheme.primary
+                            : colorScheme.outlineVariant,
                       ),
                     ),
                     child: isSelected

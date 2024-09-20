@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 
 import '../../../../domain/consts/consts.dart';
 import '../../../widgets/widgets.dart';
-import '../../widgets/filters.dart';
+import '../../../../domain/consts/app_consts/filters.dart';
 
 part 'view/create_folder_view.dart';
 part 'view/folder_templates_list.dart';
@@ -22,7 +22,8 @@ class FoldersView extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         leading: CustomIconButton(
-            onPressed: () => Navigator.pop(context), icon: Icon(Icons.adaptive.arrow_back)),
+            onPressed: () => Navigator.pop(context),
+            icon: Icon(Icons.adaptive.arrow_back)),
         title: const Text("Folders"),
         actions: [
           CustomIconButton(
