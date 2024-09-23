@@ -1,12 +1,12 @@
-import 'package:dyno_sign/infrastructure/navigation/app_routes/navigation.dart';
-import 'package:dyno_sign/presentation/pop_up/request_signature/request_sign_recipient_detail/role/req_sign_recipient_detail_added_view.dart';
+import 'package:dyno_sign/presentation/pop_up/add_templates/add_template_recipient_detail/add_template_recipient_detail_view.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../domain/consts/consts.dart';
+import '../../../../infrastructure/navigation/app_routes/navigation.dart';
 import '../../../widgets/widgets.dart';
 
-class ReqSignAgreementDetailView extends StatelessWidget {
-  const ReqSignAgreementDetailView({super.key, required});
+class AddTemplateDetailAddedView extends StatelessWidget {
+  const AddTemplateDetailAddedView({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +28,7 @@ class ReqSignAgreementDetailView extends StatelessWidget {
                 alignment: Alignment.centerRight,
                 child: CustomOutlinedTextButton(
                   onPressed: () {
-                    Go.to(const ReqSignRecipientDetailAddedView());
+                    Go.to(const AddTemplateRecipientDetailView());
                   },
                   text: 'Next',
                   borderRadius: AppStyle.outlinedBtnRadius,

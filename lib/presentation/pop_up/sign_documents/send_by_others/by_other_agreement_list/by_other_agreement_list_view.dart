@@ -1,6 +1,7 @@
 import 'package:dyno_sign/infrastructure/navigation/app_routes/navigation.dart';
 import 'package:dyno_sign/presentation/pop_up/sign_documents/send_by_others/by_other_agreement_detail/by_other_agreement_detail_view.dart';
 import 'package:flutter/material.dart';
+
 import '../../../../../domain/consts/consts.dart';
 import '../../../../widgets/widgets.dart';
 
@@ -16,7 +17,8 @@ class ByOtherAgreementListView extends StatelessWidget {
         appBar: AppBar(
           centerTitle: true,
           leading: CustomIconButton(
-              onPressed: () => Navigator.pop(context), icon: Icon(Icons.adaptive.arrow_back)),
+              onPressed: () => Navigator.pop(context),
+              icon: Icon(Icons.adaptive.arrow_back)),
           title: const CustomText("Agreements"),
           bottom: PreferredSize(
             preferredSize: const Size.fromHeight(kToolbarHeight),
@@ -71,12 +73,13 @@ class ByOtherAgreementListView extends StatelessWidget {
                   child: Card(
                     clipBehavior: Clip.hardEdge,
                     shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(AppStyle.tileBorderRadius),
+                      borderRadius:
+                          BorderRadius.circular(AppStyle.tileBorderRadius),
                     ),
                     child: ListTile(
                       leading: Container(
-                        decoration:
-                            const BoxDecoration(color: Color(0xffFEF2CD), shape: BoxShape.circle),
+                        decoration: const BoxDecoration(
+                            color: Color(0xffFEF2CD), shape: BoxShape.circle),
                         padding: const EdgeInsets.all(15),
                         child: CircleAvatar(
                           backgroundColor: const Color(0xffFBBC04),

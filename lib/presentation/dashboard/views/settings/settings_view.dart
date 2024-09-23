@@ -68,7 +68,8 @@ class SettingsView extends StatelessWidget {
               const SizedBox(height: 20),
               const Divider(),
               Padding(
-                padding: EdgeInsets.symmetric(horizontal: width * 0.05, vertical: 15),
+                padding: EdgeInsets.symmetric(
+                    horizontal: width * 0.05, vertical: 15),
                 child: const CustomText(
                   "Security Settings",
                   fontSize: AppFontSize.titleXSmallFont,
@@ -93,7 +94,8 @@ class SettingsView extends StatelessWidget {
               const SizedBox(height: 20),
               const Divider(),
               Padding(
-                padding: EdgeInsets.symmetric(horizontal: width * 0.05, vertical: 15),
+                padding: EdgeInsets.symmetric(
+                    horizontal: width * 0.05, vertical: 15),
                 child: const CustomText(
                   "Signing Settings",
                   fontSize: AppFontSize.titleXSmallFont,
@@ -118,7 +120,8 @@ class SettingsView extends StatelessWidget {
               const SizedBox(height: 20),
               const Divider(),
               Padding(
-                padding: EdgeInsets.symmetric(horizontal: width * 0.05, vertical: 15),
+                padding: EdgeInsets.symmetric(
+                    horizontal: width * 0.05, vertical: 15),
                 child: const CustomText(
                   "Push Notification Settings",
                   fontSize: AppFontSize.titleXSmallFont,

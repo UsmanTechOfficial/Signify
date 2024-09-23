@@ -6,7 +6,7 @@ import 'package:dyno_sign/infrastructure/navigation/app_routes/navigation.dart';
 import 'package:file_selector/file_selector.dart';
 import 'package:flutter/material.dart';
 
-import '../../widgets/widgets.dart';
+import '../widgets.dart';
 
 class DocumentPreviewWidget extends StatefulWidget {
   final bool previewOnly;
@@ -92,8 +92,9 @@ class _DocumentPreviewWidgetState extends State<DocumentPreviewWidget> {
         ],
       ),
       body: Center(
-        child:
-            pdfPageImage != null ? Image.memory(pdfPageImage!) : const CircularProgressIndicator(),
+        child: pdfPageImage != null
+            ? Image.memory(pdfPageImage!)
+            : const CircularProgressIndicator(),
       ),
     );
   }

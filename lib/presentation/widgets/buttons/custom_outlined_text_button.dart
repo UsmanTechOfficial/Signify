@@ -42,7 +42,8 @@ class CustomOutlinedTextButton extends StatelessWidget {
           backgroundColor: appColorScheme(context).surface,
           alignment: alignment ?? Alignment.center,
           side: BorderSide(
-              color: borderColor ?? appColorScheme(context).primary, width: borderWidth ?? 1.0),
+              color: borderColor ?? appColorScheme(context).primary,
+              width: borderWidth ?? 1.0),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(borderRadius ?? 8.0),
           ),

@@ -10,7 +10,10 @@ class OnboardingTab extends StatelessWidget {
   final String subTitle;
 
   const OnboardingTab(
-      {super.key, required this.image, required this.label, required this.subTitle});
+      {super.key,
+      required this.image,
+      required this.label,
+      required this.subTitle});
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +22,10 @@ class OnboardingTab extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        SizedBox(width: double.maxFinite, height: appHeight(context) * 0.4, child: image),
+        SizedBox(
+            width: double.maxFinite,
+            height: appHeight(context) * 0.4,
+            child: image),
         CustomText(
           label,
           fontSize: AppFontSize.titleSmallFont,

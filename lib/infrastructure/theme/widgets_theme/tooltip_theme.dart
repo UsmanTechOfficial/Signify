@@ -4,11 +4,13 @@ import '../theme.dart';
 
 TooltipThemeData get tooltipTheme => TooltipThemeData(
       decoration: BoxDecoration(
-        color: colorSchemeLight.primaryContainer, // Background color of the tooltip
+        color: colorSchemeLight.primaryContainer,
+        // Background color of the tooltip
         borderRadius: BorderRadius.circular(4.0), // Rounded corners
       ),
       textStyle: TextStyle(
-        color: colorSchemeLight.onPrimaryContainer, // Text color inside the tooltip
+        color: colorSchemeLight.onPrimaryContainer,
+        // Text color inside the tooltip
         fontSize: 14, // Example size for Body Small
       ),
       padding: const EdgeInsets.all(8.0),
@@ -28,11 +30,13 @@ TooltipThemeData get tooltipTheme => TooltipThemeData(
 
 TooltipThemeData get darkTooltipTheme => TooltipThemeData(
       decoration: BoxDecoration(
-        color: colorSchemeDark.primaryContainer, // Background color of the tooltip
+        color: colorSchemeDark.primaryContainer,
+        // Background color of the tooltip
         borderRadius: BorderRadius.circular(4.0), // Rounded corners
       ),
       textStyle: TextStyle(
-        color: colorSchemeDark.onPrimaryContainer, // Text color inside the tooltip
+        color: colorSchemeDark.onPrimaryContainer,
+        // Text color inside the tooltip
         fontSize: 14, // Example size for Body Small
       ),
       padding: const EdgeInsets.all(8.0),

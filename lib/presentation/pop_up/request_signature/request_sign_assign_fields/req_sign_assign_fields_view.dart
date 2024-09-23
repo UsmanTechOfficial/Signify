@@ -14,7 +14,8 @@ class ReqSignAssignFieldsView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final bloc = getIt<ReqSignAssignFieldsBloc>()..add(const DocumentPreviewRequested());
+    final bloc = getIt<ReqSignAssignFieldsBloc>()
+      ..add(const DocumentPreviewRequested());
     final color = appColorScheme(context);
     final width = appWidth(context);
 
@@ -74,7 +75,8 @@ class ReqSignAssignFieldsView extends StatelessWidget {
                               onTap: () {
                                 bloc.add(DocumentSelected(index));
                               },
-                              child: Image.memory(selectedPdfFileList[index].bytes),
+                              child: Image.memory(
+                                  selectedPdfFileList[index].bytes),
                             ),
                           ),
                         );
@@ -89,7 +91,8 @@ class ReqSignAssignFieldsView extends StatelessWidget {
                             onTap: () {
                               bloc.add(DocumentSelected(index));
                             },
-                            child: Image.memory(selectedPdfFileList[index].bytes),
+                            child:
+                                Image.memory(selectedPdfFileList[index].bytes),
                           ),
                         ),
                       );
@@ -187,7 +190,8 @@ class BottomField extends StatelessWidget {
   final Color? color;
   final String label;
 
-  const BottomField({super.key, required this.icon, this.color, required this.label});
+  const BottomField(
+      {super.key, required this.icon, this.color, required this.label});
 
   @override
   Widget build(BuildContext context) {
@@ -199,7 +203,8 @@ class BottomField extends StatelessWidget {
           width: 40,
           child: Card(
               shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(AppStyle.outlinedBtnRadius)),
+                  borderRadius:
+                      BorderRadius.circular(AppStyle.outlinedBtnRadius)),
               elevation: 4,
               shadowColor: colorScheme.outlineVariant,
               child: Icon(icon, color: color ?? colorScheme.primary, size: 25)),

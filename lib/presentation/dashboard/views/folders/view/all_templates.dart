@@ -23,7 +23,8 @@ class _AllTemplatesState extends State<AllTemplates> {
       appBar: AppBar(
         centerTitle: true,
         leading: CustomIconButton(
-            onPressed: () => Navigator.pop(context), icon: Icon(Icons.adaptive.arrow_back)),
+            onPressed: () => Navigator.pop(context),
+            icon: Icon(Icons.adaptive.arrow_back)),
         title: const CustomText("All Templates"),
         bottom: PreferredSize(
           preferredSize: const Size.fromHeight(kToolbarHeight),
@@ -89,7 +90,8 @@ class _AllTemplatesState extends State<AllTemplates> {
                     delegate: SliverChildBuilderDelegate(
                       childCount: getIt<FoldersBloc>().allTemplates.length,
                       (context, index) {
-                        final template = getIt<FoldersBloc>().allTemplates[index];
+                        final template =
+                            getIt<FoldersBloc>().allTemplates[index];
                         final selected = selectedTemplates.contains(index);
                         return Row(
                           children: [
@@ -126,8 +128,10 @@ class _AllTemplatesState extends State<AllTemplates> {
                                   contentPadding: const EdgeInsets.all(10),
                                   leading: Column(
                                     mainAxisSize: MainAxisSize.max,
-                                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceAround,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
                                     children: [
                                       CustomText(
                                         template.name,

@@ -7,4 +7,15 @@ sealed class AddTemplateSelectedDocState extends Equatable {
   List<Object> get props => [];
 }
 
-final class AddTemplateSelectedDocInitial extends AddTemplateSelectedDocState {}
+final class AddTemplateSelectedDocInitial extends AddTemplateSelectedDocState {
+  const AddTemplateSelectedDocInitial();
+}
+
+class FileSelectedState extends AddTemplateSelectedDocState {
+  final List<PickedFileModel> selectedPdfFileList;
+
+  const FileSelectedState(this.selectedPdfFileList);
+
+  @override
+  List<Object> get props => [selectedPdfFileList];
+}

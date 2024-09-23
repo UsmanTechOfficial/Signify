@@ -6,3 +6,19 @@ sealed class AddTemplateAssignFieldsEvent extends Equatable {
   @override
   List<Object> get props => [];
 }
+
+class DocumentPreviewRequested extends AddTemplateAssignFieldsEvent {
+  const DocumentPreviewRequested();
+
+  @override
+  List<Object> get props => [];
+}
+
+class DocumentSelected extends AddTemplateAssignFieldsEvent {
+  final int index;
+
+  const DocumentSelected(this.index);
+
+  @override
+  List<Object> get props => [index];
+}

@@ -1,21 +1,11 @@
 import 'package:dyno_sign/presentation/Initials_manager/bloc/initials_manager_bloc.dart';
 import 'package:dyno_sign/presentation/Initials_manager/initials_manager_view.dart';
-import 'package:dyno_sign/presentation/signing_process/bloc/signing_process_cubit.dart';
-import 'package:dyno_sign/presentation/signing_process/only_for_me/add_fields_in_document_view.dart';
-import 'package:dyno_sign/presentation/signing_process/request_signature/agreements_from_other.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../domain/consts/app_consts/sign_process_types.dart';
 import '../../../domain/consts/consts.dart';
 import '../../../presentation/blocs.dart';
 import '../../../presentation/screens.dart';
-import '../../../presentation/signing_process/request_signature/agreement_detail_view.03.dart';
-import '../../../presentation/signing_process/request_signature/agreement_overview_view.07.dart';
-import '../../../presentation/signing_process/request_signature/assign_fields_view.05.dart';
-import '../../../presentation/signing_process/request_signature/email_detail_view.06.dart';
-import '../../../presentation/signing_process/request_signature/recipients_detail_view.04.dart';
-import '../../../presentation/signing_process/request_signature/selected_document_view.02.dart';
 import 'routes.dart';
 
 class Go {
@@ -150,103 +140,103 @@ class AppPages {
           settings: settings,
         );
 
-      /// DocumentSelectedView
-      case Routes.SELECTED_DOCUMENT:
-        final args = settings.arguments as Map<String, dynamic>;
-        final signingCubit = args['signingCubit'] as SigningProcessCubit;
-        final signProcessTypes = args['signProcessTypes'] as SignProcessTypes;
-
-        return MaterialPageRoute(
-          builder: (context) => DocumentSelectedView(
-            signProcessTypes: signProcessTypes,
-            signingCubit: signingCubit,
-          ),
-          settings: settings,
-        );
-
-      /// EmailDetailView
-      case Routes.EMAIL_DETAIL_VIEW:
-        final args = settings.arguments as Map<String, dynamic>;
-        final signProcessTypes = args['signProcessTypes'] as SignProcessTypes;
-
-        return MaterialPageRoute(
-          builder: (context) => EmailDetailView(
-            signProcessTypes: signProcessTypes,
-          ),
-          settings: settings,
-        );
-
-      /// RecipientsDetailView
-      case Routes.RECIPIENTS_DETAIL:
-        final args = settings.arguments as Map<String, dynamic>;
-        final signProcessTypes = args['signProcessTypes'] as SignProcessTypes;
-
-        return MaterialPageRoute(
-          builder: (context) => RecipientsDetailView(
-            signProcessTypes: signProcessTypes,
-          ),
-          settings: settings,
-        );
-
-      /// AssignFieldsView
-      case Routes.ASSIGN_FIELDS:
-        final args = settings.arguments as Map<String, dynamic>;
-        final signProcessTypes = args['signProcessTypes'] as SignProcessTypes;
-
-        return MaterialPageRoute(
-          builder: (context) => AssignFieldsView(
-            signProcessTypes: signProcessTypes,
-          ),
-          settings: settings,
-        );
-
-      /// AgreementsFromOthers
-      case Routes.AGREEMENTS_FROM_OTHER:
-        final args = settings.arguments as Map<String, dynamic>;
-        final signProcessTypes = args['signProcessTypes'] as SignProcessTypes;
-
-        return MaterialPageRoute(
-          builder: (context) => AgreementsFromOthers(
-            signProcessTypes: signProcessTypes,
-          ),
-          settings: settings,
-        );
-
-      /// AgreementOverviewView
-      case Routes.AGREEMENT_OVERVIEW:
-        final args = settings.arguments as Map<String, dynamic>;
-        final signProcessTypes = args['signProcessTypes'] as SignProcessTypes;
-
-        return MaterialPageRoute(
-          builder: (context) => AgreementOverviewView(
-            signProcessTypes: signProcessTypes,
-          ),
-          settings: settings,
-        );
-
-      /// AgreementDetailAddedView
-      case Routes.AGREEMENT_DETAIL_ADDED:
-        final args = settings.arguments as Map<String, dynamic>;
-        final signProcessTypes = args['signProcessTypes'] as SignProcessTypes;
-
-        return MaterialPageRoute(
-          builder: (context) => AgreementDetailAddedView(
-            signProcessTypes: signProcessTypes,
-          ),
-          settings: settings,
-        );
-
-      /// AddFieldsInDocumentView
-      case Routes.ADD_FIELDS_IN_DOCUMENT:
-        final args = settings.arguments as Map<String, dynamic>;
-        final signProcessTypes = args['signProcessTypes'] as SignProcessTypes;
-
-        return MaterialPageRoute(
-          builder: (context) => AddFieldsInDocumentView(
-            signProcessTypes: signProcessTypes,
-          ),
-          settings: settings,
-        );
+      // /// DocumentSelectedView
+      // case Routes.SELECTED_DOCUMENT:
+      //   final args = settings.arguments as Map<String, dynamic>;
+      //   final signingCubit = args['signingCubit'] as SigningProcessCubit;
+      //   final signProcessTypes = args['signProcessTypes'] as SignProcessTypes;
+      //
+      //   return MaterialPageRoute(
+      //     builder: (context) => DocumentSelectedView(
+      //       signProcessTypes: signProcessTypes,
+      //       signingCubit: signingCubit,
+      //     ),
+      //     settings: settings,
+      //   );
+      //
+      // /// EmailDetailView
+      // case Routes.EMAIL_DETAIL_VIEW:
+      //   final args = settings.arguments as Map<String, dynamic>;
+      //   final signProcessTypes = args['signProcessTypes'] as SignProcessTypes;
+      //
+      //   return MaterialPageRoute(
+      //     builder: (context) => EmailDetailView(
+      //       signProcessTypes: signProcessTypes,
+      //     ),
+      //     settings: settings,
+      //   );
+      //
+      // /// RecipientsDetailView
+      // case Routes.RECIPIENTS_DETAIL:
+      //   final args = settings.arguments as Map<String, dynamic>;
+      //   final signProcessTypes = args['signProcessTypes'] as SignProcessTypes;
+      //
+      //   return MaterialPageRoute(
+      //     builder: (context) => RecipientsDetailView(
+      //       signProcessTypes: signProcessTypes,
+      //     ),
+      //     settings: settings,
+      //   );
+      //
+      // /// AssignFieldsView
+      // case Routes.ASSIGN_FIELDS:
+      //   final args = settings.arguments as Map<String, dynamic>;
+      //   final signProcessTypes = args['signProcessTypes'] as SignProcessTypes;
+      //
+      //   return MaterialPageRoute(
+      //     builder: (context) => AssignFieldsView(
+      //       signProcessTypes: signProcessTypes,
+      //     ),
+      //     settings: settings,
+      //   );
+      //
+      // /// AgreementsFromOthers
+      // case Routes.AGREEMENTS_FROM_OTHER:
+      //   final args = settings.arguments as Map<String, dynamic>;
+      //   final signProcessTypes = args['signProcessTypes'] as SignProcessTypes;
+      //
+      //   return MaterialPageRoute(
+      //     builder: (context) => AgreementsFromOthers(
+      //       signProcessTypes: signProcessTypes,
+      //     ),
+      //     settings: settings,
+      //   );
+      //
+      // /// AgreementOverviewView
+      // case Routes.AGREEMENT_OVERVIEW:
+      //   final args = settings.arguments as Map<String, dynamic>;
+      //   final signProcessTypes = args['signProcessTypes'] as SignProcessTypes;
+      //
+      //   return MaterialPageRoute(
+      //     builder: (context) => AgreementOverviewView(
+      //       signProcessTypes: signProcessTypes,
+      //     ),
+      //     settings: settings,
+      //   );
+      //
+      // /// AgreementDetailAddedView
+      // case Routes.AGREEMENT_DETAIL_ADDED:
+      //   final args = settings.arguments as Map<String, dynamic>;
+      //   final signProcessTypes = args['signProcessTypes'] as SignProcessTypes;
+      //
+      //   return MaterialPageRoute(
+      //     builder: (context) => AgreementDetailAddedView(
+      //       signProcessTypes: signProcessTypes,
+      //     ),
+      //     settings: settings,
+      //   );
+      //
+      // /// AddFieldsInDocumentView
+      // case Routes.ADD_FIELDS_IN_DOCUMENT:
+      //   final args = settings.arguments as Map<String, dynamic>;
+      //   final signProcessTypes = args['signProcessTypes'] as SignProcessTypes;
+      //
+      //   return MaterialPageRoute(
+      //     builder: (context) => AddFieldsInDocumentView(
+      //       signProcessTypes: signProcessTypes,
+      //     ),
+      //     settings: settings,
+      //   );
 
       /// SignatureManagerView
       case Routes.SIGNATURE_MANAGER:

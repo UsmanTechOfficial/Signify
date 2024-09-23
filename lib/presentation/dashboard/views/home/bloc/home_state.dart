@@ -35,7 +35,8 @@ class HomeCategorySelectedState extends HomeState {
 
   HomeCategorySelectedState copyWith({int? selectedCategoryIndex}) {
     return HomeCategorySelectedState(
-      selectedCategoryIndex: selectedCategoryIndex ?? this.selectedCategoryIndex,
+      selectedCategoryIndex:
+          selectedCategoryIndex ?? this.selectedCategoryIndex,
     );
   }
 

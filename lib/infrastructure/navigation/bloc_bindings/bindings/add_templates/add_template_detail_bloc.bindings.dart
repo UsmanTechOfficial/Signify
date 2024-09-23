@@ -1,10 +1,12 @@
+import 'package:dyno_sign/presentation/pop_up/add_templates/add_template_detail_added/bloc/add_template_detail_added_bloc.dart';
+
 import '../../../../../domain/consts/global_var.dart';
 import '../../../../../domain/core/interfaces/bindings.dart';
-import '../../../../../presentation/pop_up/add_templates/add_template_detail/bloc/add_template_detail_bloc.dart';
 
 class AddTemplateDetailBlocBindings implements Bindings {
   @override
   void dependencies() {
-    getIt.registerFactory<AddTemplateDetailBloc>(() => AddTemplateDetailBloc());
+    getIt.registerFactory<AddTemplateDetailAddedBloc>(
+        () => AddTemplateDetailAddedBloc());
   }
 }

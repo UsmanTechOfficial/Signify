@@ -14,7 +14,8 @@ class AgreementsBloc extends Bloc<AgreementsEvent, AgreementsState> {
 
   GetAllAgreementsUseCase getAllAgreementsUseCase;
 
-  AgreementsBloc(this.getAllAgreementsUseCase) : super(const AgreementsInitialState()) {
+  AgreementsBloc(this.getAllAgreementsUseCase)
+      : super(const AgreementsInitialState()) {
     /// [StatusFilterSelectionEvent]
     on<StatusFilterSelectionEvent>(
       (event, emit) {
@@ -32,7 +33,8 @@ class AgreementsBloc extends Bloc<AgreementsEvent, AgreementsState> {
     on<GetAllAgreementsEvent>(_fetchAgreements);
   }
 
-  _fetchAgreements(GetAllAgreementsEvent event, Emitter<AgreementsState> emit) async {
+  _fetchAgreements(
+      GetAllAgreementsEvent event, Emitter<AgreementsState> emit) async {
     try {
       emit(AgreementsLoadingState());
       var allItems = await getAllAgreementsUseCase.execute();
@@ -46,7 +48,8 @@ class AgreementsBloc extends Bloc<AgreementsEvent, AgreementsState> {
     await Future.delayed(const Duration(seconds: 1));
 
     return ["Agreement 1", "Agreement 2", "Agreement 3"]
-        .where((agreement) => agreement.toLowerCase().contains(event.query.toLowerCase()))
+        .where((agreement) =>
+            agreement.toLowerCase().contains(event.query.toLowerCase()))
         .toList();
   }
 

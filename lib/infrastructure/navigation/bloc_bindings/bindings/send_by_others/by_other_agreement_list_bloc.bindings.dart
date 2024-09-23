@@ -5,6 +5,7 @@ import '../../../../../presentation/pop_up/sign_documents/send_by_others/by_othe
 class ByOtherAgreementListBlocBindings implements Bindings {
   @override
   void dependencies() {
-    getIt.registerFactory<ByOtherAgreementListBloc>(() => ByOtherAgreementListBloc());
+    getIt.registerFactory<ByOtherAgreementListBloc>(
+        () => ByOtherAgreementListBloc());
   }
 }

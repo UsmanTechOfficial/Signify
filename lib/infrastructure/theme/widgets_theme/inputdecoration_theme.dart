@@ -7,9 +7,11 @@ InputDecorationTheme get inputDecorationTheme => InputDecorationTheme(
     enabledBorder: _outlineInputBorder(borderColor: Colors.transparent),
     focusedBorder: _outlineInputBorder(borderColor: colorSchemeLight.primary),
     errorBorder: _outlineInputBorder(borderColor: colorSchemeLight.error),
-    focusedErrorBorder: _outlineInputBorder(borderColor: colorSchemeLight.error),
+    focusedErrorBorder:
+        _outlineInputBorder(borderColor: colorSchemeLight.error),
     labelStyle: _textStyle(color: colorSchemeLight.onSurface, fontSize: 16),
-    floatingLabelStyle: _textStyle(color: colorSchemeLight.primary, fontSize: 18),
+    floatingLabelStyle:
+        _textStyle(color: colorSchemeLight.primary, fontSize: 18),
     hintStyle: _textStyle(color: colorSchemeLight.outline, fontSize: 14),
     errorStyle: _textStyle(color: colorSchemeLight.error, fontSize: 12),
     prefixStyle: _textStyle(color: colorSchemeLight.primary),
@@ -29,7 +31,8 @@ InputDecorationTheme get darkInputDecorationTheme => InputDecorationTheme(
     errorBorder: _outlineInputBorder(borderColor: colorSchemeDark.error),
     focusedErrorBorder: _outlineInputBorder(borderColor: colorSchemeDark.error),
     labelStyle: _textStyle(color: colorSchemeDark.onSurface, fontSize: 16),
-    floatingLabelStyle: _textStyle(color: colorSchemeDark.primary, fontSize: 18),
+    floatingLabelStyle:
+        _textStyle(color: colorSchemeDark.primary, fontSize: 18),
     hintStyle: _textStyle(color: colorSchemeDark.outline, fontSize: 14),
     errorStyle: _textStyle(color: colorSchemeDark.error, fontSize: 12),
     prefixStyle: _textStyle(color: colorSchemeDark.primary),
@@ -48,7 +51,8 @@ TextStyle _textStyle({Color? color, double? fontSize}) {
 }
 
 OutlineInputBorder _outlineInputBorder(
-    {double borderRadius = AppStyle.buttonBorderRadius, required Color borderColor}) {
+    {double borderRadius = AppStyle.buttonBorderRadius,
+    required Color borderColor}) {
   return OutlineInputBorder(
       borderRadius: BorderRadius.circular(borderRadius),
       borderSide: BorderSide(color: borderColor));

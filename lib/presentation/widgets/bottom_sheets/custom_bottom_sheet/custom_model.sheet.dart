@@ -88,7 +88,8 @@ class CustomModelSheet {
             return SingleChildScrollView(
               controller: scrollController,
               child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   crossAxisAlignment: CrossAxisAlignment.start,

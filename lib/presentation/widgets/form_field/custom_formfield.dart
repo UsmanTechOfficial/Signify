@@ -79,12 +79,12 @@ class CustomTextFormField extends StatelessWidget {
           filled: filled,
           fillColor: fillColor,
           enabledBorder: _outlineInputBorder(borderRadius, borderColor),
-          focusedBorder: _outlineInputBorder(
-              borderRadius, focusBorderColor ?? appColorScheme(context).primary),
-          errorBorder:
-              _outlineInputBorder(borderRadius, errorBorderColor ?? appColorScheme(context).error),
-          disabledBorder: _outlineInputBorder(
-              borderRadius, disabledBorderColor ?? Colors.transparent), // Disabled border
+          focusedBorder: _outlineInputBorder(borderRadius,
+              focusBorderColor ?? appColorScheme(context).primary),
+          errorBorder: _outlineInputBorder(
+              borderRadius, errorBorderColor ?? appColorScheme(context).error),
+          disabledBorder: _outlineInputBorder(borderRadius,
+              disabledBorderColor ?? Colors.transparent), // Disabled border
         ),
         onFieldSubmitted: onFieldSubmitted,
         keyboardType: keyboardType,
@@ -104,7 +104,8 @@ class CustomTextFormField extends StatelessWidget {
     );
   }
 
-  OutlineInputBorder _outlineInputBorder(double borderRadius, Color borderColor) {
+  OutlineInputBorder _outlineInputBorder(
+      double borderRadius, Color borderColor) {
     return OutlineInputBorder(
       borderRadius: BorderRadius.circular(borderRadius),
       borderSide: BorderSide(color: borderColor),

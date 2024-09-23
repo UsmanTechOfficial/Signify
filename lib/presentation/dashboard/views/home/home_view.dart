@@ -68,7 +68,8 @@ class HomeView extends StatelessWidget {
                 childCount: SelectedDocumentType.values.length,
                 (BuildContext context, int index) {
                   return BlocBuilder<HomeBloc, HomeState>(
-                    buildWhen: (previous, current) => current is HomeCategorySelectedState,
+                    buildWhen: (previous, current) =>
+                        current is HomeCategorySelectedState,
                     builder: (context, state) {
                       if (state is HomeCategorySelectedState) {
                         return CategoryCard(
@@ -84,7 +85,8 @@ class HomeView extends StatelessWidget {
                         isSelected: index == 0,
                         title: SelectedDocumentType.values[index].type,
                         icon: Assets.icons.docIcon.svg(),
-                        onTap: () => context.read<HomeBloc>().add(SelectCategory(index)),
+                        onTap: () =>
+                            context.read<HomeBloc>().add(SelectCategory(index)),
                       );
                     },
                   );
@@ -100,11 +102,13 @@ class HomeView extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       BlocBuilder<HomeBloc, HomeState>(
-                        buildWhen: (previous, current) => current is HomeCategorySelectedState,
+                        buildWhen: (previous, current) =>
+                            current is HomeCategorySelectedState,
                         builder: (context, state) {
                           if (state is HomeCategorySelectedState) {
                             return CustomText(
-                              SelectedDocumentType.values[state.selectedCategoryIndex].type,
+                              SelectedDocumentType
+                                  .values[state.selectedCategoryIndex].type,
                               color: colorScheme.onSurface,
                               fontSize: AppFontSize.titleSmallFont,
                               fontWeight: FontWeight.w600,
@@ -155,13 +159,15 @@ class HomeView extends StatelessWidget {
                         GridView.builder(
                           shrinkWrap: true,
                           physics: const NeverScrollableScrollPhysics(),
-                          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                          gridDelegate:
+                              const SliverGridDelegateWithFixedCrossAxisCount(
                             crossAxisCount: 2,
                             mainAxisSpacing: 10.0,
                             crossAxisSpacing: 10.0,
                             mainAxisExtent: 200,
                           ),
-                          itemCount: context.read<HomeBloc>().agreementsList.length,
+                          itemCount:
+                              context.read<HomeBloc>().agreementsList.length,
                           itemBuilder: (BuildContext context, int index) {
                             bool isSelected = false;
                             if (state is HomeDocSelectedState) {
@@ -188,13 +194,15 @@ class HomeView extends StatelessWidget {
                         GridView.builder(
                           shrinkWrap: true,
                           physics: const NeverScrollableScrollPhysics(),
-                          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                          gridDelegate:
+                              const SliverGridDelegateWithFixedCrossAxisCount(
                             crossAxisCount: 2,
                             mainAxisSpacing: 10.0,
                             crossAxisSpacing: 10.0,
                             mainAxisExtent: 200,
                           ),
-                          itemCount: context.read<HomeBloc>().templateList.length,
+                          itemCount:
+                              context.read<HomeBloc>().templateList.length,
                           itemBuilder: (BuildContext context, int index) {
                             bool isSelected = false;
                             if (state is HomeDocSelectedState) {
@@ -221,13 +229,15 @@ class HomeView extends StatelessWidget {
                         GridView.builder(
                           shrinkWrap: true,
                           physics: const NeverScrollableScrollPhysics(),
-                          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                          gridDelegate:
+                              const SliverGridDelegateWithFixedCrossAxisCount(
                             crossAxisCount: 2,
                             mainAxisSpacing: 10.0,
                             crossAxisSpacing: 10.0,
                             mainAxisExtent: 200,
                           ),
-                          itemCount: context.read<HomeBloc>().foldersList.length,
+                          itemCount:
+                              context.read<HomeBloc>().foldersList.length,
                           itemBuilder: (BuildContext context, int index) {
                             bool isSelected = false;
                             if (state is HomeDocSelectedState) {
@@ -337,7 +347,8 @@ class CategoryCard extends StatelessWidget {
     final colorScheme = Theme.of(context).colorScheme;
 
     return Card(
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(AppStyle.tileBorderRadius)),
+      shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(AppStyle.tileBorderRadius)),
       shadowColor: isSelected ? colorScheme.primary : colorScheme.shadow,
       elevation: 4,
       color: isSelected ? colorScheme.primary : colorScheme.surface,
@@ -349,7 +360,9 @@ class CategoryCard extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
             CircleAvatar(
-              backgroundColor: isSelected ? colorScheme.onPrimary : colorScheme.secondaryContainer,
+              backgroundColor: isSelected
+                  ? colorScheme.onPrimary
+                  : colorScheme.secondaryContainer,
               child: icon,
             ),
             CustomText(
@@ -388,7 +401,8 @@ class DocCard extends StatelessWidget {
     final colorScheme = Theme.of(context).colorScheme;
 
     return Card(
-      shadowColor: isSelected ? colorScheme.primary : colorScheme.outlineVariant,
+      shadowColor:
+          isSelected ? colorScheme.primary : colorScheme.outlineVariant,
       elevation: 4,
       color: colorScheme.surface,
       shape: RoundedRectangleBorder(
@@ -418,7 +432,8 @@ class DocCard extends StatelessWidget {
                             ),
                           )
                         : null,
-                    color: isSelected ? colorScheme.primary : colorScheme.surface,
+                    color:
+                        isSelected ? colorScheme.primary : colorScheme.surface,
                     borderRadius: const BorderRadius.only(
                       bottomRight: Radius.circular(AppStyle.tileBorderRadius),
                       bottomLeft: Radius.circular(
@@ -436,21 +451,26 @@ class DocCard extends StatelessWidget {
                           "Agreements",
                           fontSize: AppFontSize.labelMediumFont,
                           fontWeight: FontWeight.w500,
-                          color: isSelected ? colorScheme.onPrimary : colorScheme.onSurface,
+                          color: isSelected
+                              ? colorScheme.onPrimary
+                              : colorScheme.onSurface,
                         ),
                         Row(
                           children: [
                             Icon(
                               Icons.circle,
                               size: 10,
-                              color:
-                                  isSelected ? colorScheme.onPrimary : colorScheme.primaryContainer,
+                              color: isSelected
+                                  ? colorScheme.onPrimary
+                                  : colorScheme.primaryContainer,
                             ),
                             const SizedBox(width: 5),
                             CustomText(
                               bottomChild ?? "Completed",
                               fontSize: AppFontSize.labelSmallFont,
-                              color: isSelected ? colorScheme.onPrimary : colorScheme.outline,
+                              color: isSelected
+                                  ? colorScheme.onPrimary
+                                  : colorScheme.outline,
                             ),
                           ],
                         ),

@@ -20,7 +20,8 @@ class SignupState extends Equatable {
   }) {
     return SignupState(
       isShowPassword: isShowPassword ?? this.isShowPassword,
-      isShowConfirmPassword: isShowConfirmPassword ?? this.isShowConfirmPassword,
+      isShowConfirmPassword:
+          isShowConfirmPassword ?? this.isShowConfirmPassword,
       status: status ?? this.status,
     );
   }

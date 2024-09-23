@@ -22,7 +22,8 @@ class FoldersView extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         leading: CustomIconButton(
-            onPressed: () => Navigator.pop(context), icon: Icon(Icons.adaptive.arrow_back)),
+            onPressed: () => Navigator.pop(context),
+            icon: Icon(Icons.adaptive.arrow_back)),
         title: const Text("Folders"),
         actions: [
           CustomIconButton(

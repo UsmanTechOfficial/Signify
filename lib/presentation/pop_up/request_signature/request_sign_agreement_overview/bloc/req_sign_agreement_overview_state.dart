@@ -7,4 +7,5 @@ sealed class ReqSignAgreementOverviewState extends Equatable {
   List<Object> get props => [];
 }
 
-final class ReqSignAgreementOverviewInitial extends ReqSignAgreementOverviewState {}
+final class ReqSignAgreementOverviewInitial
+    extends ReqSignAgreementOverviewState {}

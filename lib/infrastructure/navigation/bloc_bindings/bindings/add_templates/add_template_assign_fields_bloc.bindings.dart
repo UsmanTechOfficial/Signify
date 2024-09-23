@@ -5,6 +5,7 @@ import '../../../../../presentation/pop_up/add_templates/add_template_assign_fie
 class AddTemplateAssignFieldsBlocBindings implements Bindings {
   @override
   void dependencies() {
-    getIt.registerFactory<AddTemplateAssignFieldsBloc>(() => AddTemplateAssignFieldsBloc());
+    getIt.registerFactory<AddTemplateAssignFieldsBloc>(
+        () => AddTemplateAssignFieldsBloc());
   }
 }

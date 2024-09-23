@@ -54,7 +54,8 @@ class OnboardingView extends StatelessWidget {
           builder: (context, state) {
             final bloc = context.read<OnboardingBloc>();
             return Padding(
-              padding: EdgeInsets.symmetric(horizontal: MediaQuery.of(context).size.width * 0.05),
+              padding: EdgeInsets.symmetric(
+                  horizontal: MediaQuery.of(context).size.width * 0.05),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -93,7 +94,8 @@ class OnboardingView extends StatelessWidget {
                       CustomRoundedIconButton(
                         iconRotationAngle: 1,
                         icon: Icons.play_arrow_rounded,
-                        borderColor: Theme.of(context).colorScheme.outlineVariant,
+                        borderColor:
+                            Theme.of(context).colorScheme.outlineVariant,
                         iconColor: Theme.of(context).colorScheme.onSurface,
                         backgroundColor: Theme.of(context).colorScheme.surface,
                         onPressed: () {

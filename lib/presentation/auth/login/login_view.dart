@@ -37,7 +37,8 @@ class LoginView extends StatelessWidget {
           return Form(
             key: context.read<LoginBloc>().formKey,
             child: SingleChildScrollView(
-              padding: EdgeInsets.symmetric(horizontal: MediaQuery.of(context).size.width * .05),
+              padding: EdgeInsets.symmetric(
+                  horizontal: MediaQuery.of(context).size.width * .05),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -57,8 +58,8 @@ class LoginView extends StatelessWidget {
                     focusNode: context.read<LoginBloc>().emailFocus,
                     onFieldSubmitted: (value) => FocusScope.of(context)
                         .requestFocus(context.read<LoginBloc>().passwordFocus),
-                    validator: (p0) =>
-                        Validation.emailValidation(context.read<LoginBloc>().emailController),
+                    validator: (p0) => Validation.emailValidation(
+                        context.read<LoginBloc>().emailController),
                   ),
                   const SizedBox(height: 20),
                   const CustomText(
@@ -73,15 +74,19 @@ class LoginView extends StatelessWidget {
                     borderColor: color.outlineVariant,
                     borderRadius: AppStyle.buttonBorderRadius,
                     focusNode: context.read<LoginBloc>().passwordFocus,
-                    validator: (p0) =>
-                        Validation.psdValidation(context.read<LoginBloc>().passwordController),
+                    validator: (p0) => Validation.psdValidation(
+                        context.read<LoginBloc>().passwordController),
                     suffix: IconButton(
                         icon: Icon(
                           color: color.outlineVariant,
-                          state.isShowPassword ? Icons.visibility_off : Icons.visibility,
+                          state.isShowPassword
+                              ? Icons.visibility_off
+                              : Icons.visibility,
                         ),
                         onPressed: () {
-                          context.read<LoginBloc>().add(TogglePasswordVisibility());
+                          context
+                              .read<LoginBloc>()
+                              .add(TogglePasswordVisibility());
                         }),
                   ),
                   Align(

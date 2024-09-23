@@ -5,7 +5,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 part 'forget_password_event.dart';
 part 'forget_password_state.dart';
 
-class ForgetPasswordBloc extends Bloc<ForgetPasswordEvent, ForgetPasswordState> {
+class ForgetPasswordBloc
+    extends Bloc<ForgetPasswordEvent, ForgetPasswordState> {
   final formKey = GlobalKey<FormState>();
   final emailController = TextEditingController();
   final emailFocus = FocusNode();
@@ -22,7 +23,8 @@ class ForgetPasswordBloc extends Bloc<ForgetPasswordEvent, ForgetPasswordState> 
         await Future.delayed(const Duration(seconds: 2)); // Simulate API call
         emit(state.copyWith(status: ForgetPasswordStatus.success));
         // Navigate to dashboard
-        Navigator.of(formKey.currentContext!).pushReplacementNamed('/dashboard');
+        Navigator.of(formKey.currentContext!)
+            .pushReplacementNamed('/dashboard');
       }
     });
   }

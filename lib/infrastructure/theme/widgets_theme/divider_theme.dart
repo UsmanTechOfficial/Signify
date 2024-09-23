@@ -11,7 +11,8 @@ DividerThemeData get dividerTheme => DividerThemeData(
       // The thickness of the line drawn within a divider
       indent: 10.0,
       // The amount of empty space to the leading edge of a divider.
-      endIndent: 10.0, // The amount of empty space to the trailing edge of a divider.
+      endIndent:
+          10.0, // The amount of empty space to the trailing edge of a divider.
     );
 
 DividerThemeData get darkDividerTheme => DividerThemeData(
@@ -23,5 +24,6 @@ DividerThemeData get darkDividerTheme => DividerThemeData(
       // The thickness of the line drawn within a divider
       indent: 10.0,
       // The amount of empty space to the leading edge of a divider.
-      endIndent: 10.0, // The amount of empty space to the trailing edge of a divider.
+      endIndent:
+          10.0, // The amount of empty space to the trailing edge of a divider.
     );

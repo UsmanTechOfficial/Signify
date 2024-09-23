@@ -31,8 +31,8 @@ TextButtonThemeData get textButtonTheme => TextButtonThemeData(
             fontWeight: FontWeight.w500,
           ),
         ),
-        padding:
-            WidgetStateProperty.all(const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0)),
+        padding: WidgetStateProperty.all(
+            const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0)),
       ),
     );
 
@@ -65,7 +65,7 @@ TextButtonThemeData get darkTextButtonTheme => TextButtonThemeData(
             fontWeight: FontWeight.w500,
           ),
         ),
-        padding:
-            WidgetStateProperty.all(const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0)),
+        padding: WidgetStateProperty.all(
+            const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0)),
       ),
     );

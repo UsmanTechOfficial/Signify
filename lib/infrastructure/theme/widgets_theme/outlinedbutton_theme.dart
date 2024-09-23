@@ -33,8 +33,8 @@ OutlinedButtonThemeData get outlinedButtonTheme => OutlinedButtonThemeData(
             fontSize: 16, // Font size
           ),
         ),
-        padding:
-            WidgetStateProperty.all(const EdgeInsets.symmetric(vertical: 20.0, horizontal: 30.0)),
+        padding: WidgetStateProperty.all(
+            const EdgeInsets.symmetric(vertical: 20.0, horizontal: 30.0)),
       ),
     );
 
@@ -69,7 +69,7 @@ OutlinedButtonThemeData get darkOutlinedButtonTheme => OutlinedButtonThemeData(
             fontSize: 16, // Font size
           ),
         ),
-        padding:
-            WidgetStateProperty.all(const EdgeInsets.symmetric(vertical: 20.0, horizontal: 30.0)),
+        padding: WidgetStateProperty.all(
+            const EdgeInsets.symmetric(vertical: 20.0, horizontal: 30.0)),
       ),
     );

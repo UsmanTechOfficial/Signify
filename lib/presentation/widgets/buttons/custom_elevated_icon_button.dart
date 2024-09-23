@@ -43,7 +43,9 @@ class CustomElevatedIconButton extends StatelessWidget {
           backgroundColor: fillColor ?? appColorScheme(context).primary,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(borderRadius ?? 8.0),
-            side: BorderSide(color: borderColor ?? Colors.transparent, width: borderWidth ?? 1.0),
+            side: BorderSide(
+                color: borderColor ?? Colors.transparent,
+                width: borderWidth ?? 1.0),
           ),
         ),
         child: Center(

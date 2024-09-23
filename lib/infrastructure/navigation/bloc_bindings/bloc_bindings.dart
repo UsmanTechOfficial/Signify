@@ -25,7 +25,6 @@ import 'bindings/request_signature_bindings/req_sign_agreement_detail_bloc.bindi
 import 'bindings/request_signature_bindings/req_sign_email_detail_bloc.bindings.dart';
 import 'bindings/request_signature_bindings/req_sign_recipient_detail_bloc.bindings.dart';
 import 'bindings/request_signature_bindings/req_sign_selected_doc_bloc.bindings.dart';
-import 'bindings/signing_process_cubit.bindings.dart';
 import 'bindings/template_bloc.bindings.dart';
 
 class BlocBindings implements Bindings {
@@ -40,7 +39,7 @@ class BlocBindings implements Bindings {
     AgreementsBlocBindings(),
     TemplatesBlocBindings(),
     ProfileBlocBindings(),
-    SigningProcessCubitBindings(),
+    // SigningProcessCubitBindings(),
     FoldersBlocBindings(),
 
     /// request sign

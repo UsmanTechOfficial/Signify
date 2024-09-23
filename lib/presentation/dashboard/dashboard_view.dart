@@ -6,19 +6,17 @@ import 'package:dyno_sign/presentation/dashboard/views/agreements/bloc/agreement
 import 'package:dyno_sign/presentation/dashboard/views/home/bloc/home_bloc.dart';
 import 'package:dyno_sign/presentation/dashboard/views/profile/bloc/profile_bloc.dart';
 import 'package:dyno_sign/presentation/dashboard/views/templates/bloc/templates_bloc.dart';
-import 'package:dyno_sign/presentation/pop_up/add_templates/add_template_detail/add_template_detail_view.dart';
-import 'package:dyno_sign/presentation/pop_up/add_templates/add_template_detail/bloc/add_template_detail_bloc.dart';
+import 'package:dyno_sign/presentation/pop_up/add_templates/add_template_detail_added/add_template_detail_added_view.dart';
 import 'package:dyno_sign/presentation/pop_up/request_signature/request_sign_selected_document/bloc/req_sign_selected_doc_bloc.dart';
 import 'package:dyno_sign/presentation/pop_up/request_signature/request_sign_selected_document/req_sign_selected_doc_view.dart';
 import 'package:dyno_sign/presentation/pop_up/sign_documents/only_for_me/for_me_selected_document/bloc/for_me_selected_doc_bloc.dart';
 import 'package:dyno_sign/presentation/pop_up/sign_documents/only_for_me/for_me_selected_document/for_me_selected_doc_view.dart';
 import 'package:dyno_sign/presentation/pop_up/sign_documents/send_by_others/by_other_agreement_list/bloc/by_other_agreement_list_bloc.dart';
 import 'package:dyno_sign/presentation/pop_up/sign_documents/send_by_others/by_other_agreement_list/by_other_agreement_list_view.dart';
-import 'package:dyno_sign/presentation/signing_process/bloc/signing_process_cubit.dart';
-import 'package:dyno_sign/presentation/signing_process/request_signature/document_preview_view.01.dart';
 import 'package:dyno_sign/presentation/widgets/bottom_sheets/bottom_sheets.dart';
 import 'package:dyno_sign/presentation/widgets/bottom_sheets/custom_bottom_sheet/sheets_widget/add_documents/add_document.sheet.dart';
 import 'package:dyno_sign/presentation/widgets/bottom_sheets/custom_bottom_sheet/sheets_widget/sign_selection/sign_selection.sheet.dart';
+import 'package:dyno_sign/presentation/widgets/dialogs/document_preview_view.01.dart';
 import 'package:file_selector/file_selector.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -75,14 +73,16 @@ class DashboardView extends StatelessWidget {
               );
             },
           ),
-          floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+          floatingActionButtonLocation:
+              FloatingActionButtonLocation.centerDocked,
 
           /// [FloatingActionButton]
           floatingActionButton: FloatingActionButton(
             elevation: 10,
             onPressed: () => _bottomSheet(context),
             backgroundColor: Theme.of(context).primaryColor,
-            child: Icon(Icons.add, color: Theme.of(context).colorScheme.surface),
+            child:
+                Icon(Icons.add, color: Theme.of(context).colorScheme.surface),
           ),
         ));
   }
@@ -106,15 +106,17 @@ class DashboardView extends StatelessWidget {
                 IconButton(
                   style: IconButton.styleFrom(
                     shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(AppStyle.buttonBorderRadius),
+                      borderRadius:
+                          BorderRadius.circular(AppStyle.buttonBorderRadius),
                     ),
                     backgroundColor: color.outlineVariant.withOpacity(0.5),
                   ),
                   onPressed: () {
                     scaffoldKey.currentState?.closeDrawer();
                   },
-                  icon: Assets.icons.moreIcon
-                      .svg(colorFilter: ColorFilter.mode(color.primary, BlendMode.srcIn)),
+                  icon: Assets.icons.moreIcon.svg(
+                      colorFilter:
+                          ColorFilter.mode(color.primary, BlendMode.srcIn)),
                 ),
               ],
             ),
@@ -139,7 +141,9 @@ class DashboardView extends StatelessWidget {
                       selectedTab = tab.index;
                       if (tab.index < 4) {
                         pageController.jumpToPage(selectedTab);
-                        context.read<DashboardBloc>().add(PageChangEvent(selectedTab));
+                        context
+                            .read<DashboardBloc>()
+                            .add(PageChangEvent(selectedTab));
                       } else {
                         _navigateToNewPage(tab.index);
                       }
@@ -177,13 +181,15 @@ class DashboardView extends StatelessWidget {
             subtitle: 'Request anyone to add signatures in your document',
             onTap: () {
               Go.back();
-              _showAddDocumentSheet(context, SignProcessTypes.requestSignatures);
+              _showAddDocumentSheet(
+                  context, SignProcessTypes.requestSignatures);
             },
           ),
           CustomBottomSheetTile(
             isSelected: false,
             title: "Sign Documents",
-            subtitle: 'Documents that you want to sign for yourself or sent by others',
+            subtitle:
+                'Documents that you want to sign for yourself or sent by others',
             onTap: () {
               Go.back();
               _showSignSelectionSheet(context);
@@ -194,7 +200,7 @@ class DashboardView extends StatelessWidget {
             title: "Add Templates",
             subtitle: 'Make templates and use them again and again.',
             onTap: () {
-              Go.to(const AddTemplateDetailView());
+              Go.to(const AddTemplateDetailAddedView());
             },
           ),
         ],
@@ -203,8 +209,8 @@ class DashboardView extends StatelessWidget {
   }
 
   ///  Method to show the Document Source [Selection] Sheet
-  void _showAddDocumentSheet(BuildContext context, SignProcessTypes signProcessTypes) {
-    final signingCubit = getIt<SigningProcessCubit>();
+  void _showAddDocumentSheet(
+      BuildContext context, SignProcessTypes signProcessTypes) {
     CustomModelSheet.showScrolledBottomSheet(
       context: context,
       title: "Add a Document",
@@ -216,7 +222,8 @@ class DashboardView extends StatelessWidget {
             case DocumentSource.files:
               FilePicker.pick().then(
                 (file) async {
-                  _preview(signingCubit, file: file.first, signProcessTypes: signProcessTypes);
+                  _preview(
+                      file: file.first, signProcessTypes: signProcessTypes);
                 },
               );
 
@@ -224,14 +231,14 @@ class DashboardView extends StatelessWidget {
             case DocumentSource.gallery:
               GalleryImageToPdf.convert().then(
                 (file) async {
-                  _preview(signingCubit, file: file!, signProcessTypes: signProcessTypes);
+                  _preview(file: file!, signProcessTypes: signProcessTypes);
                 },
               );
               break;
             case DocumentSource.camera:
               CameraImageToPdf.convert().then(
                 (file) {
-                  _preview(signingCubit, file: file!, signProcessTypes: signProcessTypes);
+                  _preview(file: file!, signProcessTypes: signProcessTypes);
                 },
               );
             default:
@@ -254,7 +261,6 @@ class DashboardView extends StatelessWidget {
           _showAddDocumentSheet(context, SignProcessTypes.onlyForMe);
         },
         onByOthers: () {
-
           Go.back();
           Go.to(BlocProvider(
             create: (context) => getIt<ByOtherAgreementListBloc>(),
@@ -267,7 +273,7 @@ class DashboardView extends StatelessWidget {
 
   /// [Preview] and check the for [keep] for [discard]
 
-  void _preview(SigningProcessCubit signingCubit,
+  void _preview(
       {required XFile file, required SignProcessTypes signProcessTypes}) {
     PdfPreviewDialog.show(
       file,

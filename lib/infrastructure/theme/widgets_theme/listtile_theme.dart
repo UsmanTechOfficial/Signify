@@ -10,8 +10,8 @@ ListTileThemeData get listTileTheme => ListTileThemeData(
       textColor: colorSchemeLight.onSurface,
 
       contentPadding: const EdgeInsets.symmetric(horizontal: 10),
-      shape:
-          RoundedRectangleBorder(borderRadius: BorderRadius.circular(AppStyle.buttonBorderRadius)),
+      shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(AppStyle.buttonBorderRadius)),
 // Add other properties as needed
     );
 
@@ -23,7 +23,7 @@ ListTileThemeData get darkListTileTheme => ListTileThemeData(
       iconColor: colorSchemeDark.secondary,
       textColor: colorSchemeDark.onSurface,
 
-      shape:
-          RoundedRectangleBorder(borderRadius: BorderRadius.circular(AppStyle.buttonBorderRadius)),
+      shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(AppStyle.buttonBorderRadius)),
 // Add other properties as needed
     );

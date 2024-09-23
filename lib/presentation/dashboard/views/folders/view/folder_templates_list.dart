@@ -13,7 +13,8 @@ class FolderTemplatesList extends StatelessWidget {
         appBar: AppBar(
           centerTitle: true,
           leading: CustomIconButton(
-              onPressed: () => Navigator.pop(context), icon: Icon(Icons.adaptive.arrow_back)),
+              onPressed: () => Navigator.pop(context),
+              icon: Icon(Icons.adaptive.arrow_back)),
           title: const CustomText("Folder Detail"),
           bottom: PreferredSize(
             preferredSize: const Size.fromHeight(kToolbarHeight),
@@ -89,7 +90,8 @@ class FolderTemplatesList extends StatelessWidget {
                               contentPadding: const EdgeInsets.all(10),
                               leading: Column(
                                 mainAxisSize: MainAxisSize.max,
-                                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceAround,
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   CustomText(
@@ -122,7 +124,9 @@ class FolderTemplatesList extends StatelessWidget {
                     text: "Add Template",
                     onPressed: () {
                       Navigator.push(
-                          context, MaterialPageRoute(builder: (context) => const AllTemplates()));
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const AllTemplates()));
                     },
                   ),
                 ),

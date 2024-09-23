@@ -61,7 +61,8 @@ class ForMeSelectedDocView extends StatelessWidget {
                                 child: ListTile(
                                   leading: const CircleAvatar(
                                     backgroundColor: Colors.redAccent,
-                                    child: Icon(Icons.picture_as_pdf, color: Colors.white),
+                                    child: Icon(Icons.picture_as_pdf,
+                                        color: Colors.white),
                                   ),
                                   title: CustomText(
                                     forMeSelectedPdfFileList[index].name,
@@ -69,9 +70,12 @@ class ForMeSelectedDocView extends StatelessWidget {
                                     fontWeight: FontWeight.w500,
                                   ),
                                   subtitle: CustomText(
-                                    forMeSelectedPdfFileList[index].date.toIso8601String(),
+                                    forMeSelectedPdfFileList[index]
+                                        .date
+                                        .toIso8601String(),
                                     fontSize: AppFontSize.labelSmallFont,
-                                    color: Theme.of(context).colorScheme.outline,
+                                    color:
+                                        Theme.of(context).colorScheme.outline,
                                   ),
                                 ),
                               ),
@@ -108,7 +112,8 @@ class ForMeSelectedDocView extends StatelessWidget {
                         );
                       },
                     );
-                  } else if (state is FileSelectedState && state.selectedPdfFileList.isNotEmpty) {
+                  } else if (state is FileSelectedState &&
+                      state.selectedPdfFileList.isNotEmpty) {
                     return ListView.builder(
                       shrinkWrap: true,
                       physics: const NeverScrollableScrollPhysics(),
@@ -126,7 +131,8 @@ class ForMeSelectedDocView extends StatelessWidget {
                                 child: ListTile(
                                   leading: const CircleAvatar(
                                     backgroundColor: Colors.redAccent,
-                                    child: Icon(Icons.picture_as_pdf, color: Colors.white),
+                                    child: Icon(Icons.picture_as_pdf,
+                                        color: Colors.white),
                                   ),
                                   title: CustomText(
                                     state.selectedPdfFileList[index].name,
@@ -134,9 +140,11 @@ class ForMeSelectedDocView extends StatelessWidget {
                                     fontWeight: FontWeight.w500,
                                   ),
                                   subtitle: CustomText(
-                                    state.selectedPdfFileList[index].date.toIso8601String(),
+                                    state.selectedPdfFileList[index].date
+                                        .toIso8601String(),
                                     fontSize: AppFontSize.labelSmallFont,
-                                    color: Theme.of(context).colorScheme.outline,
+                                    color:
+                                        Theme.of(context).colorScheme.outline,
                                   ),
                                 ),
                               ),

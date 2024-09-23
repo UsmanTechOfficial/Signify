@@ -59,7 +59,8 @@ class ByOtherAgreementDetailView extends StatelessWidget {
                     width: double.maxFinite,
                     decoration: BoxDecoration(
                         color: color.primary,
-                        borderRadius: BorderRadius.circular(AppStyle.tileBorderRadius)),
+                        borderRadius:
+                            BorderRadius.circular(AppStyle.tileBorderRadius)),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -74,7 +75,8 @@ class ByOtherAgreementDetailView extends StatelessWidget {
                           thickness: 1,
                         ),
                         const CardTile(title: "Amir Mahmod", label: "Sender"),
-                        const CardTile(title: "12/04/2024", label: "Created on"),
+                        const CardTile(
+                            title: "12/04/2024", label: "Created on"),
                         const CardTile(title: "amir@email.com", label: "Email"),
                       ],
                     ),
@@ -128,12 +130,16 @@ class ByOtherAgreementDetailView extends StatelessWidget {
                   shadowColor: color.shadow,
                   clipBehavior: Clip.hardEdge,
                   shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(AppStyle.tileBorderRadius),
+                    borderRadius:
+                        BorderRadius.circular(AppStyle.tileBorderRadius),
                   ),
                   child: ListTile(
-                    contentPadding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
+                    contentPadding: const EdgeInsets.symmetric(
+                        vertical: 8.0, horizontal: 16.0),
                     leading: CircleAvatar(
-                      backgroundColor: index.isEven ? color.primary : color.secondaryContainer,
+                      backgroundColor: index.isEven
+                          ? color.primary
+                          : color.secondaryContainer,
                       child: const CustomText(
                         'A',
                         fontSize: AppFontSize.labelMediumFont,
