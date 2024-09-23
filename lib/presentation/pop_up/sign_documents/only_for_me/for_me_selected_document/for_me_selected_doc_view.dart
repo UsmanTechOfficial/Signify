@@ -1,11 +1,11 @@
 import 'package:dyno_sign/infrastructure/navigation/app_routes/navigation.dart';
-import 'package:dyno_sign/presentation/pop_up/request_signature/request_sign_agreement_detail/req_sign_agreement_detail_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../../domain/consts/consts.dart';
 import '../../../../widgets/dialogs/pdf_preview.dialog.dart';
 import '../../../../widgets/widgets.dart';
+import '../for_me_assign_fields/for_me_assign_fields.dart';
 import 'bloc/for_me_selected_doc_bloc.dart';
 
 class ForMeSelectedDocView extends StatelessWidget {
@@ -31,7 +31,7 @@ class ForMeSelectedDocView extends StatelessWidget {
                 child: CustomOutlinedTextButton(
                   text: 'Next',
                   onPressed: () {
-                    Go.to(const ReqSignAgreementDetailView());
+                    Go.to(const ForMeAssignFields());
                   },
                 ),
               ),

@@ -7,7 +7,6 @@ import '../../../../../../domain/utils/utils.dart';
 import '../../../../../../infrastructure/dal/models/picked_file.model.dart';
 
 part 'for_me_selected_doc_event.dart';
-
 part 'for_me_selected_doc_state.dart';
 
 List<PickedFileModel> forMeSelectedPdfFileList = [];

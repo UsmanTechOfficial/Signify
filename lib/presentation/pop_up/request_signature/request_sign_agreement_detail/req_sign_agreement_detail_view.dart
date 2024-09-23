@@ -6,7 +6,6 @@ import '../../../../domain/consts/consts.dart';
 import '../../../widgets/widgets.dart';
 
 class ReqSignAgreementDetailView extends StatelessWidget {
-
   const ReqSignAgreementDetailView({super.key, required});
 
   @override

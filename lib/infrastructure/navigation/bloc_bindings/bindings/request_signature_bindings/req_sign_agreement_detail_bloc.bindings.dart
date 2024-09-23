@@ -5,7 +5,6 @@ import '../../../../../presentation/pop_up/request_signature/request_sign_agreem
 class ReqSignAgreementDetailBlocBindings implements Bindings {
   @override
   void dependencies() {
-    getIt.registerFactory<ReqSignAgreementDetailBloc>(
-        () => ReqSignAgreementDetailBloc());
+    getIt.registerFactory<ReqSignAgreementDetailBloc>(() => ReqSignAgreementDetailBloc());
   }
 }

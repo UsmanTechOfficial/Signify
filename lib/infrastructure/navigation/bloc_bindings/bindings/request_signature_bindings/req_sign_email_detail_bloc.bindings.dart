@@ -6,7 +6,6 @@ import '../../../../../domain/core/interfaces/bindings.dart';
 class ReqSignEmailDetailBlocBindings implements Bindings {
   @override
   void dependencies() {
-    getIt.registerFactory<ReqSignEmailDetailBloc>(
-        () => ReqSignEmailDetailBloc());
+    getIt.registerFactory<ReqSignEmailDetailBloc>(() => ReqSignEmailDetailBloc());
   }
 }

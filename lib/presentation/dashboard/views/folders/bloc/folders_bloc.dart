@@ -3,8 +3,8 @@ import 'dart:async';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../../../infrastructure/dal/models/new_folder.model.dart';
 import '../../../../../domain/consts/app_consts/filters.dart';
+import '../../../../../infrastructure/dal/models/new_folder.model.dart';
 
 part 'folders_event.dart';
 part 'folders_state.dart';
@@ -20,9 +20,8 @@ class FoldersBloc extends Bloc<FoldersEvent, FoldersState> {
 
   final List<TemplatesModel> allTemplates = List.generate(
     10,
-    (index) => TemplatesModel(
-        name: 'My Template ${index + 1}',
-        desc: DateTime.now().toUtc().toString()),
+    (index) =>
+        TemplatesModel(name: 'My Template ${index + 1}', desc: DateTime.now().toUtc().toString()),
   );
 
   FoldersBloc() : super(const FoldersInitialState()) {
@@ -61,13 +60,11 @@ class FoldersBloc extends Bloc<FoldersEvent, FoldersState> {
     await Future.delayed(const Duration(seconds: 1));
 
     return ["Folders 1", "Folders 2", "Folders 3"]
-        .where((folders) =>
-            folders.toLowerCase().contains(event.query.toLowerCase()))
+        .where((folders) => folders.toLowerCase().contains(event.query.toLowerCase()))
         .toList();
   }
 
-  FutureOr<void> createNewFolder(
-      OnNewFolderEvent event, Emitter<FoldersState> emit) {
+  FutureOr<void> createNewFolder(OnNewFolderEvent event, Emitter<FoldersState> emit) {
     final template = List<TemplatesModel>.generate(
       2,
       (index) {

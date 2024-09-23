@@ -8,8 +8,8 @@ import 'package:dyno_sign/presentation/widgets/text/custom_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../widgets/custom_appbar.dart';
 import '../../../../domain/consts/app_consts/filters.dart';
+import '../../widgets/custom_appbar.dart';
 
 class TemplatesView extends StatelessWidget {
   const TemplatesView({super.key});
@@ -56,8 +56,7 @@ class TemplatesView extends StatelessWidget {
                           showSearch(
                             context: context,
                             delegate: _TemplatesSearchDelegate(
-                              templatesBloc:
-                                  BlocProvider.of<TemplatesBloc>(context),
+                              templatesBloc: BlocProvider.of<TemplatesBloc>(context),
                             ),
                           );
                         },
@@ -103,12 +102,10 @@ class TemplatesView extends StatelessWidget {
                     child: Card(
                       clipBehavior: Clip.hardEdge,
                       shape: RoundedRectangleBorder(
-                        borderRadius:
-                            BorderRadius.circular(AppStyle.tileBorderRadius),
+                        borderRadius: BorderRadius.circular(AppStyle.tileBorderRadius),
                       ),
                       child: ListTile(
-                        contentPadding:
-                            const EdgeInsets.symmetric(horizontal: 16.0),
+                        contentPadding: const EdgeInsets.symmetric(horizontal: 16.0),
                         // Add horizontal padding
                         leading: SizedBox(
                           child: Column(
@@ -120,8 +117,7 @@ class TemplatesView extends StatelessWidget {
                                 fontSize: AppFontSize.titleXSmallFont,
                                 fontWeight: FontWeight.w600,
                               ),
-                              const SizedBox(
-                                  height: 10), // Add space between texts
+                              const SizedBox(height: 10), // Add space between texts
                               CustomText(
                                 "Amir",
                                 fontSize: AppFontSize.labelSmallFont,
@@ -203,8 +199,7 @@ class TemplatesFilterSheet extends StatelessWidget {
                 fontSize: AppFontSize.titleSmallFont,
               ),
               BlocBuilder<TemplatesBloc, TemplatesState>(
-                buildWhen: (_, current) =>
-                    current is StatusFilterSelectionState,
+                buildWhen: (_, current) => current is StatusFilterSelectionState,
                 builder: (context, state) {
                   return ListView.builder(
                     shrinkWrap: true,

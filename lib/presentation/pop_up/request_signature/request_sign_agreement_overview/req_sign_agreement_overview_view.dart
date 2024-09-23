@@ -2,7 +2,6 @@ import 'package:dyno_sign/presentation/pop_up/request_signature/request_sign_sel
 import 'package:flutter/material.dart';
 
 import '../../../../domain/consts/consts.dart';
-import '../../../dashboard/views/home/home_view.dart';
 import '../../../widgets/widgets.dart';
 
 class ReqSignAgreementOverviewView extends StatelessWidget {

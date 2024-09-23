@@ -1,7 +1,5 @@
-import 'dart:io';
 import 'dart:typed_data';
 
-import 'package:dyno_sign/infrastructure/dal/models/picked_file.model.dart';
 import 'package:dyno_sign/presentation/pop_up/request_signature/request_sign_selected_document/bloc/req_sign_selected_doc_bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

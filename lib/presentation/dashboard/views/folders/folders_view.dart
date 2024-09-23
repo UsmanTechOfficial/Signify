@@ -4,9 +4,9 @@ import 'package:dyno_sign/presentation/dashboard/views/folders/view/all_template
 import 'package:dyno_sign/presentation/widgets/tiles/custom_tiles/custom_folder_tile.dart';
 import 'package:flutter/material.dart';
 
+import '../../../../domain/consts/app_consts/filters.dart';
 import '../../../../domain/consts/consts.dart';
 import '../../../widgets/widgets.dart';
-import '../../../../domain/consts/app_consts/filters.dart';
 
 part 'view/create_folder_view.dart';
 part 'view/folder_templates_list.dart';
@@ -22,8 +22,7 @@ class FoldersView extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         leading: CustomIconButton(
-            onPressed: () => Navigator.pop(context),
-            icon: Icon(Icons.adaptive.arrow_back)),
+            onPressed: () => Navigator.pop(context), icon: Icon(Icons.adaptive.arrow_back)),
         title: const Text("Folders"),
         actions: [
           CustomIconButton(

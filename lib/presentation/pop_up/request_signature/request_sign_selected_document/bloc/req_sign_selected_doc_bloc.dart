@@ -11,8 +11,7 @@ part 'req_sign_selected_doc_state.dart';
 
 List<PickedFileModel> selectedPdfFileList = [];
 
-class ReqSignSelectedDocBloc
-    extends Bloc<ReqSignSelectedDocEvent, ReqSignSelectedDocState> {
+class ReqSignSelectedDocBloc extends Bloc<ReqSignSelectedDocEvent, ReqSignSelectedDocState> {
   ReqSignSelectedDocBloc() : super(const ReqSignSelectedDocInitial()) {
     on<AddNewFileEvent>((event, emit) => _addNewFile(emit, state));
     on<RemoveFileEvent>((event, emit) => _removeFile(event.index, emit, state));
