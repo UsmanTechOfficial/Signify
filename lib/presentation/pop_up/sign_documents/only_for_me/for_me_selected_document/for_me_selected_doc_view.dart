@@ -3,17 +3,17 @@ import 'package:dyno_sign/presentation/pop_up/request_signature/request_sign_agr
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../../domain/consts/consts.dart';
-import '../../../widgets/dialogs/pdf_preview.dialog.dart';
-import '../../../widgets/widgets.dart';
-import 'bloc/req_sign_selected_doc_bloc.dart';
+import '../../../../../domain/consts/consts.dart';
+import '../../../../widgets/dialogs/pdf_preview.dialog.dart';
+import '../../../../widgets/widgets.dart';
+import 'bloc/for_me_selected_doc_bloc.dart';
 
-class ReqSignSelectedDocView extends StatelessWidget {
-  const ReqSignSelectedDocView({super.key});
+class ForMeSelectedDocView extends StatelessWidget {
+  const ForMeSelectedDocView({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final bloc = getIt<ReqSignSelectedDocBloc>();
+    final bloc = getIt<ForMeSelectedDocBloc>();
 
     return Scaffold(
       appBar: AppBar(
@@ -40,14 +40,14 @@ class ReqSignSelectedDocView extends StatelessWidget {
                 fontSize: AppFontSize.titleXSmallFont,
                 fontWeight: FontWeight.w500,
               ),
-              BlocBuilder<ReqSignSelectedDocBloc, ReqSignSelectedDocState>(
+              BlocBuilder<ForMeSelectedDocBloc, ForMeSelectedDocState>(
                 bloc: bloc,
                 builder: (context, state) {
-                  if (selectedPdfFileList.isNotEmpty) {
+                  if (forMeSelectedPdfFileList.isNotEmpty) {
                     return ListView.builder(
                       shrinkWrap: true,
                       physics: const NeverScrollableScrollPhysics(),
-                      itemCount: selectedPdfFileList.length,
+                      itemCount: forMeSelectedPdfFileList.length,
                       itemBuilder: (context, index) {
                         return Card(
                           elevation: 5,
@@ -64,12 +64,12 @@ class ReqSignSelectedDocView extends StatelessWidget {
                                     child: Icon(Icons.picture_as_pdf, color: Colors.white),
                                   ),
                                   title: CustomText(
-                                    selectedPdfFileList[index].name,
+                                    forMeSelectedPdfFileList[index].name,
                                     fontSize: AppFontSize.titleXSmallFont,
                                     fontWeight: FontWeight.w500,
                                   ),
                                   subtitle: CustomText(
-                                    selectedPdfFileList[index].date.toIso8601String(),
+                                    forMeSelectedPdfFileList[index].date.toIso8601String(),
                                     fontSize: AppFontSize.labelSmallFont,
                                     color: Theme.of(context).colorScheme.outline,
                                   ),
@@ -83,7 +83,7 @@ class ReqSignSelectedDocView extends StatelessWidget {
                                       PdfPreviewDialog.show(
                                         context: context,
                                         previewOnly: true,
-                                        selectedPdfFileList[index].xFile,
+                                        forMeSelectedPdfFileList[index].xFile,
                                         check: (result) {},
                                       );
                                       break;

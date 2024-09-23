@@ -3,23 +3,22 @@ import 'dart:developer';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../../../domain/utils/utils.dart';
-import '../../../../../infrastructure/dal/models/picked_file.model.dart';
+import '../../../../../../domain/utils/utils.dart';
+import '../../../../../../infrastructure/dal/models/picked_file.model.dart';
 
-part 'req_sign_selected_doc_event.dart';
-part 'req_sign_selected_doc_state.dart';
+part 'for_me_selected_doc_event.dart';
 
-List<PickedFileModel> selectedPdfFileList = [];
+part 'for_me_selected_doc_state.dart';
 
-class ReqSignSelectedDocBloc
-    extends Bloc<ReqSignSelectedDocEvent, ReqSignSelectedDocState> {
-  ReqSignSelectedDocBloc() : super(const ReqSignSelectedDocInitial()) {
+List<PickedFileModel> forMeSelectedPdfFileList = [];
+
+class ForMeSelectedDocBloc extends Bloc<ForMeSelectedDocEvent, ForMeSelectedDocState> {
+  ForMeSelectedDocBloc() : super(const ReqSignSelectedDocInitial()) {
     on<AddNewFileEvent>((event, emit) => _addNewFile(emit, state));
     on<RemoveFileEvent>((event, emit) => _removeFile(event.index, emit, state));
   }
 
-  void _addNewFile(
-      Emitter<ReqSignSelectedDocState> emit, ReqSignSelectedDocState currentState) async {
+  void _addNewFile(Emitter<ForMeSelectedDocState> emit, ForMeSelectedDocState currentState) async {
     final selectedFile = await FilePicker.pick();
 
     if (selectedFile.isNotEmpty) {
@@ -31,7 +30,7 @@ class ReqSignSelectedDocBloc
         for (var file in selectedFile) {
           final model = await FileToModel.convert(file);
           updatedList.add(model);
-          selectedPdfFileList.add(model);
+          forMeSelectedPdfFileList.add(model);
 
           log('File added: ${model.name}');
         }
@@ -44,11 +43,11 @@ class ReqSignSelectedDocBloc
   }
 
   void _removeFile(
-      int index, Emitter<ReqSignSelectedDocState> emit, ReqSignSelectedDocState currentState) {
+      int index, Emitter<ForMeSelectedDocState> emit, ForMeSelectedDocState currentState) {
     if (currentState is FileSelectedState) {
       final updatedList = List<PickedFileModel>.from(currentState.selectedPdfFileList);
       updatedList.removeAt(index);
-      selectedPdfFileList.removeAt(index);
+      forMeSelectedPdfFileList.removeAt(index);
 
       emit(FileSelectedState(updatedList)); // Emit updated list after removal
     }
@@ -56,7 +55,7 @@ class ReqSignSelectedDocBloc
 
   @override
   Future<void> close() {
-    selectedPdfFileList.clear();
+    forMeSelectedPdfFileList.clear();
     return super.close();
   }
 }

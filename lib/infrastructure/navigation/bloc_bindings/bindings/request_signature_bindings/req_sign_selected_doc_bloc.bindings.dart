@@ -5,7 +5,6 @@ import '../../../../../presentation/pop_up/request_signature/request_sign_select
 class ReqSignSelectedDocBlocBindings implements Bindings {
   @override
   void dependencies() async {
-    getIt.registerFactory<ReqSignSelectedDocBloc>(
-        () => ReqSignSelectedDocBloc());
+    getIt.registerSingleton<ReqSignSelectedDocBloc>(ReqSignSelectedDocBloc());
   }
 }

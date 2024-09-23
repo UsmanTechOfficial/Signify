@@ -7,13 +7,15 @@ sealed class ReqSignSelectedDocState extends Equatable {
   List<Object> get props => [];
 }
 
-final class ReqSignSelectedDocInitial extends ReqSignSelectedDocState {}
+final class ReqSignSelectedDocInitial extends ReqSignSelectedDocState {
+  const ReqSignSelectedDocInitial();
+}
 
 class FileSelectedState extends ReqSignSelectedDocState {
-  // final List<PickedFileModel> selectedFiles;
+  final List<PickedFileModel> selectedPdfFileList;
 
-  const FileSelectedState();
+  const FileSelectedState(this.selectedPdfFileList);
 
-// @override
-// List<Object> get props => [selectedFiles];
+  @override
+  List<Object> get props => [selectedPdfFileList];
 }
