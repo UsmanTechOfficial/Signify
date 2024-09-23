@@ -6,7 +6,6 @@ export 'package:dyno_sign/presentation/dashboard/views/folders/folders_view.dart
 export 'package:dyno_sign/presentation/dashboard/views/settings/settings_view.dart';
 export 'package:dyno_sign/presentation/onboarding/onboarding_view.dart';
 export 'package:dyno_sign/presentation/onboarding/view/get_started_view.dart';
-
 export 'package:dyno_sign/presentation/signature_manager/signature_manager_view.dart';
 export 'package:dyno_sign/presentation/splash/splash_view.dart';
 
