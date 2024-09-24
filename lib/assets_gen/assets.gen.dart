@@ -3,12 +3,12 @@
 ///  FlutterGen
 /// *****************************************************
 
-import 'package:flutter/services.dart';
 // coverage:ignore-file
 // ignore_for_file: type=lint
 // ignore_for_file: directives_ordering,unnecessary_import,implicit_dynamic_list_literal,deprecated_member_use
 
 import 'package:flutter/widgets.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:vector_graphics/vector_graphics.dart';
 
@@ -19,42 +19,66 @@ class $AssetsIconsGen {
   SvgGenImage get docIcon => const SvgGenImage('assets/icons/doc_icon.svg');
 
   /// File path: assets/icons/google_icon.svg
-  SvgGenImage get googleIcon => const SvgGenImage('assets/icons/google_icon.svg');
+  SvgGenImage get googleIcon =>
+      const SvgGenImage('assets/icons/google_icon.svg');
 
   /// File path: assets/icons/ic_agreements_filled.svg
-  SvgGenImage get icAgreementsFilled => const SvgGenImage('assets/icons/ic_agreements_filled.svg');
+  SvgGenImage get icAgreementsFilled =>
+      const SvgGenImage('assets/icons/ic_agreements_filled.svg');
 
   /// File path: assets/icons/ic_agreements_outlined.svg
   SvgGenImage get icAgreementsOutlined =>
       const SvgGenImage('assets/icons/ic_agreements_outlined.svg');
 
+  /// File path: assets/icons/ic_date.svg
+  SvgGenImage get icDate => const SvgGenImage('assets/icons/ic_date.svg');
+
   /// File path: assets/icons/ic_home_filled.svg
-  SvgGenImage get icHomeFilled => const SvgGenImage('assets/icons/ic_home_filled.svg');
+  SvgGenImage get icHomeFilled =>
+      const SvgGenImage('assets/icons/ic_home_filled.svg');
 
   /// File path: assets/icons/ic_home_outlined.svg
-  SvgGenImage get icHomeOutlined => const SvgGenImage('assets/icons/ic_home_outlined.svg');
+  SvgGenImage get icHomeOutlined =>
+      const SvgGenImage('assets/icons/ic_home_outlined.svg');
+
+  /// File path: assets/icons/ic_initials.svg
+  SvgGenImage get icInitials =>
+      const SvgGenImage('assets/icons/ic_initials.svg');
 
   /// File path: assets/icons/ic_profile_filled.svg
-  SvgGenImage get icProfileFilled => const SvgGenImage('assets/icons/ic_profile_filled.svg');
+  SvgGenImage get icProfileFilled =>
+      const SvgGenImage('assets/icons/ic_profile_filled.svg');
 
   /// File path: assets/icons/ic_profile_outlined.svg
-  SvgGenImage get icProfileOutlined => const SvgGenImage('assets/icons/ic_profile_outlined.svg');
+  SvgGenImage get icProfileOutlined =>
+      const SvgGenImage('assets/icons/ic_profile_outlined.svg');
+
+  /// File path: assets/icons/ic_signature.svg
+  SvgGenImage get icSignature =>
+      const SvgGenImage('assets/icons/ic_signature.svg');
 
   /// File path: assets/icons/ic_templates_filled.svg
-  SvgGenImage get icTemplatesFilled => const SvgGenImage('assets/icons/ic_templates_filled.svg');
+  SvgGenImage get icTemplatesFilled =>
+      const SvgGenImage('assets/icons/ic_templates_filled.svg');
 
   /// File path: assets/icons/ic_templates_outlined.svg
   SvgGenImage get icTemplatesOutlined =>
       const SvgGenImage('assets/icons/ic_templates_outlined.svg');
 
+  /// File path: assets/icons/ic_text_field.svg
+  SvgGenImage get icTextField =>
+      const SvgGenImage('assets/icons/ic_text_field.svg');
+
   /// File path: assets/icons/more_icon.svg
   SvgGenImage get moreIcon => const SvgGenImage('assets/icons/more_icon.svg');
 
   /// File path: assets/icons/more_vert_icon.svg
-  SvgGenImage get moreVertIcon => const SvgGenImage('assets/icons/more_vert_icon.svg');
+  SvgGenImage get moreVertIcon =>
+      const SvgGenImage('assets/icons/more_vert_icon.svg');
 
   /// File path: assets/icons/pencil_icon.svg
-  SvgGenImage get pencilIcon => const SvgGenImage('assets/icons/pencil_icon.svg');
+  SvgGenImage get pencilIcon =>
+      const SvgGenImage('assets/icons/pencil_icon.svg');
 
   /// List of all assets
   List<SvgGenImage> get values => [
@@ -62,12 +86,16 @@ class $AssetsIconsGen {
         googleIcon,
         icAgreementsFilled,
         icAgreementsOutlined,
+        icDate,
         icHomeFilled,
         icHomeOutlined,
+        icInitials,
         icProfileFilled,
         icProfileOutlined,
+        icSignature,
         icTemplatesFilled,
         icTemplatesOutlined,
+        icTextField,
         moreIcon,
         moreVertIcon,
         pencilIcon
@@ -77,17 +105,23 @@ class $AssetsIconsGen {
 class $AssetsImagesGen {
   const $AssetsImagesGen();
 
+  /// File path: assets/images/img.png
+  AssetGenImage get img => const AssetGenImage('assets/images/img.png');
+
   /// File path: assets/images/onBoard_img.png
-  AssetGenImage get onBoardImg => const AssetGenImage('assets/images/onBoard_img.png');
+  AssetGenImage get onBoardImg =>
+      const AssetGenImage('assets/images/onBoard_img.png');
 
   /// File path: assets/images/profile_img.png
-  AssetGenImage get profileImg => const AssetGenImage('assets/images/profile_img.png');
+  AssetGenImage get profileImg =>
+      const AssetGenImage('assets/images/profile_img.png');
 
   /// File path: assets/images/splash_img.png
-  AssetGenImage get splashImg => const AssetGenImage('assets/images/splash_img.png');
+  AssetGenImage get splashImg =>
+      const AssetGenImage('assets/images/splash_img.png');
 
   /// List of all assets
-  List<AssetGenImage> get values => [onBoardImg, profileImg, splashImg];
+  List<AssetGenImage> get values => [img, onBoardImg, profileImg, splashImg];
 }
 
 class $AssetsJsonGen {
@@ -258,7 +292,8 @@ class SvgGenImage {
       placeholderBuilder: placeholderBuilder,
       semanticsLabel: semanticsLabel,
       excludeFromSemantics: excludeFromSemantics,
-      colorFilter: colorFilter ?? (color == null ? null : ColorFilter.mode(color, colorBlendMode)),
+      colorFilter: colorFilter ??
+          (color == null ? null : ColorFilter.mode(color, colorBlendMode)),
       clipBehavior: clipBehavior,
       cacheColorFilter: cacheColorFilter,
     );
