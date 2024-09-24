@@ -9,14 +9,15 @@ import '../../../../../domain/utils/utils.dart';
 part 'req_sign_assign_fields_event.dart';
 part 'req_sign_assign_fields_state.dart';
 
-class ReqSignAssignFieldsBloc extends Bloc<ReqSignAssignFieldsEvent, ReqSignAssignFieldsState> {
+class ReqSignAssignFieldsBloc
+    extends Bloc<ReqSignAssignFieldsEvent, ReqSignAssignFieldsState> {
   ReqSignAssignFieldsBloc() : super(ReqSignAssignFieldsInitial()) {
     on<DocumentPreviewRequested>(_onDocumentPreviewRequested);
     on<DocumentSelected>(_onDocumentSelected);
   }
 
-  Future<void> _onDocumentPreviewRequested(
-      DocumentPreviewRequested event, Emitter<ReqSignAssignFieldsState> emit) async {
+  Future<void> _onDocumentPreviewRequested(DocumentPreviewRequested event,
+      Emitter<ReqSignAssignFieldsState> emit) async {
     emit(DocumentPreviewLoading());
     try {
       for (var file in selectedPdfFileList) {
@@ -32,7 +33,8 @@ class ReqSignAssignFieldsBloc extends Bloc<ReqSignAssignFieldsEvent, ReqSignAssi
     }
   }
 
-  void _onDocumentSelected(DocumentSelected event, Emitter<ReqSignAssignFieldsState> emit) {
+  void _onDocumentSelected(
+      DocumentSelected event, Emitter<ReqSignAssignFieldsState> emit) {
     emit(AssignFieldSelectedDoc(event.index));
   }
 }

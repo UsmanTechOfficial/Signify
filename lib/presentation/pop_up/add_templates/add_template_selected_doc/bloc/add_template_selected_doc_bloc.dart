@@ -2,12 +2,12 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../../domain/utils/utils.dart';
-import '../../../../../infrastructure/dal/models/picked_file.model.dart';
+import '../../../../../infrastructure/dal/models/selected_file.model.dart';
 
 part 'add_template_selected_doc_event.dart';
 part 'add_template_selected_doc_state.dart';
 
-List<PickedFileModel> addTemplateSelectedPdfFileList = [];
+List<SelectedFileModel> addTemplateSelectedPdfFileList = [];
 
 class AddTemplateSelectedDocBloc
     extends Bloc<AddTemplateSelectedDocEvent, AddTemplateSelectedDocState> {
@@ -16,14 +16,16 @@ class AddTemplateSelectedDocBloc
     on<RemoveFileEvent>((event, emit) => _removeFile(event.index, emit, state));
   }
 
-  void _addNewFile(
-      Emitter<AddTemplateSelectedDocState> emit, AddTemplateSelectedDocState currentState) async {
+  void _addNewFile(Emitter<AddTemplateSelectedDocState> emit,
+      AddTemplateSelectedDocState currentState) async {
     final selectedFile = await FilePicker.pick();
 
     if (selectedFile.isNotEmpty) {
       try {
-        final List<PickedFileModel> updatedList = List.from(
-          (currentState is FileSelectedState) ? currentState.selectedPdfFileList : [],
+        final List<SelectedFileModel> updatedList = List.from(
+          (currentState is FileSelectedState)
+              ? currentState.selectedPdfFileList
+              : [],
         );
 
         for (var file in selectedFile) {
@@ -40,7 +42,8 @@ class AddTemplateSelectedDocBloc
   void _removeFile(int index, Emitter<AddTemplateSelectedDocState> emit,
       AddTemplateSelectedDocState currentState) {
     if (currentState is FileSelectedState) {
-      final updatedList = List<PickedFileModel>.from(currentState.selectedPdfFileList);
+      final updatedList =
+          List<SelectedFileModel>.from(currentState.selectedPdfFileList);
       updatedList.removeAt(index);
       addTemplateSelectedPdfFileList.removeAt(index);
 

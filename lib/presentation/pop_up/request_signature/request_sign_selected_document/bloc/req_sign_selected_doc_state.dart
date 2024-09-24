@@ -12,7 +12,7 @@ final class ReqSignSelectedDocInitial extends ReqSignSelectedDocState {
 }
 
 class FileSelectedState extends ReqSignSelectedDocState {
-  final List<PickedFileModel> selectedPdfFileList;
+  final List<SelectedFileModel> selectedPdfFileList;
 
   const FileSelectedState(this.selectedPdfFileList);
 

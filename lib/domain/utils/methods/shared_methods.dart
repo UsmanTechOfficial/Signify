@@ -115,9 +115,9 @@ class PdfSinglePage {
 }
 
 class FileToModel {
-  static Future<PickedFileModel> convert(XFile file) async {
+  static Future<SelectedFileModel> convert(XFile file) async {
     final firstPage = await PdfSinglePage.get(file);
-    return PickedFileModel(
+    return SelectedFileModel(
       name: file.name,
       date: await file.lastModified(),
       bytes: firstPage!.bytes,

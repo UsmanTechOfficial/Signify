@@ -12,7 +12,7 @@ final class AddTemplateSelectedDocInitial extends AddTemplateSelectedDocState {
 }
 
 class FileSelectedState extends AddTemplateSelectedDocState {
-  final List<PickedFileModel> selectedPdfFileList;
+  final List<SelectedFileModel> selectedPdfFileList;
 
   const FileSelectedState(this.selectedPdfFileList);
 
