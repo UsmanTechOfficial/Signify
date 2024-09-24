@@ -16,8 +16,7 @@ class ReqSignAgreementDetailView extends StatelessWidget {
         centerTitle: true,
       ),
       body: Padding(
-        padding: EdgeInsets.symmetric(
-            horizontal: MediaQuery.of(context).size.width * .05),
+        padding: EdgeInsets.symmetric(horizontal: MediaQuery.of(context).size.width * .05),
         child: SingleChildScrollView(
           physics: const ClampingScrollPhysics(),
           scrollDirection: Axis.vertical,

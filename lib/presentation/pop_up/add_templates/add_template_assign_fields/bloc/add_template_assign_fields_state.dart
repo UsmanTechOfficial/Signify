@@ -7,8 +7,7 @@ sealed class AddTemplateAssignFieldsState extends Equatable {
   List<Object> get props => [];
 }
 
-final class AddTemplateAssignFieldsInitial
-    extends AddTemplateAssignFieldsState {
+final class AddTemplateAssignFieldsInitial extends AddTemplateAssignFieldsState {
   const AddTemplateAssignFieldsInitial();
 }
 

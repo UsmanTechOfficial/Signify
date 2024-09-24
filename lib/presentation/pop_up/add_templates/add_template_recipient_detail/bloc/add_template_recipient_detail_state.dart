@@ -7,5 +7,4 @@ sealed class AddTemplateRecipientDetailState extends Equatable {
   List<Object> get props => [];
 }
 
-final class AddTemplateRecipientDetailInitial
-    extends AddTemplateRecipientDetailState {}
+final class AddTemplateRecipientDetailInitial extends AddTemplateRecipientDetailState {}

@@ -13,13 +13,11 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
     on<UpdateProfileImage>(pickImage);
   }
 
-  Future<void> pickImage(
-      UpdateProfileImage event, Emitter<ProfileState> emit) async {
+  Future<void> pickImage(UpdateProfileImage event, Emitter<ProfileState> emit) async {
     final ImagePicker imagePicker = ImagePicker();
 
     try {
-      final pickedFile =
-          await imagePicker.pickImage(source: ImageSource.gallery);
+      final pickedFile = await imagePicker.pickImage(source: ImageSource.gallery);
       if (pickedFile != null) {
         emit(ProfileImageSelectedSuccess(pickedFile.path));
       } else {

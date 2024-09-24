@@ -23,6 +23,5 @@ MaterialBannerThemeData get darkBannerTheme => MaterialBannerThemeData(
       ),
       leadingPadding: const EdgeInsets.all(10),
       // Example padding, adjust as needed
-      padding: const EdgeInsets.symmetric(
-          horizontal: 16.0), // Example padding, adjust as needed
+      padding: const EdgeInsets.symmetric(horizontal: 16.0), // Example padding, adjust as needed
     );

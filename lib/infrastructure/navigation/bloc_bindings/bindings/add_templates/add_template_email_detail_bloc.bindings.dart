@@ -5,7 +5,6 @@ import '../../../../../presentation/pop_up/add_templates/add_template_email_deta
 class AddTemplateEmailDetailBlocBindings implements Bindings {
   @override
   void dependencies() {
-    getIt.registerFactory<AddTemplateEmailDetailBloc>(
-        () => AddTemplateEmailDetailBloc());
+    getIt.registerFactory<AddTemplateEmailDetailBloc>(() => AddTemplateEmailDetailBloc());
   }
 }

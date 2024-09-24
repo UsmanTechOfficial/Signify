@@ -11,8 +11,7 @@ class SplashBloc extends Bloc<SplashEvent, SplashState> {
     on<CheckUserStatus>(_onCheckUserStatus);
   }
 
-  Future<void> _onCheckUserStatus(
-      CheckUserStatus event, Emitter<SplashState> emit) async {
+  Future<void> _onCheckUserStatus(CheckUserStatus event, Emitter<SplashState> emit) async {
     final bool isNewUser = FirstTimeService.isFirstTime();
 
     await Future.delayed(const Duration(seconds: 1));

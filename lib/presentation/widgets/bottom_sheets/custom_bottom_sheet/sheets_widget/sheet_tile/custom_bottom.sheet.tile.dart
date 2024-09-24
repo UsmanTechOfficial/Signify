@@ -30,14 +30,12 @@ class CustomBottomSheetTile extends StatelessWidget {
           elevation: 8,
           child: ListTile(
             selected: isSelected,
-            contentPadding:
-                const EdgeInsets.symmetric(horizontal: 20, vertical: 7),
+            contentPadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 7),
             onTap: onTap,
             style: ListTileStyle.drawer,
             leading: CircleAvatar(
-              backgroundColor: isSelected
-                  ? colorScheme.surface
-                  : colorScheme.outlineVariant.withOpacity(0.5),
+              backgroundColor:
+                  isSelected ? colorScheme.surface : colorScheme.outlineVariant.withOpacity(0.5),
               child: icon ?? Assets.icons.docIcon.svg(),
             ),
             title: Text(

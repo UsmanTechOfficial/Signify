@@ -12,8 +12,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
   HomeBloc() : super(const HomeInitialState(0)) {
     on<SelectCategory>((event, emit) {
       if (state is HomeCategorySelectedState) {
-        emit((state as HomeCategorySelectedState)
-            .copyWith(selectedCategoryIndex: event.index));
+        emit((state as HomeCategorySelectedState).copyWith(selectedCategoryIndex: event.index));
       } else {
         emit(HomeCategorySelectedState(selectedCategoryIndex: event.index));
       }
@@ -21,8 +20,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
 
     on<SelectDoc>((event, emit) {
       if (state is HomeDocSelectedState) {
-        emit((state as HomeDocSelectedState)
-            .copyWith(selectedDocIndex: event.index));
+        emit((state as HomeDocSelectedState).copyWith(selectedDocIndex: event.index));
       } else {
         emit(HomeDocSelectedState(selectedDocIndex: event.index));
       }

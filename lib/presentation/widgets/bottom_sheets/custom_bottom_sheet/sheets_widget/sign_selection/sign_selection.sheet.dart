@@ -5,8 +5,7 @@ class SignSelectedSheet extends StatelessWidget {
   final VoidCallback onForMe;
   final VoidCallback onByOthers;
 
-  const SignSelectedSheet(
-      {super.key, required this.onForMe, required this.onByOthers});
+  const SignSelectedSheet({super.key, required this.onForMe, required this.onByOthers});
 
   @override
   Widget build(BuildContext context) {

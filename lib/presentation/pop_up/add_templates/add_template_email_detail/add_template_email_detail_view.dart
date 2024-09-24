@@ -86,19 +86,16 @@ class AddTemplateEmailDetailView extends StatelessWidget {
                     shadowColor: color.shadow,
                     clipBehavior: Clip.hardEdge,
                     shape: RoundedRectangleBorder(
-                      borderRadius:
-                          BorderRadius.circular(AppStyle.tileBorderRadius),
+                      borderRadius: BorderRadius.circular(AppStyle.tileBorderRadius),
                     ),
                     child: ListTile(
-                      contentPadding: const EdgeInsets.symmetric(
-                          vertical: 8.0, horizontal: 16.0),
+                      contentPadding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
                       leading: Row(
                         mainAxisSize: MainAxisSize.min,
                         // Ensure the row doesn’t take more space than needed
                         children: [
                           Card(
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(5)),
+                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
                             color: color.primary,
                             child: SizedBox(
                               width: 35,
@@ -116,9 +113,8 @@ class AddTemplateEmailDetailView extends StatelessWidget {
                           const SizedBox(width: 8),
                           // Space between the card and the CircleAvatar
                           CircleAvatar(
-                            backgroundColor: index.isEven
-                                ? color.primary
-                                : color.secondaryContainer,
+                            backgroundColor:
+                                index.isEven ? color.primary : color.secondaryContainer,
                             child: const CustomText(
                               'A',
                               fontSize: AppFontSize.labelMediumFont,

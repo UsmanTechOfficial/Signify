@@ -2,8 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../theme.dart';
 
-FloatingActionButtonThemeData get floatingActionButtonTheme =>
-    FloatingActionButtonThemeData(
+FloatingActionButtonThemeData get floatingActionButtonTheme => FloatingActionButtonThemeData(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(50)),
       backgroundColor: colorSchemeLight.primary,
       foregroundColor: colorSchemeLight.onPrimary,
@@ -13,8 +12,7 @@ FloatingActionButtonThemeData get floatingActionButtonTheme =>
 // Add other properties as needed
     );
 
-FloatingActionButtonThemeData get darkFloatingActionButtonTheme =>
-    FloatingActionButtonThemeData(
+FloatingActionButtonThemeData get darkFloatingActionButtonTheme => FloatingActionButtonThemeData(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(50)),
       backgroundColor: colorSchemeDark.primary,
       foregroundColor: colorSchemeDark.onPrimary,

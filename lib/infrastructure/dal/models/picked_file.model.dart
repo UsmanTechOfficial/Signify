@@ -10,10 +10,7 @@ class PickedFileModel extends Equatable {
   final XFile xFile;
 
   const PickedFileModel(
-      {required this.name,
-      required this.date,
-      required this.bytes,
-      required this.xFile});
+      {required this.name, required this.date, required this.bytes, required this.xFile});
 
   @override
   List<Object?> get props => [name, date, bytes, xFile];

@@ -5,7 +5,6 @@ import '../../../../../presentation/pop_up/add_templates/add_template_recipient_
 class AddTemplateRecipientDetailBlocBindings implements Bindings {
   @override
   void dependencies() {
-    getIt.registerFactory<AddTemplateRecipientDetailBloc>(
-        () => AddTemplateRecipientDetailBloc());
+    getIt.registerFactory<AddTemplateRecipientDetailBloc>(() => AddTemplateRecipientDetailBloc());
   }
 }

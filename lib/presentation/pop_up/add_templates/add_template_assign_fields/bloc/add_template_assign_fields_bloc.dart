@@ -11,14 +11,13 @@ part 'add_template_assign_fields_state.dart';
 
 class AddTemplateAssignFieldsBloc
     extends Bloc<AddTemplateAssignFieldsEvent, AddTemplateAssignFieldsState> {
-  AddTemplateAssignFieldsBloc()
-      : super(const AddTemplateAssignFieldsInitial()) {
+  AddTemplateAssignFieldsBloc() : super(const AddTemplateAssignFieldsInitial()) {
     on<DocumentPreviewRequested>(_onDocumentPreviewRequested);
     on<DocumentSelected>(_onDocumentSelected);
   }
 
-  Future<void> _onDocumentPreviewRequested(DocumentPreviewRequested event,
-      Emitter<AddTemplateAssignFieldsState> emit) async {
+  Future<void> _onDocumentPreviewRequested(
+      DocumentPreviewRequested event, Emitter<AddTemplateAssignFieldsState> emit) async {
     emit(DocumentPreviewLoading());
     try {
       for (var file in addTemplateSelectedPdfFileList) {
@@ -34,8 +33,7 @@ class AddTemplateAssignFieldsBloc
     }
   }
 
-  void _onDocumentSelected(
-      DocumentSelected event, Emitter<AddTemplateAssignFieldsState> emit) {
+  void _onDocumentSelected(DocumentSelected event, Emitter<AddTemplateAssignFieldsState> emit) {
     emit(AssignFieldSelectedDoc(event.index));
   }
 }

@@ -77,8 +77,7 @@ const MaterialColor primaryMaterial = MaterialColor(0xffF96A70, <int, Color>{
 });
 
 /// [Dark]
-const MaterialColor darkPrimaryMaterial =
-    MaterialColor(0xffeec4d8, <int, Color>{
+const MaterialColor darkPrimaryMaterial = MaterialColor(0xffeec4d8, <int, Color>{
   50: Color.fromRGBO(238, 196, 216, .1),
   100: Color.fromRGBO(238, 196, 216, .2),
   200: Color.fromRGBO(238, 196, 216, .3),

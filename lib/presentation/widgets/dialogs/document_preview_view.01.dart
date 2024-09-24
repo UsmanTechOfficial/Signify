@@ -92,9 +92,8 @@ class _DocumentPreviewWidgetState extends State<DocumentPreviewWidget> {
         ],
       ),
       body: Center(
-        child: pdfPageImage != null
-            ? Image.memory(pdfPageImage!)
-            : const CircularProgressIndicator(),
+        child:
+            pdfPageImage != null ? Image.memory(pdfPageImage!) : const CircularProgressIndicator(),
       ),
     );
   }

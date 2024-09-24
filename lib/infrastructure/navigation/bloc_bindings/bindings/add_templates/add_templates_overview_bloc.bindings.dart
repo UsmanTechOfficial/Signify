@@ -5,7 +5,6 @@ import '../../../../../presentation/pop_up/add_templates/add_templates_overview/
 class AddTemplatesOverviewBlocBindings implements Bindings {
   @override
   void dependencies() {
-    getIt.registerFactory<AddTemplatesOverviewBloc>(
-        () => AddTemplatesOverviewBloc());
+    getIt.registerFactory<AddTemplatesOverviewBloc>(() => AddTemplatesOverviewBloc());
   }
 }

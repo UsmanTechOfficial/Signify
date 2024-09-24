@@ -14,8 +14,7 @@ class AddTemplateAssignFieldsView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final bloc = getIt<AddTemplateAssignFieldsBloc>()
-      ..add(const DocumentPreviewRequested());
+    final bloc = getIt<AddTemplateAssignFieldsBloc>()..add(const DocumentPreviewRequested());
     final color = appColorScheme(context);
     final width = appWidth(context);
 
@@ -52,8 +51,7 @@ class AddTemplateAssignFieldsView extends StatelessWidget {
                 ),
               ),
             ),
-            BlocBuilder<AddTemplateAssignFieldsBloc,
-                AddTemplateAssignFieldsState>(
+            BlocBuilder<AddTemplateAssignFieldsBloc, AddTemplateAssignFieldsState>(
               buildWhen: (_, current) => current is AssignFieldSelectedDoc,
               bloc: bloc,
               builder: (context, state) {
@@ -76,8 +74,7 @@ class AddTemplateAssignFieldsView extends StatelessWidget {
                               onTap: () {
                                 bloc.add(DocumentSelected(index));
                               },
-                              child: Image.memory(
-                                  addTemplateSelectedPdfFileList[index].bytes),
+                              child: Image.memory(addTemplateSelectedPdfFileList[index].bytes),
                             ),
                           ),
                         );
@@ -92,8 +89,7 @@ class AddTemplateAssignFieldsView extends StatelessWidget {
                             onTap: () {
                               bloc.add(DocumentSelected(index));
                             },
-                            child: Image.memory(
-                                addTemplateSelectedPdfFileList[index].bytes),
+                            child: Image.memory(addTemplateSelectedPdfFileList[index].bytes),
                           ),
                         ),
                       );
@@ -102,8 +98,7 @@ class AddTemplateAssignFieldsView extends StatelessWidget {
                 );
               },
             ),
-            BlocBuilder<AddTemplateAssignFieldsBloc,
-                AddTemplateAssignFieldsState>(
+            BlocBuilder<AddTemplateAssignFieldsBloc, AddTemplateAssignFieldsState>(
               bloc: bloc,
               builder: (context, state) {
                 if (state is DocumentPreviewLoading) {
@@ -113,8 +108,7 @@ class AddTemplateAssignFieldsView extends StatelessWidget {
                 } else if (state is DocumentPreviewError) {
                   return CustomText(state.msg);
                 } else if (state is AssignFieldSelectedDoc) {
-                  return Image.memory(
-                      addTemplateSelectedPdfFileList[state.index].bytes);
+                  return Image.memory(addTemplateSelectedPdfFileList[state.index].bytes);
                 }
                 return const CustomText("No Preview Found");
               },
@@ -193,8 +187,7 @@ class BottomField extends StatelessWidget {
   final Color? color;
   final String label;
 
-  const BottomField(
-      {super.key, required this.icon, this.color, required this.label});
+  const BottomField({super.key, required this.icon, this.color, required this.label});
 
   @override
   Widget build(BuildContext context) {
@@ -206,8 +199,7 @@ class BottomField extends StatelessWidget {
           width: 40,
           child: Card(
               shape: RoundedRectangleBorder(
-                  borderRadius:
-                      BorderRadius.circular(AppStyle.outlinedBtnRadius)),
+                  borderRadius: BorderRadius.circular(AppStyle.outlinedBtnRadius)),
               elevation: 4,
               shadowColor: colorScheme.outlineVariant,
               child: Icon(icon, color: color ?? colorScheme.primary, size: 25)),

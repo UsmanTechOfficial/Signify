@@ -64,16 +64,12 @@ class ReqSignRecipientDetailAddedView extends StatelessWidget {
                       shadowColor: color.shadow,
                       clipBehavior: Clip.hardEdge,
                       shape: RoundedRectangleBorder(
-                        borderRadius:
-                            BorderRadius.circular(AppStyle.tileBorderRadius),
+                        borderRadius: BorderRadius.circular(AppStyle.tileBorderRadius),
                       ),
                       child: ListTile(
-                        contentPadding: const EdgeInsets.symmetric(
-                            vertical: 8.0, horizontal: 16.0),
+                        contentPadding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
                         leading: CircleAvatar(
-                          backgroundColor: index.isEven
-                              ? color.primary
-                              : color.secondaryContainer,
+                          backgroundColor: index.isEven ? color.primary : color.secondaryContainer,
                           child: const CustomText(
                             'A',
                             fontSize: AppFontSize.labelMediumFont,

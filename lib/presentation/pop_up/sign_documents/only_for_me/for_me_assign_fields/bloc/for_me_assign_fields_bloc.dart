@@ -9,15 +9,14 @@ import '../../../../../../domain/utils/utils.dart';
 part 'for_me_assign_fields_event.dart';
 part 'for_me_assign_fields_state.dart';
 
-class ForMeAssignFieldsBloc
-    extends Bloc<ForMeAssignFieldsEvent, ForMeAssignFieldsState> {
+class ForMeAssignFieldsBloc extends Bloc<ForMeAssignFieldsEvent, ForMeAssignFieldsState> {
   ForMeAssignFieldsBloc() : super(const ForMeAssignFieldsInitial()) {
     on<DocumentPreviewRequested>(_onDocumentPreviewRequested);
     on<DocumentSelected>(_onDocumentSelected);
   }
 
-  Future<void> _onDocumentPreviewRequested(DocumentPreviewRequested event,
-      Emitter<ForMeAssignFieldsState> emit) async {
+  Future<void> _onDocumentPreviewRequested(
+      DocumentPreviewRequested event, Emitter<ForMeAssignFieldsState> emit) async {
     emit(const DocumentPreviewLoading());
     try {
       for (var file in forMeSelectedPdfFileList) {
@@ -33,8 +32,7 @@ class ForMeAssignFieldsBloc
     }
   }
 
-  void _onDocumentSelected(
-      DocumentSelected event, Emitter<ForMeAssignFieldsState> emit) {
+  void _onDocumentSelected(DocumentSelected event, Emitter<ForMeAssignFieldsState> emit) {
     emit(AssignFieldSelectedDoc(event.index));
   }
 }

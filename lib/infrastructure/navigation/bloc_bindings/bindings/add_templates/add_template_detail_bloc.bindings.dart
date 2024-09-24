@@ -6,7 +6,6 @@ import '../../../../../domain/core/interfaces/bindings.dart';
 class AddTemplateDetailBlocBindings implements Bindings {
   @override
   void dependencies() {
-    getIt.registerFactory<AddTemplateDetailAddedBloc>(
-        () => AddTemplateDetailAddedBloc());
+    getIt.registerFactory<AddTemplateDetailAddedBloc>(() => AddTemplateDetailAddedBloc());
   }
 }

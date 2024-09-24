@@ -24,8 +24,7 @@ class CreateFolderView extends StatelessWidget {
       body: Form(
         key: formKey,
         child: Padding(
-          padding: EdgeInsets.symmetric(
-              horizontal: width * 0.05, vertical: width * 0.05),
+          padding: EdgeInsets.symmetric(horizontal: width * 0.05, vertical: width * 0.05),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -36,8 +35,7 @@ class CreateFolderView extends StatelessWidget {
                     text: 'Next',
                     onPressed: () {
                       if (formKey.currentState!.validate()) {
-                        var folder =
-                            FolderModel(name: controller.text, desc: 'amir');
+                        var folder = FolderModel(name: controller.text, desc: 'amir');
                         getIt<FoldersBloc>().foldersList.add(folder);
                       }
 

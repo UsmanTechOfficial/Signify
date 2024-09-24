@@ -14,8 +14,7 @@ class SignupBloc extends Bloc<SignupEvent, SignupState> {
   final cnfPsdFocus = FocusNode();
 
   SignupBloc() : super(const SignupState()) {
-    on<TogglePasswordVisibility>(
-        (TogglePasswordVisibility event, Emitter<SignupState> emit) {
+    on<TogglePasswordVisibility>((TogglePasswordVisibility event, Emitter<SignupState> emit) {
       emit(state.copyWith(isShowPassword: !state.isShowPassword));
     });
 
@@ -24,8 +23,7 @@ class SignupBloc extends Bloc<SignupEvent, SignupState> {
       emit(state.copyWith(isShowConfirmPassword: !state.isShowConfirmPassword));
     });
 
-    on<SignupSubmitted>(
-        (SignupSubmitted event, Emitter<SignupState> emit) async {
+    on<SignupSubmitted>((SignupSubmitted event, Emitter<SignupState> emit) async {
       if (formKey.currentState?.validate() ?? false) {
         emit(state.copyWith(status: SignupStatus.success));
         // Handle signup logic here

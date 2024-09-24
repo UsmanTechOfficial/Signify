@@ -40,12 +40,10 @@ class AddTemplateSelectedDocView extends StatelessWidget {
                 fontSize: AppFontSize.titleXSmallFont,
                 fontWeight: FontWeight.w500,
               ),
-              BlocBuilder<AddTemplateSelectedDocBloc,
-                  AddTemplateSelectedDocState>(
+              BlocBuilder<AddTemplateSelectedDocBloc, AddTemplateSelectedDocState>(
                 bloc: bloc,
                 builder: (context, state) {
-                  if (state is FileSelectedState &&
-                      state.selectedPdfFileList.isNotEmpty) {
+                  if (state is FileSelectedState && state.selectedPdfFileList.isNotEmpty) {
                     return ListView.builder(
                       shrinkWrap: true,
                       physics: const NeverScrollableScrollPhysics(),
@@ -63,8 +61,7 @@ class AddTemplateSelectedDocView extends StatelessWidget {
                                 child: ListTile(
                                   leading: const CircleAvatar(
                                     backgroundColor: Colors.redAccent,
-                                    child: Icon(Icons.picture_as_pdf,
-                                        color: Colors.white),
+                                    child: Icon(Icons.picture_as_pdf, color: Colors.white),
                                   ),
                                   title: CustomText(
                                     state.selectedPdfFileList[index].name,
@@ -72,11 +69,9 @@ class AddTemplateSelectedDocView extends StatelessWidget {
                                     fontWeight: FontWeight.w500,
                                   ),
                                   subtitle: CustomText(
-                                    state.selectedPdfFileList[index].date
-                                        .toIso8601String(),
+                                    state.selectedPdfFileList[index].date.toIso8601String(),
                                     fontSize: AppFontSize.labelSmallFont,
-                                    color:
-                                        Theme.of(context).colorScheme.outline,
+                                    color: Theme.of(context).colorScheme.outline,
                                   ),
                                 ),
                               ),

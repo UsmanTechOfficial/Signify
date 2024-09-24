@@ -5,7 +5,6 @@ import '../../../../../presentation/pop_up/request_signature/request_sign_assign
 class ReqSignAssignFieldsBlocBindings implements Bindings {
   @override
   void dependencies() {
-    getIt.registerFactory<ReqSignAssignFieldsBloc>(
-        () => ReqSignAssignFieldsBloc());
+    getIt.registerFactory<ReqSignAssignFieldsBloc>(() => ReqSignAssignFieldsBloc());
   }
 }

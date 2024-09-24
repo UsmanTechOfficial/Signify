@@ -73,16 +73,14 @@ class DashboardView extends StatelessWidget {
               );
             },
           ),
-          floatingActionButtonLocation:
-              FloatingActionButtonLocation.centerDocked,
+          floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
 
           /// [FloatingActionButton]
           floatingActionButton: FloatingActionButton(
             elevation: 10,
             onPressed: () => _bottomSheet(context),
             backgroundColor: Theme.of(context).primaryColor,
-            child:
-                Icon(Icons.add, color: Theme.of(context).colorScheme.surface),
+            child: Icon(Icons.add, color: Theme.of(context).colorScheme.surface),
           ),
         ));
   }
@@ -106,17 +104,15 @@ class DashboardView extends StatelessWidget {
                 IconButton(
                   style: IconButton.styleFrom(
                     shape: RoundedRectangleBorder(
-                      borderRadius:
-                          BorderRadius.circular(AppStyle.buttonBorderRadius),
+                      borderRadius: BorderRadius.circular(AppStyle.buttonBorderRadius),
                     ),
                     backgroundColor: color.outlineVariant.withOpacity(0.5),
                   ),
                   onPressed: () {
                     scaffoldKey.currentState?.closeDrawer();
                   },
-                  icon: Assets.icons.moreIcon.svg(
-                      colorFilter:
-                          ColorFilter.mode(color.primary, BlendMode.srcIn)),
+                  icon: Assets.icons.moreIcon
+                      .svg(colorFilter: ColorFilter.mode(color.primary, BlendMode.srcIn)),
                 ),
               ],
             ),
@@ -141,9 +137,7 @@ class DashboardView extends StatelessWidget {
                       selectedTab = tab.index;
                       if (tab.index < 4) {
                         pageController.jumpToPage(selectedTab);
-                        context
-                            .read<DashboardBloc>()
-                            .add(PageChangEvent(selectedTab));
+                        context.read<DashboardBloc>().add(PageChangEvent(selectedTab));
                       } else {
                         _navigateToNewPage(tab.index);
                       }
@@ -181,15 +175,13 @@ class DashboardView extends StatelessWidget {
             subtitle: 'Request anyone to add signatures in your document',
             onTap: () {
               Go.back();
-              _showAddDocumentSheet(
-                  context, SignProcessTypes.requestSignatures);
+              _showAddDocumentSheet(context, SignProcessTypes.requestSignatures);
             },
           ),
           CustomBottomSheetTile(
             isSelected: false,
             title: "Sign Documents",
-            subtitle:
-                'Documents that you want to sign for yourself or sent by others',
+            subtitle: 'Documents that you want to sign for yourself or sent by others',
             onTap: () {
               Go.back();
               _showSignSelectionSheet(context);
@@ -209,8 +201,7 @@ class DashboardView extends StatelessWidget {
   }
 
   ///  Method to show the Document Source [Selection] Sheet
-  void _showAddDocumentSheet(
-      BuildContext context, SignProcessTypes signProcessTypes) {
+  void _showAddDocumentSheet(BuildContext context, SignProcessTypes signProcessTypes) {
     CustomModelSheet.showScrolledBottomSheet(
       context: context,
       title: "Add a Document",
@@ -222,8 +213,7 @@ class DashboardView extends StatelessWidget {
             case DocumentSource.files:
               FilePicker.pick().then(
                 (file) async {
-                  _preview(
-                      file: file.first, signProcessTypes: signProcessTypes);
+                  _preview(file: file.first, signProcessTypes: signProcessTypes);
                 },
               );
 
@@ -273,8 +263,7 @@ class DashboardView extends StatelessWidget {
 
   /// [Preview] and check the for [keep] for [discard]
 
-  void _preview(
-      {required XFile file, required SignProcessTypes signProcessTypes}) {
+  void _preview({required XFile file, required SignProcessTypes signProcessTypes}) {
     PdfPreviewDialog.show(
       file,
       check: (result) async {

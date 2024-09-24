@@ -5,7 +5,6 @@ import '../../../../../presentation/pop_up/add_templates/add_template_selected_d
 class AddTemplateSelectedDocBlocBindings implements Bindings {
   @override
   void dependencies() {
-    getIt.registerFactory<AddTemplateSelectedDocBloc>(
-        () => AddTemplateSelectedDocBloc());
+    getIt.registerFactory<AddTemplateSelectedDocBloc>(() => AddTemplateSelectedDocBloc());
   }
 }

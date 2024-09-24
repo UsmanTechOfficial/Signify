@@ -7,8 +7,7 @@ TextSelectionThemeData get textSelectionTheme => TextSelectionThemeData(
       // Color of the cursor
       selectionColor: colorSchemeLight.primaryContainer,
       // Color of the selection rectangle
-      selectionHandleColor:
-          colorSchemeLight.secondary, // Color of the drag handles
+      selectionHandleColor: colorSchemeLight.secondary, // Color of the drag handles
 // Add other properties as needed
     );
 
@@ -17,7 +16,6 @@ TextSelectionThemeData get darkTextSelectionTheme => TextSelectionThemeData(
       // Color of the cursor
       selectionColor: colorSchemeDark.primaryContainer,
       // Color of the selection rectangle
-      selectionHandleColor:
-          colorSchemeDark.secondary, // Color of the drag handles
+      selectionHandleColor: colorSchemeDark.secondary, // Color of the drag handles
 // Add other properties as needed
     );

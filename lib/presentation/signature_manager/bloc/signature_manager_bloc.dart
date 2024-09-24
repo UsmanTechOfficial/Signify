@@ -4,8 +4,7 @@ import '../../../domain/consts/app_consts/pen_tools.dart';
 import 'signature_manager_event.dart';
 import 'signature_manager_state.dart';
 
-class SignatureManagerBloc
-    extends Bloc<SignatureManagerEvent, SignatureManagerState> {
+class SignatureManagerBloc extends Bloc<SignatureManagerEvent, SignatureManagerState> {
   int selectedSign = -1;
   var selectedStroke = PenStroke.fine;
   var selectedColor = PenColors.black;
