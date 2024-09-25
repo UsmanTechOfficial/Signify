@@ -1,5 +1,6 @@
 import 'package:dyno_sign/domain/consts/global_var.dart';
 import 'package:dyno_sign/domain/consts/styles.dart';
+import 'package:dyno_sign/infrastructure/dal/models/selected_file.model.dart';
 import 'package:dyno_sign/infrastructure/navigation/app_routes/navigation.dart';
 import 'package:dyno_sign/infrastructure/navigation/app_routes/routes.dart';
 import 'package:dyno_sign/presentation/dashboard/views/agreements/bloc/agreements_bloc.dart';
@@ -16,8 +17,6 @@ import 'package:dyno_sign/presentation/pop_up/sign_documents/send_by_others/by_o
 import 'package:dyno_sign/presentation/widgets/bottom_sheets/bottom_sheets.dart';
 import 'package:dyno_sign/presentation/widgets/bottom_sheets/custom_bottom_sheet/sheets_widget/add_documents/add_document.sheet.dart';
 import 'package:dyno_sign/presentation/widgets/bottom_sheets/custom_bottom_sheet/sheets_widget/sign_selection/sign_selection.sheet.dart';
-import 'package:dyno_sign/presentation/widgets/dialogs/document_preview_view.01.dart';
-import 'package:file_selector/file_selector.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -73,16 +72,14 @@ class DashboardView extends StatelessWidget {
               );
             },
           ),
-          floatingActionButtonLocation:
-              FloatingActionButtonLocation.centerDocked,
+          floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
 
           /// [FloatingActionButton]
           floatingActionButton: FloatingActionButton(
             elevation: 10,
             onPressed: () => _bottomSheet(context),
             backgroundColor: Theme.of(context).primaryColor,
-            child:
-                Icon(Icons.add, color: Theme.of(context).colorScheme.surface),
+            child: Icon(Icons.add, color: Theme.of(context).colorScheme.surface),
           ),
         ));
   }
@@ -106,17 +103,15 @@ class DashboardView extends StatelessWidget {
                 IconButton(
                   style: IconButton.styleFrom(
                     shape: RoundedRectangleBorder(
-                      borderRadius:
-                          BorderRadius.circular(AppStyle.buttonBorderRadius),
+                      borderRadius: BorderRadius.circular(AppStyle.buttonBorderRadius),
                     ),
                     backgroundColor: color.outlineVariant.withOpacity(0.5),
                   ),
                   onPressed: () {
                     scaffoldKey.currentState?.closeDrawer();
                   },
-                  icon: Assets.icons.moreIcon.svg(
-                      colorFilter:
-                          ColorFilter.mode(color.primary, BlendMode.srcIn)),
+                  icon: Assets.icons.moreIcon
+                      .svg(colorFilter: ColorFilter.mode(color.primary, BlendMode.srcIn)),
                 ),
               ],
             ),
@@ -141,9 +136,7 @@ class DashboardView extends StatelessWidget {
                       selectedTab = tab.index;
                       if (tab.index < 4) {
                         pageController.jumpToPage(selectedTab);
-                        context
-                            .read<DashboardBloc>()
-                            .add(PageChangEvent(selectedTab));
+                        context.read<DashboardBloc>().add(PageChangEvent(selectedTab));
                       } else {
                         _navigateToNewPage(tab.index);
                       }
@@ -157,10 +150,6 @@ class DashboardView extends StatelessWidget {
       ),
     );
   }
-
-  // Widget _buildBottomNavigationBar(DashboardBloc bloc, int currentPage) {
-  //   return
-  // }
 
   void _navigateToNewPage(int index) {
     if (index == 4) Go.toNamed(Routes.FOLDERS);
@@ -181,15 +170,13 @@ class DashboardView extends StatelessWidget {
             subtitle: 'Request anyone to add signatures in your document',
             onTap: () {
               Go.back();
-              _showAddDocumentSheet(
-                  context, SignProcessTypes.requestSignatures);
+              _showDocumentSourceSheet(context, SignProcessTypes.requestSignatures);
             },
           ),
           CustomBottomSheetTile(
             isSelected: false,
             title: "Sign Documents",
-            subtitle:
-                'Documents that you want to sign for yourself or sent by others',
+            subtitle: 'Documents that you want to sign for yourself or sent by others',
             onTap: () {
               Go.back();
               _showSignSelectionSheet(context);
@@ -209,8 +196,7 @@ class DashboardView extends StatelessWidget {
   }
 
   ///  Method to show the Document Source [Selection] Sheet
-  void _showAddDocumentSheet(
-      BuildContext context, SignProcessTypes signProcessTypes) {
+  void _showDocumentSourceSheet(BuildContext context, SignProcessTypes signProcessTypes) {
     CustomModelSheet.showScrolledBottomSheet(
       context: context,
       title: "Add a Document",
@@ -221,9 +207,17 @@ class DashboardView extends StatelessWidget {
           switch (source) {
             case DocumentSource.files:
               FilePicker.pick().then(
-                (file) async {
-                  _preview(
-                      file: file.first, signProcessTypes: signProcessTypes);
+                (pdfFile) async {
+                  // get the first page of Pdf and pass to show preview
+                  SelectedFileModel? pdfModel = await PdfFirstPage.get(pdfFile.first);
+
+                  if (pdfModel != null) {
+                    PdfPreviewDialog.show(
+                      pdfModel.bytes,
+                      check: (p0) {},
+                    );
+                    //   _preview(file: model, signProcessTypes: signProcessTypes);
+                  }
                 },
               );
 
@@ -258,50 +252,55 @@ class DashboardView extends StatelessWidget {
         onForMe: () {
           // close previous sheet
           Go.back();
-          _showAddDocumentSheet(context, SignProcessTypes.onlyForMe);
+          _showDocumentSourceSheet(context, SignProcessTypes.onlyForMe);
         },
         onByOthers: () {
           Go.back();
-          Go.to(BlocProvider(
-            create: (context) => getIt<ByOtherAgreementListBloc>(),
-            child: const ByOtherAgreementListView(),
-          ));
+          Go.to(
+            BlocProvider(
+              create: (context) => getIt<ByOtherAgreementListBloc>(),
+              child: const ByOtherAgreementListView(),
+            ),
+          );
         },
       ),
     );
   }
 
-  /// [Preview] and check the for [keep] for [discard]
+  /// [Preview] and check the for [keep] for [discard] the selected [file]
 
-  void _preview(
-      {required XFile file, required SignProcessTypes signProcessTypes}) {
+  void _preview({required SelectedFileModel file, required SignProcessTypes signProcessTypes}) {
     PdfPreviewDialog.show(
-      file,
+      file.bytes,
       check: (result) async {
         if (result == PreviewCheck.keep) {
-          final model = await FileToModel.convert(file);
-
           switch (signProcessTypes) {
             case SignProcessTypes.requestSignatures:
               // selectedPdfFileList.add(model);
-              Go.to(BlocProvider(
-                create: (context) => getIt<ReqSignSelectedDocBloc>(),
-                child: const ReqSignSelectedDocView(),
-              ));
+              Go.to(
+                BlocProvider(
+                  create: (context) => getIt<ReqSignSelectedDocBloc>(),
+                  child: const ReqSignSelectedDocView(),
+                ),
+              );
               break;
 
             case SignProcessTypes.onlyForMe:
-              forMeSelectedPdfFileList.add(model);
-              Go.to(BlocProvider(
-                create: (context) => getIt<ForMeSelectedDocBloc>(),
-                child: const ForMeSelectedDocView(),
-              ));
+              forMeSelectedPdfFileList.add(file);
+              Go.to(
+                BlocProvider(
+                  create: (context) => getIt<ForMeSelectedDocBloc>(),
+                  child: const ForMeSelectedDocView(),
+                ),
+              );
 
             case SignProcessTypes.sendByOthers:
-              Go.to(BlocProvider(
-                create: (context) => getIt<ByOtherAgreementListBloc>(),
-                child: const ByOtherAgreementListView(),
-              ));
+              Go.to(
+                BlocProvider(
+                  create: (context) => getIt<ByOtherAgreementListBloc>(),
+                  child: const ByOtherAgreementListView(),
+                ),
+              );
             default:
           }
         }

@@ -21,10 +21,12 @@ dependencies:
   path_provider: any
   image_picker: any
   intl: any
-  syncfusion_flutter_signaturepad: any
-  pdfx: any
-  pdf: any
+  syncfusion_flutter_signaturepad: ^27.1.50
+  syncfusion_flutter_pdfviewer: ^27.1.50
+  syncfusion_flutter_pdf: ^27.1.50
   path: any
+#  pdf: ^3.11.1
+#  pdfx: ^2.8.0
 
 
 dev_dependencies:

@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../domain/consts/consts.dart';
-import '../../../widgets/dialogs/pdf_preview.dialog.dart';
 import '../../../widgets/widgets.dart';
 import 'bloc/req_sign_selected_doc_bloc.dart';
 
@@ -61,8 +60,7 @@ class ReqSignSelectedDocView extends StatelessWidget {
                                 child: ListTile(
                                   leading: const CircleAvatar(
                                     backgroundColor: Colors.redAccent,
-                                    child: Icon(Icons.picture_as_pdf,
-                                        color: Colors.white),
+                                    child: Icon(Icons.picture_as_pdf, color: Colors.white),
                                   ),
                                   title: CustomText(
                                     selectedPdfFileList[index].name,
@@ -70,12 +68,9 @@ class ReqSignSelectedDocView extends StatelessWidget {
                                     fontWeight: FontWeight.w500,
                                   ),
                                   subtitle: CustomText(
-                                    selectedPdfFileList[index]
-                                        .date
-                                        .toIso8601String(),
+                                    selectedPdfFileList[index].date.toIso8601String(),
                                     fontSize: AppFontSize.labelSmallFont,
-                                    color:
-                                        Theme.of(context).colorScheme.outline,
+                                    color: Theme.of(context).colorScheme.outline,
                                   ),
                                 ),
                               ),
@@ -84,12 +79,12 @@ class ReqSignSelectedDocView extends StatelessWidget {
                                 onSelected: (value) {
                                   switch (value) {
                                     case 0:
-                                      PdfPreviewDialog.show(
-                                        context: context,
-                                        previewOnly: true,
-                                        selectedPdfFileList[index].xFile,
-                                        check: (result) {},
-                                      );
+                                      // PdfPreviewDialog.show(
+                                      //   context: context,
+                                      //   previewOnly: true,
+                                      //   selectedPdfFileList[index].xFile,
+                                      //   check: (result) {},
+                                      // );
                                       break;
                                     case 1:
                                       bloc.add(RemoveFileEvent(index));
@@ -112,8 +107,7 @@ class ReqSignSelectedDocView extends StatelessWidget {
                         );
                       },
                     );
-                  } else if (state is FileSelectedState &&
-                      state.selectedPdfFileList.isNotEmpty) {
+                  } else if (state is FileSelectedState && state.selectedPdfFileList.isNotEmpty) {
                     return ListView.builder(
                       shrinkWrap: true,
                       physics: const NeverScrollableScrollPhysics(),
@@ -131,8 +125,7 @@ class ReqSignSelectedDocView extends StatelessWidget {
                                 child: ListTile(
                                   leading: const CircleAvatar(
                                     backgroundColor: Colors.redAccent,
-                                    child: Icon(Icons.picture_as_pdf,
-                                        color: Colors.white),
+                                    child: Icon(Icons.picture_as_pdf, color: Colors.white),
                                   ),
                                   title: CustomText(
                                     state.selectedPdfFileList[index].name,
@@ -140,11 +133,9 @@ class ReqSignSelectedDocView extends StatelessWidget {
                                     fontWeight: FontWeight.w500,
                                   ),
                                   subtitle: CustomText(
-                                    state.selectedPdfFileList[index].date
-                                        .toIso8601String(),
+                                    state.selectedPdfFileList[index].date.toIso8601String(),
                                     fontSize: AppFontSize.labelSmallFont,
-                                    color:
-                                        Theme.of(context).colorScheme.outline,
+                                    color: Theme.of(context).colorScheme.outline,
                                   ),
                                 ),
                               ),
@@ -153,12 +144,12 @@ class ReqSignSelectedDocView extends StatelessWidget {
                                 onSelected: (value) {
                                   switch (value) {
                                     case 0:
-                                      PdfPreviewDialog.show(
-                                        context: context,
-                                        previewOnly: true,
-                                        state.selectedPdfFileList[index].xFile,
-                                        check: (result) {},
-                                      );
+                                      // PdfPreviewDialog.show(
+                                      //   context: context,
+                                      //   previewOnly: true,
+                                      //   state.selectedPdfFileList[index].xFile,
+                                      //   check: (result) {},
+                                      // );
                                       break;
                                     case 1:
                                       bloc.add(RemoveFileEvent(index));

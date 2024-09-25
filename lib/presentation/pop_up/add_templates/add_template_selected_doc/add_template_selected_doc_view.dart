@@ -4,7 +4,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../domain/consts/consts.dart';
 import '../../../../infrastructure/navigation/app_routes/navigation.dart';
-import '../../../widgets/dialogs/pdf_preview.dialog.dart';
 import '../../../widgets/widgets.dart';
 import '../add_template_email_detail/add_template_email_detail_view.dart';
 
@@ -80,12 +79,12 @@ class AddTemplateSelectedDocView extends StatelessWidget {
                                 onSelected: (value) {
                                   switch (value) {
                                     case 0:
-                                      PdfPreviewDialog.show(
-                                        context: context,
-                                        previewOnly: true,
-                                        state.selectedPdfFileList[index].xFile,
-                                        check: (result) {},
-                                      );
+                                      // PdfPreviewDialog.show(
+                                      //   context: context,
+                                      //   previewOnly: true,
+                                      //   state.selectedPdfFileList[index].xFile,
+                                      //   check: (result) {},
+                                      // );
                                       break;
                                     case 1:
                                       bloc.add(RemoveFileEvent(index));
