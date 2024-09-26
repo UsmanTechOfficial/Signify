@@ -16,16 +16,14 @@ class AddTemplateSelectedDocBloc
     on<RemoveFileEvent>((event, emit) => _removeFile(event.index, emit, state));
   }
 
-  void _addNewFile(Emitter<AddTemplateSelectedDocState> emit,
-      AddTemplateSelectedDocState currentState) async {
+  void _addNewFile(
+      Emitter<AddTemplateSelectedDocState> emit, AddTemplateSelectedDocState currentState) async {
     final selectedFile = await FilePicker.pick();
 
-    if (selectedFile.isNotEmpty) {
+    if (selectedFile != null) {
       try {
         final List<SelectedFileModel> updatedList = List.from(
-          (currentState is FileSelectedState)
-              ? currentState.selectedPdfFileList
-              : [],
+          (currentState is FileSelectedState) ? currentState.selectedPdfFileList : [],
         );
 
         for (var file in selectedFile) {
@@ -42,8 +40,7 @@ class AddTemplateSelectedDocBloc
   void _removeFile(int index, Emitter<AddTemplateSelectedDocState> emit,
       AddTemplateSelectedDocState currentState) {
     if (currentState is FileSelectedState) {
-      final updatedList =
-          List<SelectedFileModel>.from(currentState.selectedPdfFileList);
+      final updatedList = List<SelectedFileModel>.from(currentState.selectedPdfFileList);
       updatedList.removeAt(index);
       addTemplateSelectedPdfFileList.removeAt(index);
 

@@ -1,10 +1,11 @@
-import 'dart:developer';
+import 'dart:async';
 
-import 'package:dyno_sign/infrastructure/dal/models/request_signature_models/req_sign_doc_model.dart';
+import 'package:dyno_sign/domain/utils/utils.dart';
+import 'package:dyno_sign/infrastructure/navigation/app_routes/navigation.dart';
+import 'package:dyno_sign/infrastructure/navigation/app_routes/routes.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../../../domain/utils/utils.dart';
 import '../../../../../infrastructure/dal/models/selected_file.model.dart';
 import '../../../../../infrastructure/dal/services/data_models_repository/req_sign_doc_data_repository.dart';
 
@@ -13,68 +14,60 @@ part 'req_sign_selected_doc_state.dart';
 
 List<SelectedFileModel> selectedPdfFileList = [];
 
-SelectedFileModel selectedFileModel = SelectedFileModel.empty();
-AgreementDetailModel agreementDetailModel = AgreementDetailModel.empty();
-EmailDetailModel emailDetailModel = EmailDetailModel.empty();
-RecipientDetailModel recipientDetailModel = RecipientDetailModel.empty();
-UserModel userModel = UserModel.empty();
-
-ReqSignDocModel reqSignDocModel = ReqSignDocModel.empty();
-
 class ReqSignSelectedDocBloc extends Bloc<ReqSignSelectedDocEvent, ReqSignSelectedDocState> {
   final ReqSignDocDataRepository dataRepository;
 
   ReqSignSelectedDocBloc(this.dataRepository) : super(const ReqSignSelectedDocInitial()) {
-    on<AddNewFileEvent>(
-      (event, emit) => _addNewFile(emit, state),
-    );
-    on<RemoveFileEvent>(
-      (event, emit) => _removeFile(event.index, emit, state),
-    );
+    on<InitialEvent>(_initializeFiles);
+    on<AddNewFileEvent>(_addNewFiles);
+    on<RemoveFileEvent>(_removeFile);
+    on<NextNavigateEvent>(_nextNavigation);
   }
 
-  void _addNewFile(
-      Emitter<ReqSignSelectedDocState> emit, ReqSignSelectedDocState currentState) async {
-    final selectedFile = await FilePicker.pick();
+  FutureOr<void> _initializeFiles(InitialEvent event, Emitter<ReqSignSelectedDocState> emit) async {
+    emit(FileSelectedState(event.files));
+  }
 
-    if (selectedFile.isNotEmpty) {
-      try {
-        final List<SelectedFileModel> updatedList = List.from(
-          (currentState is FileSelectedState) ? currentState.selectedPdfFileList : [],
-        );
+  FutureOr<void> _addNewFiles(AddNewFileEvent event, Emitter<ReqSignSelectedDocState> emit) async {
+    List<SelectedFileModel> currentFiles = [];
+    if (state is FileSelectedState) {
+      currentFiles = List.from((state as FileSelectedState).selectedPdfFiles);
+    }
 
-        for (var file in selectedFile) {
-          final model = await FileToModel.convert(file);
-          updatedList.add(model);
-          selectedPdfFileList.add(model);
+    var pickedFiles = await FilePicker.pick();
 
-          reqSignDocModel.copyWith(selectedFile: List.from(updatedList));
-
-          log('File added: ${model.name}');
-        }
-
-        emit(FileSelectedState(updatedList));
-      } catch (e) {
-        log(e.toString());
+    if (pickedFiles != null) {
+      for (var file in pickedFiles) {
+        final model = await FileToModel.convert(file);
+        currentFiles.add(model);
       }
     }
+
+    emit(FileSelectedState(currentFiles));
   }
 
-  void _removeFile(
-      int index, Emitter<ReqSignSelectedDocState> emit, ReqSignSelectedDocState currentState) {
-    if (currentState is FileSelectedState) {
-      final updatedList = List<SelectedFileModel>.from(currentState.selectedPdfFileList);
-      updatedList.removeAt(index);
-      selectedPdfFileList.removeAt(index);
-      reqSignDocModel.selectedFile.removeAt(index);
+  FutureOr<void> _removeFile(RemoveFileEvent event, Emitter<ReqSignSelectedDocState> emit) {
+    if (state is FileSelectedState || state is ReqSignSelectedDocInitial) {
+      final updatedFiles =
+          List<SelectedFileModel>.from((state as FileSelectedState).selectedPdfFiles);
+      if (event.index >= 0 && event.index < updatedFiles.length) {
+        updatedFiles.removeAt(event.index);
+      }
 
-      emit(FileSelectedState(updatedList));
+      emit(FileSelectedState(updatedFiles));
     }
   }
 
-  @override
-  Future<void> close() {
-    selectedPdfFileList.clear();
-    return super.close();
+  FutureOr<void> _nextNavigation(NextNavigateEvent event, Emitter<ReqSignSelectedDocState> emit) {
+    if (state is FileSelectedState || state is ReqSignSelectedDocInitial) {
+      final updatedFiles = List<SelectedFileModel>.from(
+        (state as FileSelectedState).selectedPdfFiles,
+      );
+
+      /// update dataRepository by add Selected Files
+      dataRepository.updateSelectedFile(updatedFiles);
+
+      Go.toNamed(Routes.REQ_SIGN_AGREEMENT_DETAIL);
+    }
   }
 }

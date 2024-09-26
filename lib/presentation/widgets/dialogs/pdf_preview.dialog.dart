@@ -1,21 +1,24 @@
+import 'dart:typed_data';
+
 import 'package:dyno_sign/infrastructure/navigation/app_routes/navigation.dart';
+import 'package:file_selector/file_selector.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
+import 'package:syncfusion_flutter_pdf/pdf.dart';
 import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
 
 import '../../../domain/consts/consts.dart';
 import '../widgets.dart';
 
 class PdfPreviewDialog {
-  static show(Uint8List page,
-      {required Function(PreviewCheck) check, BuildContext? context, bool previewOnly = false}) {
+  static show(
+    XFile file, {
+    required Function(PreviewCheck) check,
+    BuildContext? context,
+    bool previewOnly = false,
+  }) {
     showGeneralDialog(
       context: context ?? navigatorKey.currentContext!,
       barrierDismissible: false,
-      pageBuilder: (BuildContext context, Animation<double> animation,
-          Animation<double> secondaryAnimation) {
-        return DocumentPreviewWidget(pdfPage: page, result: check, previewOnly: previewOnly);
-      },
       transitionDuration: const Duration(milliseconds: 300),
       transitionBuilder: (BuildContext context, Animation<double> animation,
           Animation<double> secondaryAnimation, Widget child) {
@@ -27,19 +30,27 @@ class PdfPreviewDialog {
           child: child,
         );
       },
+      pageBuilder: (BuildContext context, Animation<double> animation,
+          Animation<double> secondaryAnimation) {
+        return DocumentPreviewWidget(
+          pdfFile: file,
+          onSelect: check,
+          previewOnly: previewOnly,
+        );
+      },
     );
   }
 }
 
 class DocumentPreviewWidget extends StatefulWidget {
   final bool previewOnly;
-  final Uint8List pdfPage;
-  final Function(PreviewCheck check) result;
+  final XFile pdfFile;
+  final Function(PreviewCheck check) onSelect;
 
   const DocumentPreviewWidget({
     super.key,
-    required this.pdfPage,
-    required this.result,
+    required this.pdfFile,
+    required this.onSelect,
     required this.previewOnly,
   });
 
@@ -48,32 +59,51 @@ class DocumentPreviewWidget extends StatefulWidget {
 }
 
 class _DocumentPreviewWidgetState extends State<DocumentPreviewWidget> {
-  Uint8List? pdfPageData;
+  Uint8List? _newDocumentBytes;
+  String _pdfName = '';
 
   @override
   void initState() {
     super.initState();
-    loadPdfData();
+    if (widget.previewOnly) {
+      _previewPage();
+    } else {
+      _extractFirstPage();
+    }
   }
 
-  Future<void> loadPdfData() async {
+  Future<void> _previewPage() async {
+    _newDocumentBytes = await widget.pdfFile.readAsBytes();
+    setState(() {});
+  }
+
+  Future<void> _extractFirstPage() async {
     try {
-      // Load the PDF bytes from the assets folder
-      ByteData pdfByteData = await rootBundle.load('assets/flow.pdf');
+      _pdfName = widget.pdfFile.name;
+      final pdfBytes = await widget.pdfFile.readAsBytes();
 
-      // Convert the ByteData to Uint8List
-      Uint8List examplePdfBytes = pdfByteData.buffer.asUint8List();
+      final PdfDocument document = PdfDocument(inputBytes: pdfBytes);
 
-      // Set the loaded PDF bytes to the state
+      // Extract the first page of the document
+      final PdfDocument newDocument = PdfDocument();
+      newDocument.pages.add().graphics.drawPdfTemplate(
+            document.pages[0].createTemplate(),
+            const Offset(0, 0),
+          );
+
+      // Save the extracted first page as a new document
+      final List<int> newDocBytes = newDocument.saveSync();
+      newDocument.dispose();
+
+      // Convert List<int> to Uint8List for preview
+      final Uint8List newDocUint8List = Uint8List.fromList(newDocBytes);
+
+      // Store the new document bytes for preview
       setState(() {
-        pdfPageData = examplePdfBytes;
+        _newDocumentBytes = newDocUint8List;
       });
-
-      // Debugging output to verify the loaded bytes
-      print('PDF bytes loaded: ${examplePdfBytes.length}');
     } catch (e) {
-      // Handle any errors during loading
-      print("Error loading PDF data: $e");
+      print('Error extracting first page: $e');
     }
   }
 
@@ -90,15 +120,15 @@ class _DocumentPreviewWidgetState extends State<DocumentPreviewWidget> {
           clickEffect: false,
           onPressed: () {
             Go.back();
-            widget.result(PreviewCheck.discard);
+            widget.onSelect(PreviewCheck.discard);
           },
           icon: const Icon(
             Icons.close,
             size: 25,
           ),
         ),
-        title: const CustomText(
-          'Sale Invoice',
+        title: CustomText(
+          _pdfName,
           fontSize: AppFontSize.titleMediumFont,
         ),
         actions: [
@@ -116,18 +146,16 @@ class _DocumentPreviewWidgetState extends State<DocumentPreviewWidget> {
                     fillColor: color.outlineVariant.withOpacity(0.5),
                     onPressed: () {
                       Go.back();
-                      widget.result(PreviewCheck.keep);
+                      widget.onSelect(PreviewCheck.keep);
                     },
                   ),
                 )
               : const SizedBox.shrink()
         ],
       ),
-      body: Center(
-        child: pdfPageData != null
-            ? SfPdfViewer.memory(pdfPageData!) // Display PDF directly from memory
-            : const CircularProgressIndicator(),
-      ),
+      body: _newDocumentBytes == null
+          ? const Center(child: CircularProgressIndicator())
+          : SfPdfViewer.memory(_newDocumentBytes!), // Display the PDF preview
     );
   }
 }

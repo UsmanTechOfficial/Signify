@@ -1,7 +1,7 @@
 part of '../utils.dart';
 
 class FilePicker {
-  static Future<List<XFile>> pick() async {
+  static Future<List<XFile>?> pick() async {
     const XTypeGroup typeGroup = XTypeGroup(
       label: 'PDFs',
       extensions: ['pdf'],
@@ -16,189 +16,135 @@ class FilePicker {
   }
 }
 
-class GalleryImageToPdf {
-  static Future<dynamic?> convert() async {
-    // final picker = ImagePicker();
-    // final pickedFile = await picker.pickImage(source: ImageSource.gallery);
-    //
-    // if (pickedFile == null) {
-    //   return null;
-    // }
-    //
-    // final imageFile = File(pickedFile.path);
-    //
-    // final pdf = pw.Document();
-    //
-    // final image = pw.MemoryImage(imageFile.readAsBytesSync());
-    //
-    // pdf.addPage(
-    //   pw.Page(
-    //     build: (pw.Context context) {
-    //       return pw.Center(
-    //         child: pw.Image(image),
-    //       );
-    //     },
-    //   ),
-    // );
-    //
-    // final outputDir = await getTemporaryDirectory();
-    // final pdfFilePath = path.join(outputDir.path, 'converted_image.pdf');
-    // final pdfFile = File(pdfFilePath);
-    //
-    // await pdfFile.writeAsBytes(await pdf.save());
-    //
-    // return XFile(pdfFilePath);
+class CameraImageToPdfModel {
+  /// Method to capture an image from the camera and convert it into a PDF
+  static Future<SelectedFileModel?> capture() async {
+    try {
+      // Pick an image from the camera
+      final pickedFile = await getIt<ImagePicker>().pickImage(source: ImageSource.camera);
+
+      // Return null if no image is captured
+      if (pickedFile == null) {
+        return null;
+      }
+
+      final name = pickedFile.name;
+      final dateCreated = DateTime.now();
+
+      // Read the image as bytes
+      final selectedImageBytes = await File(pickedFile.path).readAsBytes();
+
+      // Load the image into PdfBitmap
+      final PdfBitmap image = PdfBitmap(selectedImageBytes);
+
+      // Create a new PDF document
+      PdfDocument newDocument = PdfDocument();
+      final PdfPage page = newDocument.pages.add();
+
+      // Draw the image on the PDF page
+      page.graphics.drawImage(
+        image,
+        Rect.fromLTWH(0, 0, page.size.width, page.size.height),
+      );
+
+      // Save the PDF document as bytes
+      List<int> newDocBytes = await newDocument.save();
+      newDocument.dispose();
+
+      // Convert List<int> to Uint8List for file preview
+      final Uint8List newDocUint8List = Uint8List.fromList(newDocBytes);
+
+      // Return a model containing file details
+      return SelectedFileModel(
+        name: name,
+        date: dateCreated,
+        bytes: newDocUint8List,
+      );
+    } catch (e) {
+      print('Error occurred while capturing image and creating PDF: $e');
+      return null;
+    }
   }
 }
 
-class CameraImageToPdf {
-  static Future<dynamic?> convert() async {
-    // final picker = ImagePicker();
-    // final pickedFile = await picker.pickImage(source: ImageSource.camera);
-    //
-    // if (pickedFile == null) {
-    //   return null;
-    // }
-    //
-    // final imageFile = File(pickedFile.path);
-    //
-    // final pdf = pw.Document();
-    //
-    // final image = pw.MemoryImage(imageFile.readAsBytesSync());
-    //
-    // pdf.addPage(
-    //   pw.Page(
-    //     build: (pw.Context context) {
-    //       return pw.Center(
-    //         child: pw.Image(image),
-    //       );
-    //     },
-    //   ),
-    // );
-    //
-    // final outputDir = await getTemporaryDirectory();
-    // final pdfFilePath = path.join(outputDir.path, 'converted_image.pdf');
-    // final pdfFile = File(pdfFilePath);
-    //
-    // await pdfFile.writeAsBytes(await pdf.save());
-    //
-    // return XFile(pdfFilePath);
+class GalleryImageToPdfModel {
+  /// Method to capture an image from the camera and convert it into a PDF
+  static Future<SelectedFileModel?> pick() async {
+    try {
+      // Pick an image from the camera
+      final pickedFile = await getIt<ImagePicker>().pickImage(source: ImageSource.gallery);
+
+      // Return null if no image is captured
+      if (pickedFile == null) {
+        return null;
+      }
+
+      final name = pickedFile.name;
+      final dateCreated = DateTime.now();
+
+      // Read the image as bytes
+      final selectedImageBytes = await File(pickedFile.path).readAsBytes();
+
+      // Load the image into PdfBitmap
+      final PdfBitmap image = PdfBitmap(selectedImageBytes);
+
+      // Create a new PDF document
+      PdfDocument newDocument = PdfDocument();
+      final PdfPage page = newDocument.pages.add();
+
+      // Draw the image on the PDF page
+      page.graphics.drawImage(
+        image,
+        Rect.fromLTWH(0, 0, page.size.width, page.size.height),
+      );
+
+      // Save the PDF document as bytes
+      List<int> newDocBytes = await newDocument.save();
+      newDocument.dispose();
+
+      // Convert List<int> to Uint8List for file preview
+      final Uint8List newDocUint8List = Uint8List.fromList(newDocBytes);
+
+      // Return a model containing file details
+      return SelectedFileModel(
+        name: name,
+        date: dateCreated,
+        bytes: newDocUint8List,
+      );
+    } catch (e) {
+      print('Error occurred while capturing image and creating PDF: $e');
+      return null;
+    }
   }
 }
-
-// class CameraImageToPdf {
-//   static Future<XFile?> convert() async {
-//     final picker = ImagePicker();
-//     final pickedFile = await picker.pickImage(source: ImageSource.camera);
-//
-//     if (pickedFile == null) {
-//       return null;
-//     }
-//
-//     final imageFile = File(pickedFile.path);
-//
-//     final pdf = pw.Document();
-//
-//     final image = pw.MemoryImage(imageFile.readAsBytesSync());
-//
-//     pdf.addPage(
-//       pw.Page(
-//         build: (pw.Context context) {
-//           return pw.Center(
-//             child: pw.Image(image),
-//           );
-//         },
-//       ),
-//     );
-//
-//     final outputDir = await getTemporaryDirectory();
-//     final pdfFilePath = path.join(outputDir.path, 'converted_image.pdf');
-//     final pdfFile = File(pdfFilePath);
-//
-//     await pdfFile.writeAsBytes(await pdf.save());
-//
-//     return XFile(pdfFilePath);
-//   }
-// }
-
-// class PdfSinglePage {
-//   static Future<PdfPageImage?> get(XFile pdf, {int pageNumber = 1}) async {
-//     try {
-//       final Uint8List pdfBytes = await pdf.readAsBytes();
-//
-//       final pdfDocument = await PdfDocument.openData(pdfBytes);
-//
-//       if (pdfDocument.pagesCount > 0) {
-//         final page = await pdfDocument.getPage(pageNumber);
-//
-//         final pdfPageImage = await page.render(
-//           width: page.width,
-//           height: page.height,
-//         );
-//
-//         await page.close();
-//         await pdfDocument.close();
-//
-//         return pdfPageImage;
-//       } else {
-//         throw Exception("PDF has no pages.");
-//       }
-//     } catch (e) {
-//       rethrow;
-//     }
-//   }
-// }
 
 class PdfFirstPage {
   /// Extracts the first page from a given PDF file and returns it as a new `SelectedFileModel`.
   static Future<SelectedFileModel?> get(XFile pdfFile) async {
     try {
-      // Read the PDF file as bytes.
-      Uint8List pdfBytes = await pdfFile.readAsBytes();
-
-      // Load the PDF document.
+      final pdfName = pdfFile.name;
+      final pdfDate = DateTime.now();
+      final pdfBytes = await pdfFile.readAsBytes();
       final PdfDocument document = PdfDocument(inputBytes: pdfBytes);
 
-      // Access the first page of the original document.
-      final PdfPage firstPage = document.pages[0];
-
-      // Create a template from the first page.
-      PdfTemplate template = firstPage.createTemplate();
-
-      // Create a new PDF document to store the first page.
-      PdfDocument newDocument = PdfDocument();
-
-      // Add a new page to the new document and draw the template.
+      // Extract the first page of the document
+      final PdfDocument newDocument = PdfDocument();
       newDocument.pages.add().graphics.drawPdfTemplate(
-            template,
+            document.pages[0].createTemplate(),
             const Offset(0, 0),
-            template.size,
           );
 
-      // Save the new PDF with just the first page and get the bytes.
-      List<int> bytes = await newDocument.save();
-
-      // Dispose of the documents to free up memory.
-      document.dispose();
+      // Save the extracted first page as a new document
+      final List<int> newDocBytes = newDocument.saveSync();
       newDocument.dispose();
 
-      // Convert the bytes to a new XFile for the first page.
-      XFile firstPageXFile = XFile.fromData(
-        Uint8List.fromList(bytes),
-        name: '${pdfFile.name}_first_page.pdf',
-        mimeType: 'application/pdf',
-      );
+      // Convert List<int> to Uint8List for preview
+      final Uint8List newDocUint8List = Uint8List.fromList(newDocBytes);
 
-      // Get the original document's name and the current date.
-      String originalName = pdfFile.name;
-      DateTime creationDate = await pdfFile.lastModified();
-
-      // Return the SelectedFileModel with the original name, date, first page bytes, and XFile.
       return SelectedFileModel(
-        name: originalName,
-        date: creationDate,
-        bytes: Uint8List.fromList(bytes),
-        xFile: firstPageXFile,
+        name: pdfName,
+        date: pdfDate,
+        bytes: newDocUint8List,
       );
     } catch (e) {
       return null;
@@ -206,42 +152,13 @@ class PdfFirstPage {
   }
 }
 
-class PdfSinglePage {
-  static Future<dynamic> get(XFile pdf, {int pageNumber = 1}) async {
-    try {
-      // final Uint8List pdfBytes = await pdf.readAsBytes();
-      //
-      // final pdfDocument = await PdfDocument.openData(pdfBytes);
-      //
-      // if (pdfDocument.pagesCount > 0) {
-      //   final page = await pdfDocument.getPage(pageNumber);
-      //
-      //   final pdfPageImage = await page.render(
-      //     width: page.width,
-      //     height: page.height,
-      //   );
-      //
-      //   await page.close();
-      //   await pdfDocument.close();
-      //
-      //   return pdfPageImage;
-      // } else {
-      //   throw Exception("PDF has no pages.");
-      // }
-    } catch (e) {
-      rethrow;
-    }
-  }
-}
-
 class FileToModel {
   static Future<SelectedFileModel> convert(XFile file) async {
-    final firstPage = await PdfSinglePage.get(file);
+    final firstPage = await PdfFirstPage.get(file);
     return SelectedFileModel(
       name: file.name,
       date: await file.lastModified(),
       bytes: firstPage!.bytes,
-      xFile: file,
     );
   }
 }

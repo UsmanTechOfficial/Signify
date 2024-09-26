@@ -1,19 +1,23 @@
-import 'package:dyno_sign/infrastructure/navigation/app_routes/navigation.dart';
-import 'package:dyno_sign/presentation/pop_up/request_signature/request_sign_agreement_detail/req_sign_agreement_detail_view.dart';
+import 'package:dyno_sign/domain/utils/utils.dart';
+import 'package:dyno_sign/infrastructure/dal/models/selected_file.model.dart';
+import 'package:file_selector/file_selector.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../domain/consts/consts.dart';
+import '../../../widgets/dialogs/pdf_preview.dialog.dart';
 import '../../../widgets/widgets.dart';
 import 'bloc/req_sign_selected_doc_bloc.dart';
 
 class ReqSignSelectedDocView extends StatelessWidget {
-  const ReqSignSelectedDocView({super.key});
+  final SelectedFileModel file;
+
+  const ReqSignSelectedDocView({super.key, required this.file});
 
   @override
   Widget build(BuildContext context) {
-    final bloc = getIt<ReqSignSelectedDocBloc>();
-
+    final bloc = context.read<ReqSignSelectedDocBloc>();
+    bloc.add(InitialEvent([file]));
     return Scaffold(
       appBar: AppBar(
         title: const Text('Agreement Detail'),
@@ -30,7 +34,7 @@ class ReqSignSelectedDocView extends StatelessWidget {
                 child: CustomOutlinedTextButton(
                   text: 'Next',
                   onPressed: () {
-                    Go.to(const ReqSignAgreementDetailView());
+                    bloc.add(const NextNavigateEvent());
                   },
                 ),
               ),
@@ -39,141 +43,30 @@ class ReqSignSelectedDocView extends StatelessWidget {
                 fontSize: AppFontSize.titleXSmallFont,
                 fontWeight: FontWeight.w500,
               ),
-              BlocBuilder<ReqSignSelectedDocBloc, ReqSignSelectedDocState>(
+              BlocConsumer<ReqSignSelectedDocBloc, ReqSignSelectedDocState>(
                 bloc: bloc,
+                listenWhen: (previous, current) => previous != current,
+                listener: (context, state) {
+                  if (state is FileSelectedState && state.selectedPdfFiles.isEmpty) {
+                    CSnackBar.show('Cannot remove the last document.');
+                  }
+                },
+                buildWhen: (_, current) => current is FileSelectedState,
                 builder: (context, state) {
-                  if (selectedPdfFileList.isNotEmpty) {
+                  if (state is FileSelectedState && state.selectedPdfFiles.isNotEmpty) {
                     return ListView.builder(
                       shrinkWrap: true,
                       physics: const NeverScrollableScrollPhysics(),
-                      itemCount: selectedPdfFileList.length,
+                      itemCount: state.selectedPdfFiles.length,
                       itemBuilder: (context, index) {
-                        return Card(
-                          elevation: 5,
-                          margin: const EdgeInsets.symmetric(vertical: 8),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(12),
-                          ),
-                          child: Row(
-                            children: [
-                              Expanded(
-                                child: ListTile(
-                                  leading: const CircleAvatar(
-                                    backgroundColor: Colors.redAccent,
-                                    child: Icon(Icons.picture_as_pdf, color: Colors.white),
-                                  ),
-                                  title: CustomText(
-                                    selectedPdfFileList[index].name,
-                                    fontSize: AppFontSize.titleXSmallFont,
-                                    fontWeight: FontWeight.w500,
-                                  ),
-                                  subtitle: CustomText(
-                                    selectedPdfFileList[index].date.toIso8601String(),
-                                    fontSize: AppFontSize.labelSmallFont,
-                                    color: Theme.of(context).colorScheme.outline,
-                                  ),
-                                ),
-                              ),
-                              PopupMenuButton<int>(
-                                icon: const Icon(Icons.more_vert_rounded),
-                                onSelected: (value) {
-                                  switch (value) {
-                                    case 0:
-                                      // PdfPreviewDialog.show(
-                                      //   context: context,
-                                      //   previewOnly: true,
-                                      //   selectedPdfFileList[index].xFile,
-                                      //   check: (result) {},
-                                      // );
-                                      break;
-                                    case 1:
-                                      bloc.add(RemoveFileEvent(index));
-                                      break;
-                                  }
-                                },
-                                itemBuilder: (BuildContext context) => const [
-                                  PopupMenuItem(
-                                    value: 0,
-                                    child: Text('Preview'),
-                                  ),
-                                  PopupMenuItem(
-                                    value: 1,
-                                    child: Text('Delete'),
-                                  ),
-                                ],
-                              ),
-                            ],
-                          ),
-                        );
-                      },
-                    );
-                  } else if (state is FileSelectedState && state.selectedPdfFileList.isNotEmpty) {
-                    return ListView.builder(
-                      shrinkWrap: true,
-                      physics: const NeverScrollableScrollPhysics(),
-                      itemCount: state.selectedPdfFileList.length,
-                      itemBuilder: (context, index) {
-                        return Card(
-                          elevation: 5,
-                          margin: const EdgeInsets.symmetric(vertical: 8),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(12),
-                          ),
-                          child: Row(
-                            children: [
-                              Expanded(
-                                child: ListTile(
-                                  leading: const CircleAvatar(
-                                    backgroundColor: Colors.redAccent,
-                                    child: Icon(Icons.picture_as_pdf, color: Colors.white),
-                                  ),
-                                  title: CustomText(
-                                    state.selectedPdfFileList[index].name,
-                                    fontSize: AppFontSize.titleXSmallFont,
-                                    fontWeight: FontWeight.w500,
-                                  ),
-                                  subtitle: CustomText(
-                                    state.selectedPdfFileList[index].date.toIso8601String(),
-                                    fontSize: AppFontSize.labelSmallFont,
-                                    color: Theme.of(context).colorScheme.outline,
-                                  ),
-                                ),
-                              ),
-                              PopupMenuButton<int>(
-                                icon: const Icon(Icons.more_vert_rounded),
-                                onSelected: (value) {
-                                  switch (value) {
-                                    case 0:
-                                      // PdfPreviewDialog.show(
-                                      //   context: context,
-                                      //   previewOnly: true,
-                                      //   state.selectedPdfFileList[index].xFile,
-                                      //   check: (result) {},
-                                      // );
-                                      break;
-                                    case 1:
-                                      bloc.add(RemoveFileEvent(index));
-                                      break;
-                                  }
-                                },
-                                itemBuilder: (BuildContext context) => const [
-                                  PopupMenuItem(
-                                    value: 0,
-                                    child: Text('Preview'),
-                                  ),
-                                  PopupMenuItem(
-                                    value: 1,
-                                    child: Text('Delete'),
-                                  ),
-                                ],
-                              ),
-                            ],
-                          ),
-                        );
+                        return _buildFileCard(context, bloc, state, index);
                       },
                     );
                   } else {
-                    return const CustomText('No documents added yet.');
+                    return const CustomText(
+                      'No documents added yet.',
+                      textAlign: TextAlign.center,
+                    );
                   }
                 },
               ),
@@ -190,6 +83,68 @@ class ReqSignSelectedDocView extends StatelessWidget {
             ],
           ),
         ),
+      ),
+    );
+  }
+
+  Widget _buildFileCard(
+      BuildContext context, ReqSignSelectedDocBloc bloc, FileSelectedState state, int index) {
+    return Card(
+      elevation: 5,
+      margin: const EdgeInsets.symmetric(vertical: 8),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(12),
+      ),
+      child: Row(
+        children: [
+          Expanded(
+            child: ListTile(
+              leading: const CircleAvatar(
+                backgroundColor: Colors.redAccent,
+                child: Icon(Icons.picture_as_pdf, color: Colors.white),
+              ),
+              title: CustomText(
+                state.selectedPdfFiles[index].name,
+                fontSize: AppFontSize.titleXSmallFont,
+                fontWeight: FontWeight.w500,
+              ),
+              subtitle: CustomText(
+                state.selectedPdfFiles[index].date.toIso8601String(),
+                fontSize: AppFontSize.labelSmallFont,
+                color: Theme.of(context).colorScheme.outline,
+              ),
+            ),
+          ),
+          PopupMenuButton<int>(
+            icon: const Icon(Icons.more_vert_rounded),
+            onSelected: (value) {
+              switch (value) {
+                case 0:
+                  PdfPreviewDialog.show(
+                    XFile.fromData(state.selectedPdfFiles[index].bytes,
+                        name: state.selectedPdfFiles[index].name, mimeType: 'application/pdf'),
+                    check: (_) {},
+                    previewOnly: true,
+                  );
+                  break;
+                case 1:
+                  bloc.add(RemoveFileEvent(index));
+
+                  break;
+              }
+            },
+            itemBuilder: (BuildContext context) => const [
+              PopupMenuItem(
+                value: 0,
+                child: Text('Preview'),
+              ),
+              PopupMenuItem(
+                value: 1,
+                child: Text('Delete'),
+              ),
+            ],
+          ),
+        ],
       ),
     );
   }

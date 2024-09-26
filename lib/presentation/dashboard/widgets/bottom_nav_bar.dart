@@ -5,12 +5,12 @@ import '../../../assets_gen/assets.gen.dart';
 import '../../../domain/consts/consts.dart';
 
 class CustomBottomNavBar extends StatelessWidget {
-  final int currentPage;
+  final int index;
   final ValueChanged<int> onChange;
 
   const CustomBottomNavBar({
     super.key,
-    required this.currentPage,
+    required this.index,
     required this.onChange,
   });
 
@@ -27,14 +27,14 @@ class CustomBottomNavBar extends StatelessWidget {
             Row(
               children: [
                 CustomNavBarItem(
-                  isSelected: currentPage == 0,
+                  isSelected: index == 0,
                   onTap: () => onChange(0),
                   label: 'Home',
                   icon: Assets.icons.icHomeOutlined.svg(),
                   activeIcon: Assets.icons.icHomeFilled.svg(),
                 ),
                 CustomNavBarItem(
-                  isSelected: currentPage == 1,
+                  isSelected: index == 1,
                   onTap: () => onChange(1),
                   label: 'Template',
                   icon: Assets.icons.icTemplatesOutlined.svg(),
@@ -45,14 +45,14 @@ class CustomBottomNavBar extends StatelessWidget {
             Row(
               children: [
                 CustomNavBarItem(
-                  isSelected: currentPage == 2,
+                  isSelected: index == 2,
                   onTap: () => onChange(2),
                   label: 'Agreement',
                   icon: Assets.icons.icAgreementsOutlined.svg(),
                   activeIcon: Assets.icons.icAgreementsFilled.svg(),
                 ),
                 CustomNavBarItem(
-                  isSelected: currentPage == 3,
+                  isSelected: index == 3,
                   onTap: () => onChange(3),
                   label: 'Profile',
                   icon: Assets.icons.icProfileOutlined.svg(),

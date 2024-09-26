@@ -4,7 +4,6 @@ import 'package:dyno_sign/presentation/pop_up/request_signature/request_sign_sel
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../../../domain/utils/utils.dart';
 import '../../../../../infrastructure/dal/services/data_models_repository/req_sign_doc_data_repository.dart';
 
 part 'req_sign_assign_fields_event.dart';
@@ -23,12 +22,12 @@ class ReqSignAssignFieldsBloc extends Bloc<ReqSignAssignFieldsEvent, ReqSignAssi
     emit(DocumentPreviewLoading());
     try {
       for (var file in selectedPdfFileList) {
-        final firstPage = await PdfSinglePage.get(file.xFile);
-        final imageBytes = firstPage?.bytes;
-
-        if (imageBytes != null) {
-          emit(DocumentPreviewLoaded(imageBytes));
-        }
+        // final firstPage = await PdfSinglePage.get(file.xFile!);
+        // final imageBytes = firstPage?.bytes;
+        //
+        // if (imageBytes != null) {
+        //   emit(DocumentPreviewLoaded(imageBytes));
+        // }
       }
     } catch (e) {
       emit(DocumentPreviewError(e.toString()));

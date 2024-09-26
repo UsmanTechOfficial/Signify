@@ -8,8 +8,6 @@ import 'package:dyno_sign/presentation/dashboard/views/home/bloc/home_bloc.dart'
 import 'package:dyno_sign/presentation/dashboard/views/profile/bloc/profile_bloc.dart';
 import 'package:dyno_sign/presentation/dashboard/views/templates/bloc/templates_bloc.dart';
 import 'package:dyno_sign/presentation/pop_up/add_templates/add_template_detail_added/add_template_detail_added_view.dart';
-import 'package:dyno_sign/presentation/pop_up/request_signature/request_sign_selected_document/bloc/req_sign_selected_doc_bloc.dart';
-import 'package:dyno_sign/presentation/pop_up/request_signature/request_sign_selected_document/req_sign_selected_doc_view.dart';
 import 'package:dyno_sign/presentation/pop_up/sign_documents/only_for_me/for_me_selected_document/bloc/for_me_selected_doc_bloc.dart';
 import 'package:dyno_sign/presentation/pop_up/sign_documents/only_for_me/for_me_selected_document/for_me_selected_doc_view.dart';
 import 'package:dyno_sign/presentation/pop_up/sign_documents/send_by_others/by_other_agreement_list/bloc/by_other_agreement_list_bloc.dart';
@@ -17,8 +15,10 @@ import 'package:dyno_sign/presentation/pop_up/sign_documents/send_by_others/by_o
 import 'package:dyno_sign/presentation/widgets/bottom_sheets/bottom_sheets.dart';
 import 'package:dyno_sign/presentation/widgets/bottom_sheets/custom_bottom_sheet/sheets_widget/add_documents/add_document.sheet.dart';
 import 'package:dyno_sign/presentation/widgets/bottom_sheets/custom_bottom_sheet/sheets_widget/sign_selection/sign_selection.sheet.dart';
+import 'package:file_selector/file_selector.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:image_picker/image_picker.dart';
 
 import '../../assets_gen/assets.gen.dart';
 import '../../domain/consts/app_consts/sign_process_types.dart';
@@ -64,7 +64,7 @@ class DashboardView extends StatelessWidget {
                 currentIndex = state.currentIndex;
               }
               return CustomBottomNavBar(
-                currentPage: currentIndex,
+                index: currentIndex,
                 onChange: (index) {
                   pageController.jumpToPage(index);
                   context.read<DashboardBloc>().add(PageChangEvent(index));
@@ -156,7 +156,7 @@ class DashboardView extends StatelessWidget {
     if (index == 5) Go.toNamed(Routes.SETTINGS);
   }
 
-  /// show first Bottom Sheet on [FloatingActionButton] click
+  /// Shows the first Bottom Sheet when the FloatingActionButton is clicked
   void _bottomSheet(BuildContext context) {
     CustomModelSheet.showBottomSheet(
       context: context,
@@ -195,7 +195,7 @@ class DashboardView extends StatelessWidget {
     );
   }
 
-  ///  Method to show the Document Source [Selection] Sheet
+  /// Shows the Document Source Selection Sheet
   void _showDocumentSourceSheet(BuildContext context, SignProcessTypes signProcessTypes) {
     CustomModelSheet.showScrolledBottomSheet(
       context: context,
@@ -206,35 +206,40 @@ class DashboardView extends StatelessWidget {
 
           switch (source) {
             case DocumentSource.files:
-              FilePicker.pick().then(
-                (pdfFile) async {
-                  // get the first page of Pdf and pass to show preview
-                  SelectedFileModel? pdfModel = await PdfFirstPage.get(pdfFile.first);
+              final pickedFile = await FilePicker.pick();
 
-                  if (pdfModel != null) {
-                    PdfPreviewDialog.show(
-                      pdfModel.bytes,
-                      check: (p0) {},
-                    );
-                    //   _preview(file: model, signProcessTypes: signProcessTypes);
-                  }
-                },
-              );
+              if (pickedFile != null) {
+                final pdfFirstPageModel = await PdfFirstPage.get(pickedFile.first);
+                if (pdfFirstPageModel != null) {
+                  _preview(
+                      pdfFile: pickedFile.first,
+                      signProcessTypes: signProcessTypes,
+                      firstPageModel: pdfFirstPageModel);
+                }
+              }
+              break;
 
-              break;
-            case DocumentSource.gallery:
-              GalleryImageToPdf.convert().then(
-                (file) async {
-                  _preview(file: file!, signProcessTypes: signProcessTypes);
-                },
-              );
-              break;
             case DocumentSource.camera:
-              CameraImageToPdf.convert().then(
-                (file) {
-                  _preview(file: file!, signProcessTypes: signProcessTypes);
-                },
-              );
+              final pickedImageModel = await CameraImageToPdfModel.capture();
+
+              if (pickedImageModel != null) {
+                _preview(
+                    pdfFile: XFile.fromData(pickedImageModel.bytes, name: pickedImageModel.name),
+                    signProcessTypes: signProcessTypes,
+                    firstPageModel: pickedImageModel);
+              }
+
+              break;
+
+            case DocumentSource.gallery:
+              final pickedImageModel = await GalleryImageToPdfModel.pick();
+
+              if (pickedImageModel != null) {
+                _preview(
+                    pdfFile: XFile.fromData(pickedImageModel.bytes, name: pickedImageModel.name),
+                    signProcessTypes: signProcessTypes,
+                    firstPageModel: pickedImageModel);
+              }
             default:
               break;
           }
@@ -243,14 +248,13 @@ class DashboardView extends StatelessWidget {
     );
   }
 
-  /// Method to show the SignSheet for [me] or from [other]
+  /// Shows the Sign Sheet for self or others
   void _showSignSelectionSheet(BuildContext context) {
     CustomModelSheet.showBottomSheet(
       context: context,
       title: "Sign",
       content: SignSelectedSheet(
         onForMe: () {
-          // close previous sheet
           Go.back();
           _showDocumentSourceSheet(context, SignProcessTypes.onlyForMe);
         },
@@ -267,32 +271,30 @@ class DashboardView extends StatelessWidget {
     );
   }
 
-  /// [Preview] and check the for [keep] for [discard] the selected [file]
-
-  void _preview({required SelectedFileModel file, required SignProcessTypes signProcessTypes}) {
+  /// Previews and checks whether to keep or discard the selected file
+  void _preview(
+      {required XFile pdfFile,
+      required SelectedFileModel firstPageModel,
+      required SignProcessTypes signProcessTypes}) {
     PdfPreviewDialog.show(
-      file.bytes,
-      check: (result) async {
-        if (result == PreviewCheck.keep) {
+      pdfFile,
+      check: (PreviewCheck onCheck) async {
+        if (onCheck == PreviewCheck.keep) {
+          // final firstPageModel = await PdfFirstPage.get(pdfFile);
+
           switch (signProcessTypes) {
             case SignProcessTypes.requestSignatures:
-              // selectedPdfFileList.add(model);
-              Go.to(
-                BlocProvider(
-                  create: (context) => getIt<ReqSignSelectedDocBloc>(),
-                  child: const ReqSignSelectedDocView(),
-                ),
-              );
+              Go.toNamed(Routes.REQ_SIGN_SELECTED_DOC, arguments: firstPageModel);
               break;
 
             case SignProcessTypes.onlyForMe:
-              forMeSelectedPdfFileList.add(file);
               Go.to(
                 BlocProvider(
                   create: (context) => getIt<ForMeSelectedDocBloc>(),
                   child: const ForMeSelectedDocView(),
                 ),
               );
+              break;
 
             case SignProcessTypes.sendByOthers:
               Go.to(
@@ -301,7 +303,10 @@ class DashboardView extends StatelessWidget {
                   child: const ByOtherAgreementListView(),
                 ),
               );
+              break;
+
             default:
+              break;
           }
         }
       },

@@ -12,10 +12,10 @@ final class ReqSignSelectedDocInitial extends ReqSignSelectedDocState {
 }
 
 class FileSelectedState extends ReqSignSelectedDocState {
-  final List<SelectedFileModel> selectedPdfFileList;
+  final List<SelectedFileModel> selectedPdfFiles;
 
-  const FileSelectedState(this.selectedPdfFileList);
+  const FileSelectedState(this.selectedPdfFiles);
 
   @override
-  List<Object> get props => [selectedPdfFileList];
+  List<Object> get props => [selectedPdfFiles];
 }

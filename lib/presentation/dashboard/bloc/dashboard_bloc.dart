@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -9,11 +11,11 @@ part 'dashboard_state.dart';
 
 class DashboardBloc extends Bloc<DashboardEvent, DashboardState> {
   DashboardBloc() : super(const DashboardInitialState()) {
-    on<PageChangEvent>(
-      (event, emit) {
-        emit(PageChangedState(event.index));
-      },
-    );
+    on<PageChangEvent>(_onPageChange);
+  }
+
+  FutureOr<void> _onPageChange(PageChangEvent event, Emitter<DashboardState> emit) {
+    emit(PageChangedState(event.index));
   }
 }
 

@@ -4,8 +4,6 @@ import 'package:dyno_sign/presentation/pop_up/add_templates/add_template_selecte
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../../../domain/utils/utils.dart';
-
 part 'add_template_assign_fields_event.dart';
 part 'add_template_assign_fields_state.dart';
 
@@ -21,12 +19,12 @@ class AddTemplateAssignFieldsBloc
     emit(DocumentPreviewLoading());
     try {
       for (var file in addTemplateSelectedPdfFileList) {
-        final firstPage = await PdfSinglePage.get(file.xFile);
-        final imageBytes = firstPage?.bytes;
-
-        if (imageBytes != null) {
-          emit(DocumentPreviewLoaded(imageBytes));
-        }
+        // final firstPage = await PdfSinglePage.get(file.xFile!);
+        // final imageBytes = firstPage?.bytes;
+        //
+        // if (imageBytes != null) {
+        //   emit(DocumentPreviewLoaded(imageBytes));
+        // }
       }
     } catch (e) {
       emit(DocumentPreviewError(e.toString()));

@@ -7,11 +7,17 @@ sealed class ReqSignSelectedDocEvent extends Equatable {
   List<Object> get props => [];
 }
 
-class AddNewFileEvent extends ReqSignSelectedDocEvent {
-  const AddNewFileEvent();
+class InitialEvent extends ReqSignSelectedDocEvent {
+  final List<SelectedFileModel> files;
+
+  const InitialEvent(this.files);
 
   @override
-  List<Object> get props => [];
+  List<Object> get props => [files];
+}
+
+class AddNewFileEvent extends ReqSignSelectedDocEvent {
+  const AddNewFileEvent();
 }
 
 class RemoveFileEvent extends ReqSignSelectedDocEvent {
@@ -21,4 +27,8 @@ class RemoveFileEvent extends ReqSignSelectedDocEvent {
 
   @override
   List<Object> get props => [index];
+}
+
+class NextNavigateEvent extends ReqSignSelectedDocEvent {
+  const NextNavigateEvent();
 }

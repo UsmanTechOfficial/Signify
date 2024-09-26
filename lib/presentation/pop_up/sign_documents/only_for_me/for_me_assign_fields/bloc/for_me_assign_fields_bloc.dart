@@ -4,8 +4,6 @@ import 'package:dyno_sign/presentation/pop_up/sign_documents/only_for_me/for_me_
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../../../../domain/utils/utils.dart';
-
 part 'for_me_assign_fields_event.dart';
 part 'for_me_assign_fields_state.dart';
 
@@ -20,12 +18,12 @@ class ForMeAssignFieldsBloc extends Bloc<ForMeAssignFieldsEvent, ForMeAssignFiel
     emit(const DocumentPreviewLoading());
     try {
       for (var file in forMeSelectedPdfFileList) {
-        final firstPage = await PdfSinglePage.get(file.xFile);
-        final imageBytes = firstPage?.bytes;
-
-        if (imageBytes != null) {
-          emit(DocumentPreviewLoaded(imageBytes));
-        }
+        // final firstPage = await PdfSinglePage.get(file.xFile!);
+        // final imageBytes = firstPage?.bytes;
+        //
+        // if (imageBytes != null) {
+        //   emit(DocumentPreviewLoaded(imageBytes));
+        // }
       }
     } catch (e) {
       emit(DocumentPreviewError(e.toString()));

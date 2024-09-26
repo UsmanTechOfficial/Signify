@@ -20,8 +20,8 @@ class AppFontSize {
   static const bodyMediumFont = 14.0;
   static const bodySmallFont = 12.0;
 
-  static const labelXMediumFont = 16.0;
   static const labelLargeFont = 18.0;
+  static const labelXMediumFont = 16.0;
   static const labelMediumFont = 14.0;
   static const labelSmallFont = 12.0;
   static const labelXSmallFont = 10.0;
