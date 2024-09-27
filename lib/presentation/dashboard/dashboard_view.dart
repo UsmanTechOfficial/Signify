@@ -28,9 +28,14 @@ import 'widgets/drawer_items_tile.dart';
 
 final PageController pageController = PageController();
 
-class DashboardView extends StatelessWidget {
+class DashboardView extends StatefulWidget {
   const DashboardView({super.key});
 
+  @override
+  State<DashboardView> createState() => _DashboardViewState();
+}
+
+class _DashboardViewState extends State<DashboardView> with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     final color = appColorScheme(context);
@@ -75,7 +80,7 @@ class DashboardView extends StatelessWidget {
           /// [FloatingActionButton]
           floatingActionButton: FloatingActionButton(
             elevation: 10,
-            onPressed: () => _bottomSheet(context),
+            onPressed: () => _bottomSheet(context, this),
             backgroundColor: Theme.of(context).primaryColor,
             child: Icon(Icons.add, color: Theme.of(context).colorScheme.surface),
           ),
@@ -155,8 +160,9 @@ class DashboardView extends StatelessWidget {
   }
 
   /// Shows the first Bottom Sheet when the FloatingActionButton is clicked
-  void _bottomSheet(BuildContext context) {
+  void _bottomSheet(BuildContext context, TickerProvider ticker) {
     CustomModelSheet.showBottomSheet(
+      ticker: ticker,
       context: context,
       title: "Add",
       content: Column(
@@ -168,7 +174,7 @@ class DashboardView extends StatelessWidget {
             subtitle: 'Request anyone to add signatures in your document',
             onTap: () {
               Go.back();
-              _showDocumentSourceSheet(context, SignProcessTypes.requestSignatures);
+              _showDocumentSourceSheet(context, SignProcessTypes.requestSignatures, ticker: ticker);
             },
           ),
           CustomBottomSheetTile(
@@ -177,7 +183,7 @@ class DashboardView extends StatelessWidget {
             subtitle: 'Documents that you want to sign for yourself or sent by others',
             onTap: () {
               Go.back();
-              _showSignSelectionSheet(context);
+              _showSignSelectionSheet(context, ticker);
             },
           ),
           CustomBottomSheetTile(
@@ -194,8 +200,10 @@ class DashboardView extends StatelessWidget {
   }
 
   /// Shows the Document Source Selection Sheet
-  void _showDocumentSourceSheet(BuildContext context, SignProcessTypes signProcessTypes) {
+  void _showDocumentSourceSheet(BuildContext context, SignProcessTypes signProcessTypes,
+      {required TickerProvider ticker}) {
     CustomModelSheet.showScrolledBottomSheet(
+      ticker: ticker,
       context: context,
       title: "Add a Document",
       content: AddDocumentSheet(
@@ -248,14 +256,15 @@ class DashboardView extends StatelessWidget {
   }
 
   /// Shows the Sign Sheet for self or others
-  void _showSignSelectionSheet(BuildContext context) {
+  void _showSignSelectionSheet(BuildContext context, TickerProvider ticker) {
     CustomModelSheet.showBottomSheet(
+      ticker: ticker,
       context: context,
       title: "Sign",
       content: SignSelectedSheet(
         onForMe: () {
           Go.back();
-          _showDocumentSourceSheet(context, SignProcessTypes.onlyForMe);
+          _showDocumentSourceSheet(context, SignProcessTypes.onlyForMe, ticker: ticker);
         },
         onByOthers: () {
           Go.back();

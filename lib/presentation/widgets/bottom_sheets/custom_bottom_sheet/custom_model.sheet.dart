@@ -5,6 +5,7 @@ import '../../../../../domain/consts/styles.dart';
 
 class CustomModelSheet {
   static void showBottomSheet({
+    required TickerProvider ticker,
     required BuildContext context,
     required String title,
     required Widget content,
@@ -14,11 +15,16 @@ class CustomModelSheet {
       context: context,
       isScrollControlled: true,
       backgroundColor: colorScheme.surface,
+      sheetAnimationStyle: TreeSliver.defaultToggleAnimationStyle,
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.only(
           topLeft: Radius.circular(AppStyle.sheetRadius),
           topRight: Radius.circular(AppStyle.sheetRadius),
         ),
+      ),
+      transitionAnimationController: AnimationController(
+        duration: const Duration(milliseconds: 200),
+        vsync: ticker,
       ),
       builder: (context) {
         return Padding(
@@ -65,6 +71,7 @@ class CustomModelSheet {
   }
 
   static void showScrolledBottomSheet({
+    required TickerProvider ticker,
     required BuildContext context,
     required String title,
     required Widget content,
@@ -80,6 +87,11 @@ class CustomModelSheet {
           topLeft: Radius.circular(AppStyle.sheetRadius),
           topRight: Radius.circular(AppStyle.sheetRadius),
         ),
+      ),
+      sheetAnimationStyle: TreeSliver.defaultToggleAnimationStyle,
+      transitionAnimationController: AnimationController(
+        duration: const Duration(milliseconds: 200),
+        vsync: ticker,
       ),
       builder: (context) {
         return DraggableScrollableSheet(
