@@ -1,15 +1,16 @@
 import 'package:equatable/equatable.dart';
 
+import '../app_models/document_user_model.dart';
 import '../selected_file.model.dart';
 
-part 'user_model.dart';
 part 'agreement_detail_model.dart';
-part 'recipient_detail_model.dart';
 part 'email_detail_model.dart';
+part 'recipient_detail_model.dart';
+part 'user_model.dart';
 
 class ReqSignDocModel extends Equatable {
   final AgreementDetailModel agreementDetail;
-  final List<RecipientDetailModel> recipientDetail;
+  final List<DocumentUserModel> recipientDetail;
   final List<SelectedFileModel> selectedFile;
   final List<EmailDetailModel> emailDetail;
 
@@ -22,8 +23,8 @@ class ReqSignDocModel extends Equatable {
 
   factory ReqSignDocModel.empty() {
     return const ReqSignDocModel(
-      agreementDetail: AgreementDetailModel(
-          name: '', desc: '', role: AgreementUserRole.addRecipient),
+      agreementDetail:
+          AgreementDetailModel(name: '', desc: '', role: AgreementUserRole.addRecipient),
       recipientDetail: [],
       selectedFile: [],
       emailDetail: [],
@@ -32,7 +33,7 @@ class ReqSignDocModel extends Equatable {
 
   ReqSignDocModel copyWith({
     AgreementDetailModel? agreementDetail,
-    List<RecipientDetailModel>? recipientDetail,
+    List<DocumentUserModel>? recipientDetail,
     List<SelectedFileModel>? selectedFile,
     List<EmailDetailModel>? emailDetail,
   }) {
@@ -45,8 +46,7 @@ class ReqSignDocModel extends Equatable {
   }
 
   @override
-  List<Object?> get props =>
-      [agreementDetail, recipientDetail, selectedFile, emailDetail];
+  List<Object?> get props => [agreementDetail, recipientDetail, selectedFile, emailDetail];
 
   @override
   bool get stringify => true;

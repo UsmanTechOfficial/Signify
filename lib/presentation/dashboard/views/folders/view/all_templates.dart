@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-import '../../../../../domain/consts/app_consts/filters.dart';
 import '../../../../../domain/consts/consts.dart';
 import '../../../../widgets/widgets.dart';
 import '../bloc/folders_bloc.dart';

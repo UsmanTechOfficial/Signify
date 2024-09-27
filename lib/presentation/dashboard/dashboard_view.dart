@@ -1,5 +1,3 @@
-import 'package:dyno_sign/domain/consts/global_var.dart';
-import 'package:dyno_sign/domain/consts/styles.dart';
 import 'package:dyno_sign/infrastructure/dal/models/selected_file.model.dart';
 import 'package:dyno_sign/infrastructure/navigation/app_routes/navigation.dart';
 import 'package:dyno_sign/infrastructure/navigation/app_routes/routes.dart';
@@ -21,7 +19,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
 
 import '../../assets_gen/assets.gen.dart';
-import '../../domain/consts/app_consts/sign_process_types.dart';
+import '../../domain/consts/consts.dart';
 import '../../domain/utils/utils.dart';
 import '../widgets/dialogs/pdf_preview.dialog.dart';
 import 'bloc/dashboard_bloc.dart';
@@ -209,13 +207,14 @@ class DashboardView extends StatelessWidget {
               final pickedFile = await FilePicker.pick();
 
               if (pickedFile != null) {
-                final pdfFirstPageModel = await PdfFirstPage.get(pickedFile.first);
-                if (pdfFirstPageModel != null) {
-                  _preview(
-                      pdfFile: pickedFile.first,
-                      signProcessTypes: signProcessTypes,
-                      firstPageModel: pdfFirstPageModel);
-                }
+                // final pdfFirstPageModel = await PdfFirstPage.get(pickedFile.first);
+                final pdfFirstPageModel = await FileToModel.convert(pickedFile.first);
+                // if (pdfFirstPageModel != null) {
+                _preview(
+                    pdfFile: pickedFile.first,
+                    signProcessTypes: signProcessTypes,
+                    firstPageModel: pdfFirstPageModel);
+                // }
               }
               break;
 

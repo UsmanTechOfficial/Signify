@@ -186,7 +186,7 @@ class _BottomField extends StatelessWidget {
   final Color? color;
   final String label;
 
-  const _BottomField({super.key, required this.icon, this.color, required this.label});
+  const _BottomField({required this.icon, this.color, required this.label});
 
   @override
   Widget build(BuildContext context) {

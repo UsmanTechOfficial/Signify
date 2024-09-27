@@ -1,6 +1,6 @@
 import 'package:equatable/equatable.dart';
 
-import '../../../domain/consts/app_consts/pen_tools.dart';
+import '../../../domain/consts/consts.dart';
 
 /// [SignatureManagerEvent]
 abstract class SignatureManagerEvent extends Equatable {

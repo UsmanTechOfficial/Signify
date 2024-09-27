@@ -1,3 +1,5 @@
+part of '../consts.dart';
+
 enum StatusFilters {
   all('All '),
   onlyForMe('Only for me'),

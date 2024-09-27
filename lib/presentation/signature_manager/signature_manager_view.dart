@@ -1,13 +1,10 @@
 import 'dart:ui' as ui;
 
-import 'package:dyno_sign/domain/consts/font_size.dart';
-import 'package:dyno_sign/domain/consts/styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:syncfusion_flutter_signaturepad/signaturepad.dart';
 
-import '../../domain/consts/app_consts/pen_tools.dart';
-import '../../domain/consts/global_var.dart';
+import '../../domain/consts/consts.dart';
 import '../widgets/add_signature_widgets/custom_pen_color.dart';
 import '../widgets/add_signature_widgets/custom_pen_stroke.dart';
 import '../widgets/add_signature_widgets/signature_choice_card.dart';

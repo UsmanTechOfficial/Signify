@@ -8,3 +8,12 @@ sealed class ReqSignAgreementDetailState extends Equatable {
 }
 
 final class ReqSignAgreementDetailInitial extends ReqSignAgreementDetailState {}
+
+class RecipientRoleState extends ReqSignAgreementDetailState {
+  final RecipientUserRole selectedRole;
+
+  const RecipientRoleState(this.selectedRole);
+
+  @override
+  List<Object> get props => [selectedRole];
+}

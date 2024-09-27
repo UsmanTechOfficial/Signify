@@ -3,10 +3,9 @@ import 'package:dyno_sign/infrastructure/dal/models/docs_model.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../../../domain/consts/app_consts/filters.dart';
+import '../../../../../domain/consts/consts.dart';
 
-part 'agreements_event.dart';
-part 'agreements_state.dart';
+part 'agreements_event.dart';part 'agreements_state.dart';
 
 class AgreementsBloc extends Bloc<AgreementsEvent, AgreementsState> {
   StatusFilters selectedStatusFilter = StatusFilters.all;

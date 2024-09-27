@@ -21,6 +21,8 @@ class ReqSignSelectedDocBloc extends Bloc<ReqSignSelectedDocEvent, ReqSignSelect
     on<InitialEvent>(_initializeFiles);
     on<AddNewFileEvent>(_addNewFiles);
     on<RemoveFileEvent>(_removeFile);
+
+    /// go to next screen
     on<NextNavigateEvent>(_nextNavigation);
   }
 

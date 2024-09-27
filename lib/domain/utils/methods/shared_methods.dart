@@ -118,47 +118,48 @@ class GalleryImageToPdfModel {
   }
 }
 
-class PdfFirstPage {
-  /// Extracts the first page from a given PDF file and returns it as a new `SelectedFileModel`.
-  static Future<SelectedFileModel?> get(XFile pdfFile) async {
-    try {
-      final pdfName = pdfFile.name;
-      final pdfDate = DateTime.now();
-      final pdfBytes = await pdfFile.readAsBytes();
-      final PdfDocument document = PdfDocument(inputBytes: pdfBytes);
-
-      // Extract the first page of the document
-      final PdfDocument newDocument = PdfDocument();
-      newDocument.pages.add().graphics.drawPdfTemplate(
-            document.pages[0].createTemplate(),
-            const Offset(0, 0),
-          );
-
-      // Save the extracted first page as a new document
-      final List<int> newDocBytes = newDocument.saveSync();
-      newDocument.dispose();
-
-      // Convert List<int> to Uint8List for preview
-      final Uint8List newDocUint8List = Uint8List.fromList(newDocBytes);
-
-      return SelectedFileModel(
-        name: pdfName,
-        date: pdfDate,
-        bytes: newDocUint8List,
-      );
-    } catch (e) {
-      return null;
-    }
-  }
-}
+// class PdfFirstPage {
+//   /// Extracts the first page from a given PDF file and returns it as a new `SelectedFileModel`.
+//   static Future<SelectedFileModel?> get(XFile pdfFile) async {
+//     try {
+//       final pdfName = pdfFile.name;
+//       final pdfDate = DateTime.now();
+//       final pdfBytes = await pdfFile.readAsBytes();
+//       final PdfDocument document = PdfDocument(inputBytes: pdfBytes);
+//
+//       // Extract the first page of the document
+//       final PdfDocument newDocument = PdfDocument();
+//       newDocument.pages.add().graphics.drawPdfTemplate(
+//             document.pages[0].createTemplate(),
+//             const Offset(0, 0),
+//           );
+//
+//       // Save the extracted first page as a new document
+//       final List<int> newDocBytes = newDocument.saveSync();
+//       newDocument.dispose();
+//
+//       // Convert List<int> to Uint8List for preview
+//       final Uint8List newDocUint8List = Uint8List.fromList(newDocBytes);
+//
+//       return SelectedFileModel(
+//         name: pdfName,
+//         date: pdfDate,
+//         bytes: newDocUint8List,
+//       );
+//     } catch (e) {
+//       return null;
+//     }
+//   }
+// }
 
 class FileToModel {
-  static Future<SelectedFileModel> convert(XFile file) async {
-    final firstPage = await PdfFirstPage.get(file);
+  static Future<SelectedFileModel> convert(XFile pdfFile) async {
+    final pdfBytes = await pdfFile.readAsBytes();
+
     return SelectedFileModel(
-      name: file.name,
-      date: await file.lastModified(),
-      bytes: firstPage!.bytes,
+      name: pdfFile.name,
+      date: DateTime.now(),
+      bytes: pdfBytes,
     );
   }
 }

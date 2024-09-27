@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../../domain/consts/app_consts/pen_tools.dart';
-import '../../../domain/consts/global_var.dart';
-import '../../../domain/consts/styles.dart';
+import '../../../domain/consts/consts.dart';
 
 class CustomPenColor extends StatelessWidget {
   final int selectedColor;

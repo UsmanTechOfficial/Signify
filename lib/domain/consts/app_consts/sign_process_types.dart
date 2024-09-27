@@ -1,3 +1,5 @@
+part of '../consts.dart';
+
 enum SignProcessTypes {
   requestSignatures('Request Signatures'),
   onlyForMe('Only For Me'),

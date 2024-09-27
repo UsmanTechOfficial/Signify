@@ -183,7 +183,7 @@ class ForMeSelectedDocView extends StatelessWidget {
                   width: double.infinity,
                   text: "Add another document",
                   onPressed: () {
-                    bloc.add(AddNewFileEvent());
+                    bloc.add(const AddNewFileEvent());
                   },
                 ),
               ),

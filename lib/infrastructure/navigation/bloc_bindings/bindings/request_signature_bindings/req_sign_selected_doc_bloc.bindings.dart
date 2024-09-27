@@ -6,7 +6,7 @@ import '../../../../dal/services/data_models_repository/req_sign_doc_data_reposi
 class ReqSignSelectedDocBlocBindings implements Bindings {
   @override
   void dependencies() async {
-    getIt.registerSingleton<ReqSignSelectedDocBloc>(
-        ReqSignSelectedDocBloc(getIt<ReqSignDocDataRepository>()));
+    getIt.registerFactory<ReqSignSelectedDocBloc>(
+        () => ReqSignSelectedDocBloc(getIt<ReqSignDocDataRepository>()));
   }
 }

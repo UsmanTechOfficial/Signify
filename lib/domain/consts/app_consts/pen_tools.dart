@@ -1,4 +1,4 @@
-import 'dart:ui';
+part of '../consts.dart';
 
 enum PenColors {
   black(Color(0xff000000)),

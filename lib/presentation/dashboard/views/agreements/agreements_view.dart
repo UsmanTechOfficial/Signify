@@ -1,5 +1,3 @@
-import 'package:dyno_sign/domain/consts/global_var.dart';
-import 'package:dyno_sign/infrastructure/theme/theme.dart';
 import 'package:dyno_sign/presentation/widgets/buttons/custom_icon_button.dart';
 import 'package:dyno_sign/presentation/widgets/buttons/custom_outlined_text_button.dart';
 import 'package:dyno_sign/presentation/widgets/form_field/custom_formfield.dart';
@@ -7,7 +5,7 @@ import 'package:dyno_sign/presentation/widgets/text/custom_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../../domain/consts/app_consts/filters.dart';
+import '../../../../domain/consts/consts.dart';
 import '../../widgets/custom_appbar.dart';
 import '../home/home_view.dart';
 import 'bloc/agreements_bloc.dart';

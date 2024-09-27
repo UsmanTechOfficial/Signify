@@ -6,3 +6,21 @@ sealed class ReqSignAgreementDetailEvent extends Equatable {
   @override
   List<Object> get props => [];
 }
+
+class RecipientRoleChangedEvent extends ReqSignAgreementDetailEvent {
+  final RecipientUserRole newRole;
+
+  const RecipientRoleChangedEvent(this.newRole);
+
+  @override
+  List<Object> get props => [newRole];
+}
+
+class NextNavigateEvent extends ReqSignAgreementDetailEvent {
+  final RecipientUserRole currentRole;
+
+  const NextNavigateEvent(this.currentRole);
+
+  @override
+  List<Object> get props => [currentRole];
+}

@@ -1,6 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../domain/consts/app_consts/pen_tools.dart';
+import '../../../domain/consts/consts.dart';
 import 'signature_manager_event.dart';
 import 'signature_manager_state.dart';
 

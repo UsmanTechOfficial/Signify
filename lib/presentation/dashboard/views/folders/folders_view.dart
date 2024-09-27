@@ -4,7 +4,6 @@ import 'package:dyno_sign/presentation/dashboard/views/folders/view/all_template
 import 'package:dyno_sign/presentation/widgets/tiles/custom_tiles/custom_folder_tile.dart';
 import 'package:flutter/material.dart';
 
-import '../../../../domain/consts/app_consts/filters.dart';
 import '../../../../domain/consts/consts.dart';
 import '../../../widgets/widgets.dart';
 

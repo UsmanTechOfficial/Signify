@@ -1,10 +1,9 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../../../domain/consts/app_consts/filters.dart';
+import '../../../../../domain/consts/consts.dart';
 
-part 'templates_event.dart';
-part 'templates_state.dart';
+part 'templates_event.dart';part 'templates_state.dart';
 
 class TemplatesBloc extends Bloc<TemplatesEvent, TemplatesState> {
   StatusFilters selectedStatusFilter = StatusFilters.all;

@@ -65,11 +65,12 @@ class _DocumentPreviewWidgetState extends State<DocumentPreviewWidget> {
   @override
   void initState() {
     super.initState();
-    if (widget.previewOnly) {
-      _previewPage();
-    } else {
-      _extractFirstPage();
-    }
+    _previewPage();
+    // if (widget.previewOnly) {
+    //   _previewPage();
+    // } else {
+    //   _extractFirstPage();
+    // }
   }
 
   Future<void> _previewPage() async {

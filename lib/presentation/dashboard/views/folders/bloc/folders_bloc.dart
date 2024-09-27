@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../../../domain/consts/app_consts/filters.dart';
+import '../../../../../domain/consts/consts.dart';
 import '../../../../../infrastructure/dal/models/new_folder.model.dart';
 
 part 'folders_event.dart';
