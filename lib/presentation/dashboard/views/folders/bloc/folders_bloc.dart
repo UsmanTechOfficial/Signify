@@ -65,7 +65,8 @@ class FoldersBloc extends Bloc<FoldersEvent, FoldersState> {
   }
 
   FutureOr<void> createNewFolder(OnNewFolderEvent event, Emitter<FoldersState> emit) {
-    final template = List<TemplatesModel>.generate(
+    // final template =
+    List<TemplatesModel>.generate(
       2,
       (index) {
         return TemplatesModel(name: 'Invoice Temp $index', desc: 'none');

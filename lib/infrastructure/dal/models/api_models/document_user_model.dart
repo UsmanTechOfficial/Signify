@@ -42,6 +42,10 @@ class DocumentUserModel extends Equatable {
     };
   }
 
+  factory DocumentUserModel.empty() {
+    return DocumentUserModel(email: '', firstName: '', signingOrder: 1, status: '');
+  }
+
   factory DocumentUserModel.fromMap(Map<String, dynamic> map) {
     return DocumentUserModel(
       email: map['email'] ?? '',

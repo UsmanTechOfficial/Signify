@@ -17,6 +17,8 @@ class ReqSignSelectedDocView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final bloc = context.read<ReqSignSelectedDocBloc>();
+
+    // add file receive from previous screen
     bloc.add(InitialEvent([file]));
     return Scaffold(
       appBar: AppBar(

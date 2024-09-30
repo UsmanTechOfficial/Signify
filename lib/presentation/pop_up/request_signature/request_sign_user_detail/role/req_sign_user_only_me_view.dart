@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class ReqSignRecipientIncludeMeView extends StatelessWidget {
-  const ReqSignRecipientIncludeMeView({super.key});
+class ReqSignUserOnlyMeView extends StatelessWidget {
+  const ReqSignUserOnlyMeView({super.key});
 
   @override
   Widget build(BuildContext context) {

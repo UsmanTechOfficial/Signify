@@ -7,6 +7,6 @@ class ReqSignAgreementDetailBlocBindings implements Bindings {
   @override
   void dependencies() {
     getIt.registerFactory<ReqSignAgreementDetailBloc>(
-        () => ReqSignAgreementDetailBloc(getIt<ReqSignDocDataRepository>()));
+        () => ReqSignAgreementDetailBloc(getIt<ReqSignDocumentRepository>()));
   }
 }

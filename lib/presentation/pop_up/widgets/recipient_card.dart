@@ -8,6 +8,7 @@ class RecipientCard extends StatelessWidget {
   final int index;
   final bool isMe;
   final bool order;
+  final Function(int value) onSelected;
 
   const RecipientCard({
     super.key,
@@ -17,6 +18,7 @@ class RecipientCard extends StatelessWidget {
     required this.index,
     this.isMe = false,
     required this.order,
+    required this.onSelected,
   });
 
   @override
@@ -105,7 +107,7 @@ class RecipientCard extends StatelessWidget {
             PopupMenuButton<int>(
               icon: const Icon(Icons.more_vert_rounded),
               onSelected: (value) {
-                // Handle menu actions
+                onSelected(value);
               },
               itemBuilder: (BuildContext context) => [
                 const PopupMenuItem<int>(

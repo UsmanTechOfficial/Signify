@@ -12,7 +12,6 @@ class ReqSignAgreementDetailView extends StatelessWidget {
   Widget build(BuildContext context) {
     final bloc = context.read<ReqSignAgreementDetailBloc>();
 
-
     return Scaffold(
       appBar: AppBar(
         title: const Text('Agreement Detail'),
@@ -26,6 +25,8 @@ class ReqSignAgreementDetailView extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+
+
               Align(
                 alignment: Alignment.centerRight,
                 child: CustomOutlinedTextButton(
@@ -38,7 +39,6 @@ class ReqSignAgreementDetailView extends StatelessWidget {
 
                     // Trigger the navigation event with the selected role
                     bloc.add(NextNavigateEvent(selectedRole));
-
                   },
                   text: 'Next',
                   borderRadius: AppStyle.outlinedBtnRadius,
@@ -51,43 +51,41 @@ class ReqSignAgreementDetailView extends StatelessWidget {
               ),
               const SizedBox(height: 20),
               const CustomText(
-                'Enter Agreement Name',
+                'Enter Title',
                 fontSize: AppFontSize.titleXSmallFont,
                 fontWeight: FontWeight.w500,
               ),
               const SizedBox(height: 5),
               CustomTextFormField(
-                controller: bloc.agreementNameController,
-                hint: "Enter Agreement Name",
+                controller: bloc.agreementTitleController,
+                hint: "enter agreement title",
                 textInputAction: TextInputAction.next,
                 borderColor: Theme.of(context).colorScheme.outlineVariant,
                 borderRadius: AppStyle.buttonBorderRadius,
-                focusNode: bloc.agreementNameFocus,
+                focusNode: bloc.titleFocus,
                 onFieldSubmitted: (value) {
-                  FocusScope.of(context).requestFocus(bloc.descriptionFocus);
+                  FocusScope.of(context).requestFocus(bloc.messageFocus);
                 },
                 maxLines: 2,
-
               ),
               const SizedBox(height: 20),
               const CustomText(
-                'Enter Description',
+                'Enter Message',
                 fontSize: AppFontSize.titleXSmallFont,
                 fontWeight: FontWeight.w500,
               ),
               const SizedBox(height: 5),
               CustomTextFormField(
-                controller: bloc.descriptionController,
-                hint: "Write Description here",
+                controller: bloc.messageController,
+                hint: "write message here",
                 borderColor: Theme.of(context).colorScheme.outlineVariant,
                 borderRadius: AppStyle.buttonBorderRadius,
-                focusNode: bloc.descriptionFocus,
+                focusNode: bloc.messageFocus,
                 textInputAction: TextInputAction.done,
                 onFieldSubmitted: (value) {
                   FocusScope.of(context).unfocus();
                 },
                 maxLines: 5,
-
               ),
               const SizedBox(height: 30),
               const CustomText(
@@ -99,38 +97,38 @@ class ReqSignAgreementDetailView extends StatelessWidget {
               BlocBuilder<ReqSignAgreementDetailBloc, ReqSignAgreementDetailState>(
                 buildWhen: (_, current) => current is RecipientRoleState,
                 builder: (context, state) {
-                  if(state is RecipientRoleState){
-                  return SizedBox(
-                    height: 150,
-                    child: ListView.builder(
-                      physics: const NeverScrollableScrollPhysics(),
-                      shrinkWrap: true,
-                      itemCount: RecipientUserRole.values.length,
-                      itemBuilder: (context, index) {
-                        final role = RecipientUserRole.values[index];
-                        return SizedBox(
-                          height: 30,
-                          child: ListTile(
-                            leading: Radio<RecipientUserRole>(
-                              value: role,
-                              groupValue: state.selectedRole,
-                              onChanged: (RecipientUserRole? role) {
-                                if (role != null) {
-                                  bloc.add(RecipientRoleChangedEvent(role));
-                                }
-                              },
+                  if (state is RecipientRoleState) {
+                    return SizedBox(
+                      height: 150,
+                      child: ListView.builder(
+                        physics: const NeverScrollableScrollPhysics(),
+                        shrinkWrap: true,
+                        itemCount: RecipientUserRole.values.length,
+                        itemBuilder: (context, index) {
+                          final role = RecipientUserRole.values[index];
+                          return SizedBox(
+                            height: 30,
+                            child: ListTile(
+                              leading: Radio<RecipientUserRole>(
+                                value: role,
+                                groupValue: state.selectedRole,
+                                onChanged: (RecipientUserRole? role) {
+                                  if (role != null) {
+                                    bloc.add(RecipientRoleChangedEvent(role));
+                                  }
+                                },
+                              ),
+                              title: CustomText(
+                                role.role, // Display role name from enum
+                                fontSize: AppFontSize.labelMediumFont,
+                                fontWeight: FontWeight.w400,
+                              ),
                             ),
-                            title: CustomText(
-                              role.role, // Display role name from enum
-                              fontSize: AppFontSize.labelMediumFont,
-                              fontWeight: FontWeight.w400,
-                            ),
-                          ),
-                        );
-                      },
-                    ),
-                  );
-                  } else{
+                          );
+                        },
+                      ),
+                    );
+                  } else {
                     return SizedBox(
                       height: 150,
                       child: ListView.builder(

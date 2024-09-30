@@ -7,6 +7,6 @@ class ReqSignSelectedDocBlocBindings implements Bindings {
   @override
   void dependencies() async {
     getIt.registerFactory<ReqSignSelectedDocBloc>(
-        () => ReqSignSelectedDocBloc(getIt<ReqSignDocDataRepository>()));
+        () => ReqSignSelectedDocBloc(getIt<ReqSignDocumentRepository>()));
   }
 }

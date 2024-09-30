@@ -1,4 +1,3 @@
-import 'package:dyno_sign/presentation/pop_up/request_signature/request_sign_selected_document/bloc/req_sign_selected_doc_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -11,15 +10,13 @@ class ReqSignAssignFieldsView extends StatefulWidget {
   const ReqSignAssignFieldsView({super.key});
 
   @override
-  State<ReqSignAssignFieldsView> createState() =>
-      _ReqSignAssignFieldsViewState();
+  State<ReqSignAssignFieldsView> createState() => _ReqSignAssignFieldsViewState();
 }
 
 class _ReqSignAssignFieldsViewState extends State<ReqSignAssignFieldsView> {
   @override
   Widget build(BuildContext context) {
-    final bloc = getIt<ReqSignAssignFieldsBloc>()
-      ..add(const DocumentPreviewRequested());
+    final bloc = getIt<ReqSignAssignFieldsBloc>()..add(const DocumentPreviewRequested());
     final color = appColorScheme(context);
     final width = appWidth(context);
 
@@ -114,28 +111,26 @@ class _ReqSignAssignFieldsViewState extends State<ReqSignAssignFieldsView> {
               builder: (context, candidateData, rejectedData) {
                 return Stack(
                   children: [
-                    BlocBuilder<ReqSignAssignFieldsBloc,
-                        ReqSignAssignFieldsState>(
+                    BlocBuilder<ReqSignAssignFieldsBloc, ReqSignAssignFieldsState>(
                       bloc: bloc,
                       builder: (context, state) {
                         if (state is DocumentPreviewLoading) {
-                          return const Center(
-                              child: CircularProgressIndicator());
+                          return const Center(child: CircularProgressIndicator());
                         } else if (state is DocumentPreviewLoaded) {
                           return Image.memory(state.imageBytes);
                         } else if (state is DocumentPreviewError) {
                           return CustomText(state.msg);
                         } else if (state is AssignFieldSelectedDoc) {
-                          return Image.memory(
-                              selectedPdfFileList[state.index].bytes);
+                          // return Image.memory(
+                          //     selectedPdfFileList[state.index].bytes);
                         }
                         return const CustomText("No Preview Found");
                       },
                     ),
                     if (dropItems != null)
                       Positioned.fromRect(
-                        rect: Rect.fromLTWH(offset.dx,
-                            offset.dy - appHeight(context) * 0.15, 100, 50),
+                        rect: Rect.fromLTWH(
+                            offset.dx, offset.dy - appHeight(context) * 0.15, 100, 50),
                         child: SizedBox(
                           width: appWidth(context) * 0.25,
                           height: 45,
@@ -184,8 +179,7 @@ class _ReqSignAssignFieldsViewState extends State<ReqSignAssignFieldsView> {
                   childWhenDragging: Card(
                     elevation: 0,
                     shape: RoundedRectangleBorder(
-                      borderRadius:
-                          BorderRadius.circular(AppStyle.buttonBorderRadius),
+                      borderRadius: BorderRadius.circular(AppStyle.buttonBorderRadius),
                     ),
                     color: color.outlineVariant.withOpacity(0.2),
                     child: Row(
@@ -196,8 +190,7 @@ class _ReqSignAssignFieldsViewState extends State<ReqSignAssignFieldsView> {
                           child: Card(
                             elevation: 0,
                             margin: const EdgeInsets.symmetric(horizontal: 5),
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(6)),
+                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(6)),
                             color: color.outlineVariant,
                             child: Center(
                               child: SvgPicture.asset(placeHolder.iconPath),
@@ -236,8 +229,7 @@ class _ReqSignAssignFieldsViewState extends State<ReqSignAssignFieldsView> {
                   child: Card(
                     elevation: 0,
                     shape: RoundedRectangleBorder(
-                      borderRadius:
-                          BorderRadius.circular(AppStyle.buttonBorderRadius),
+                      borderRadius: BorderRadius.circular(AppStyle.buttonBorderRadius),
                     ),
                     color: placeHolder.color.withOpacity(0.2),
                     child: Row(
@@ -247,8 +239,7 @@ class _ReqSignAssignFieldsViewState extends State<ReqSignAssignFieldsView> {
                           width: width * .15,
                           child: Card(
                             elevation: 0,
-                            margin: const EdgeInsets.symmetric(
-                                horizontal: 5, vertical: 2),
+                            margin: const EdgeInsets.symmetric(horizontal: 5, vertical: 2),
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(6),
                             ),

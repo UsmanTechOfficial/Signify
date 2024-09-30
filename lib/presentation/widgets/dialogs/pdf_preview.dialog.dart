@@ -3,7 +3,6 @@ import 'dart:typed_data';
 import 'package:dyno_sign/infrastructure/navigation/app_routes/navigation.dart';
 import 'package:file_selector/file_selector.dart';
 import 'package:flutter/material.dart';
-import 'package:syncfusion_flutter_pdf/pdf.dart';
 import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
 
 import '../../../domain/consts/consts.dart';
@@ -60,7 +59,7 @@ class DocumentPreviewWidget extends StatefulWidget {
 
 class _DocumentPreviewWidgetState extends State<DocumentPreviewWidget> {
   Uint8List? _newDocumentBytes;
-  String _pdfName = '';
+  final String _pdfName = '';
 
   @override
   void initState() {
@@ -78,35 +77,35 @@ class _DocumentPreviewWidgetState extends State<DocumentPreviewWidget> {
     setState(() {});
   }
 
-  Future<void> _extractFirstPage() async {
-    try {
-      _pdfName = widget.pdfFile.name;
-      final pdfBytes = await widget.pdfFile.readAsBytes();
-
-      final PdfDocument document = PdfDocument(inputBytes: pdfBytes);
-
-      // Extract the first page of the document
-      final PdfDocument newDocument = PdfDocument();
-      newDocument.pages.add().graphics.drawPdfTemplate(
-            document.pages[0].createTemplate(),
-            const Offset(0, 0),
-          );
-
-      // Save the extracted first page as a new document
-      final List<int> newDocBytes = newDocument.saveSync();
-      newDocument.dispose();
-
-      // Convert List<int> to Uint8List for preview
-      final Uint8List newDocUint8List = Uint8List.fromList(newDocBytes);
-
-      // Store the new document bytes for preview
-      setState(() {
-        _newDocumentBytes = newDocUint8List;
-      });
-    } catch (e) {
-      print('Error extracting first page: $e');
-    }
-  }
+  // Future<void> _extractFirstPage() async {
+  //   try {
+  //     _pdfName = widget.pdfFile.name;
+  //     final pdfBytes = await widget.pdfFile.readAsBytes();
+  //
+  //     final PdfDocument document = PdfDocument(inputBytes: pdfBytes);
+  //
+  //     // Extract the first page of the document
+  //     final PdfDocument newDocument = PdfDocument();
+  //     newDocument.pages.add().graphics.drawPdfTemplate(
+  //           document.pages[0].createTemplate(),
+  //           const Offset(0, 0),
+  //         );
+  //
+  //     // Save the extracted first page as a new document
+  //     final List<int> newDocBytes = newDocument.saveSync();
+  //     newDocument.dispose();
+  //
+  //     // Convert List<int> to Uint8List for preview
+  //     final Uint8List newDocUint8List = Uint8List.fromList(newDocBytes);
+  //
+  //     // Store the new document bytes for preview
+  //     setState(() {
+  //       _newDocumentBytes = newDocUint8List;
+  //     });
+  //   } catch (e) {
+  //     print('Error extracting first page: $e');
+  //   }
+  // }
 
   @override
   Widget build(BuildContext context) {

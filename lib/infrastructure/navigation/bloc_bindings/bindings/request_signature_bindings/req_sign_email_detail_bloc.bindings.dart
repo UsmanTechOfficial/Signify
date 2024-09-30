@@ -8,6 +8,6 @@ class ReqSignEmailDetailBlocBindings implements Bindings {
   @override
   void dependencies() {
     getIt.registerFactory<ReqSignEmailDetailBloc>(
-        () => ReqSignEmailDetailBloc(getIt<ReqSignDocDataRepository>()));
+        () => ReqSignEmailDetailBloc(getIt<ReqSignDocumentRepository>()));
   }
 }

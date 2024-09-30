@@ -33,7 +33,9 @@ class AddTemplateSelectedDocBloc
         }
 
         emit(FileSelectedState(updatedList)); // Emit updated list through state
-      } catch (e) {}
+      } catch (e) {
+        print(e);
+      }
     }
   }
 

@@ -1,4 +1,3 @@
-import 'package:dyno_sign/presentation/pop_up/add_templates/add_template_selected_doc/bloc/add_template_selected_doc_bloc.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../domain/consts/consts.dart';
@@ -9,7 +8,6 @@ class AddTemplatesOverviewView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final cubit = getIt<AddTemplateSelectedDocBloc>();
     final color = appColorScheme(context);
     // final height = appHeight(context);
     final width = appWidth(context);

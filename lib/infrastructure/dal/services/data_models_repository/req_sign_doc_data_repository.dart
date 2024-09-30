@@ -1,29 +1,57 @@
-import '../../models/app_models/document_user_model.dart';
-import '../../models/request_signature_models/req_sign_doc_model.dart';
-import '../../models/selected_file.model.dart';
+import '../../models/api_models/document_model.dart';
+import '../../models/api_models/document_user_model.dart';
+import '../../models/api_models/recipinet_model.dart';
 
-class ReqSignDocDataRepository {
-  ReqSignDocModel _reqSignDocModel = ReqSignDocModel.empty();
+class ReqSignDocumentRepository {
+  DocumentModel _documentModel = DocumentModel(
+    title: '',
+    message: '',
+    userId: '',
+    fieldsData: {},
+    file: '',
+    documentUsers: [],
+    recipients: [],
+  );
 
-  ReqSignDocModel get reqSignDocModel => _reqSignDocModel;
+  DocumentModel get documentModel => _documentModel;
 
-  void updateAgreementDetail(AgreementDetailModel agreementDetail) {
-    _reqSignDocModel = _reqSignDocModel.copyWith(agreementDetail: agreementDetail);
+  // Update the title of the document
+  void updateTitle(String title) {
+    _documentModel = _documentModel.copyWith(title: title);
   }
 
-  void updateRecipientDetail(List<DocumentUserModel> recipientDetail) {
-    _reqSignDocModel = _reqSignDocModel.copyWith(recipientDetail: recipientDetail);
+  // Update the message associated with the document
+  void updateMessage(String message) {
+    _documentModel = _documentModel.copyWith(message: message);
   }
 
-  void updateSelectedFile(List<SelectedFileModel> selectedFile) {
-    _reqSignDocModel = _reqSignDocModel.copyWith(selectedFile: selectedFile);
+  // Update the userId associated with the document
+  void updateUserId(String userId) {
+    _documentModel = _documentModel.copyWith(userId: userId);
   }
 
-  void updateEmailDetail(List<EmailDetailModel> emailDetail) {
-    _reqSignDocModel = _reqSignDocModel.copyWith(emailDetail: emailDetail);
+  // Update fieldsData (dynamic fields in the document)
+  void updateFieldsData(Map<String, dynamic> fieldsData) {
+    _documentModel = _documentModel.copyWith(fieldsData: fieldsData);
   }
 
-  ReqSignDocModel getFinalReqSignDocModel() {
-    return _reqSignDocModel;
+  // Update the file linked with the document
+  void updateFile(String file) {
+    _documentModel = _documentModel.copyWith(file: file);
+  }
+
+  // Update the list of document users
+  void updateDocumentUsers(List<DocumentUserModel> documentUsers) {
+    _documentModel = _documentModel.copyWith(documentUsers: documentUsers);
+  }
+
+  // Update the list of recipients for the document
+  void updateRecipients(List<RecipientModel> recipients) {
+    _documentModel = _documentModel.copyWith(recipients: recipients);
+  }
+
+  // Retrieve the final DocumentModel
+  DocumentModel getFinalDocumentModel() {
+    return _documentModel;
   }
 }

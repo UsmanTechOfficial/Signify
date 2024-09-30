@@ -1,4 +1,3 @@
-import 'package:dyno_sign/presentation/pop_up/request_signature/request_sign_selected_document/bloc/req_sign_selected_doc_bloc.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../domain/consts/consts.dart';
@@ -9,7 +8,6 @@ class ReqSignAgreementOverviewView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final cubit = getIt<ReqSignSelectedDocBloc>();
     final color = appColorScheme(context);
     // final height = appHeight(context);
     final width = appWidth(context);

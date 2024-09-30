@@ -19,6 +19,7 @@ dependencies:
   flutter_svg: any
   file_selector: any
   path_provider: any
+  permission_handler: ^11.3.1
   image_picker: any
   intl: any
   syncfusion_flutter_signaturepad: ^27.1.50

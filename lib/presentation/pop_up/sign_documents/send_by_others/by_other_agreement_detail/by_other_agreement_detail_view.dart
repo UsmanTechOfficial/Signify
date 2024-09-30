@@ -2,14 +2,13 @@ import 'package:flutter/material.dart';
 
 import '../../../../../domain/consts/consts.dart';
 import '../../../../widgets/widgets.dart';
-import 'bloc/by_other_agreement_detail_bloc.dart';
 
 class ByOtherAgreementDetailView extends StatelessWidget {
   const ByOtherAgreementDetailView({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final bloc = getIt<ByOtherAgreementDetailBloc>();
+    // final bloc = getIt<ByOtherAgreementDetailBloc>();
     final color = appColorScheme(context);
     // final height = appHeight(context);
     final width = appWidth(context);

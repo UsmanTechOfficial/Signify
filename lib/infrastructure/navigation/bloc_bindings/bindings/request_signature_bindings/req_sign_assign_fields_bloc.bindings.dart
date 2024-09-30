@@ -7,6 +7,6 @@ class ReqSignAssignFieldsBlocBindings implements Bindings {
   @override
   void dependencies() {
     getIt.registerFactory<ReqSignAssignFieldsBloc>(
-        () => ReqSignAssignFieldsBloc(getIt<ReqSignDocDataRepository>()));
+        () => ReqSignAssignFieldsBloc(getIt<ReqSignDocumentRepository>()));
   }
 }

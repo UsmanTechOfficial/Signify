@@ -1,6 +1,5 @@
 import 'dart:typed_data';
 
-import 'package:dyno_sign/presentation/pop_up/request_signature/request_sign_selected_document/bloc/req_sign_selected_doc_bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -10,7 +9,7 @@ part 'req_sign_assign_fields_event.dart';
 part 'req_sign_assign_fields_state.dart';
 
 class ReqSignAssignFieldsBloc extends Bloc<ReqSignAssignFieldsEvent, ReqSignAssignFieldsState> {
-  final ReqSignDocDataRepository dataRepository;
+  final ReqSignDocumentRepository dataRepository;
 
   ReqSignAssignFieldsBloc(this.dataRepository) : super(ReqSignAssignFieldsInitial()) {
     on<DocumentPreviewRequested>(_onDocumentPreviewRequested);
@@ -21,14 +20,14 @@ class ReqSignAssignFieldsBloc extends Bloc<ReqSignAssignFieldsEvent, ReqSignAssi
       DocumentPreviewRequested event, Emitter<ReqSignAssignFieldsState> emit) async {
     emit(DocumentPreviewLoading());
     try {
-      for (var file in selectedPdfFileList) {
-        // final firstPage = await PdfSinglePage.get(file.xFile!);
-        // final imageBytes = firstPage?.bytes;
-        //
-        // if (imageBytes != null) {
-        //   emit(DocumentPreviewLoaded(imageBytes));
-        // }
-      }
+      // for (var file in selectedPdfFileList) {
+      //   final firstPage = await PdfSinglePage.get(file.xFile!);
+      //   final imageBytes = firstPage?.bytes;
+      //
+      //   if (imageBytes != null) {
+      //     emit(DocumentPreviewLoaded(imageBytes));
+      //   }
+      // }
     } catch (e) {
       emit(DocumentPreviewError(e.toString()));
     }

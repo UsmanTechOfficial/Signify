@@ -14,6 +14,6 @@ class ServiceLocator extends Bindings {
     getIt.registerLazySingleton(() => ImagePicker());
 
     /// Request Sign Doc Model Injection
-    getIt.registerLazySingleton<ReqSignDocDataRepository>(() => ReqSignDocDataRepository());
+    getIt.registerLazySingleton<ReqSignDocumentRepository>(() => ReqSignDocumentRepository());
   }
 }

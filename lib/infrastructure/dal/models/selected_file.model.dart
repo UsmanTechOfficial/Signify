@@ -1,8 +1,6 @@
 import 'dart:typed_data';
 
 import 'package:equatable/equatable.dart';
-import 'package:file_selector/file_selector.dart';
-import 'package:image_picker/image_picker.dart';
 
 class SelectedFileModel extends Equatable {
   final String name;
@@ -27,7 +25,6 @@ class SelectedFileModel extends Equatable {
     String? name,
     DateTime? date,
     Uint8List? bytes,
-    XFile? xFile,
   }) {
     return SelectedFileModel(
       name: name ?? this.name,

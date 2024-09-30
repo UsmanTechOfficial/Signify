@@ -14,15 +14,17 @@ part 'req_sign_agreement_detail_state.dart';
 
 class ReqSignAgreementDetailBloc
     extends Bloc<ReqSignAgreementDetailEvent, ReqSignAgreementDetailState> {
-  final ReqSignDocDataRepository dataRepository;
+  final ReqSignDocumentRepository dataRepository;
 
-  final TextEditingController agreementNameController = TextEditingController();
-  final TextEditingController descriptionController = TextEditingController();
-  final FocusNode agreementNameFocus = FocusNode();
-  final FocusNode descriptionFocus = FocusNode();
+  final TextEditingController agreementTitleController = TextEditingController();
+  final TextEditingController messageController = TextEditingController();
+  final FocusNode titleFocus = FocusNode();
+  final FocusNode messageFocus = FocusNode();
 
   ReqSignAgreementDetailBloc(this.dataRepository) : super(ReqSignAgreementDetailInitial()) {
     on<RecipientRoleChangedEvent>(_changeRecipientRole);
+
+    // go to next screen
     on<NextNavigateEvent>(_nextNavigation);
   }
 
@@ -34,15 +36,18 @@ class ReqSignAgreementDetailBloc
   @override
   Future<void> close() {
     // Dispose of controllers when Bloc is closed
-    agreementNameController.dispose();
-    descriptionController.dispose();
-    agreementNameFocus.dispose();
-    descriptionFocus.dispose();
+    agreementTitleController.dispose();
+    messageController.dispose();
+    titleFocus.dispose();
+    messageFocus.dispose();
     return super.close();
   }
 
   FutureOr<void> _nextNavigation(
       NextNavigateEvent event, Emitter<ReqSignAgreementDetailState> emit) {
+    dataRepository.updateTitle(agreementTitleController.text);
+    dataRepository.updateMessage(messageController.text);
+
     Go.toNamed(Routes.REQ_SIGN_RECIPIENT_DETAIL, arguments: event.currentRole);
   }
 }

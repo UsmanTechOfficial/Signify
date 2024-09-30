@@ -16,11 +16,10 @@ class AgreementsDoa extends AgreementsRepository {
     try {
       final jsonString = await rootBundle.loadString("assets/json/docs.json");
       List<dynamic> mapData = jsonDecode(jsonString);
+      _apiHelper;
 
-      final response = Response(
-          data: mapData,
-          statusCode: 200,
-          requestOptions: RequestOptions(path: ''));
+      final response =
+          Response(data: mapData, statusCode: 200, requestOptions: RequestOptions(path: ''));
 
       final List<dynamic>? data = response.data;
 

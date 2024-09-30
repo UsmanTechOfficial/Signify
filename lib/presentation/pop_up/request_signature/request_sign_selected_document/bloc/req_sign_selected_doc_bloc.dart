@@ -1,21 +1,19 @@
 import 'dart:async';
 
 import 'package:dyno_sign/domain/utils/utils.dart';
-import 'package:dyno_sign/infrastructure/navigation/app_routes/navigation.dart';
-import 'package:dyno_sign/infrastructure/navigation/app_routes/routes.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../../infrastructure/dal/models/selected_file.model.dart';
 import '../../../../../infrastructure/dal/services/data_models_repository/req_sign_doc_data_repository.dart';
+import '../../../../../infrastructure/navigation/app_routes/navigation.dart';
+import '../../../../../infrastructure/navigation/app_routes/routes.dart';
 
 part 'req_sign_selected_doc_event.dart';
 part 'req_sign_selected_doc_state.dart';
 
-List<SelectedFileModel> selectedPdfFileList = [];
-
 class ReqSignSelectedDocBloc extends Bloc<ReqSignSelectedDocEvent, ReqSignSelectedDocState> {
-  final ReqSignDocDataRepository dataRepository;
+  final ReqSignDocumentRepository dataRepository;
 
   ReqSignSelectedDocBloc(this.dataRepository) : super(const ReqSignSelectedDocInitial()) {
     on<InitialEvent>(_initializeFiles);
@@ -66,8 +64,10 @@ class ReqSignSelectedDocBloc extends Bloc<ReqSignSelectedDocEvent, ReqSignSelect
         (state as FileSelectedState).selectedPdfFiles,
       );
 
-      /// update dataRepository by add Selected Files
-      dataRepository.updateSelectedFile(updatedFiles);
+      /// update dataRepository by add Selected Files in document model as string json json string form
+      final modelString = SelectedFilesModelHelper.toJsonString(updatedFiles);
+
+      dataRepository.updateFile(modelString.toString());
 
       Go.toNamed(Routes.REQ_SIGN_AGREEMENT_DETAIL);
     }

@@ -8,7 +8,7 @@ part 'req_sign_agreement_overview_state.dart';
 
 class ReqSignAgreementOverviewBloc
     extends Bloc<ReqSignAgreementOverviewEvent, ReqSignAgreementOverviewState> {
-  final ReqSignDocDataRepository dataRepository;
+  final ReqSignDocumentRepository dataRepository;
 
   ReqSignAgreementOverviewBloc(this.dataRepository) : super(ReqSignAgreementOverviewInitial()) {
     on<ReqSignAgreementOverviewEvent>((event, emit) {

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class ReqSignRecipientReceiveCopyView extends StatelessWidget {
-  const ReqSignRecipientReceiveCopyView({super.key});
+class ReqSignUserReceiveCopyView extends StatelessWidget {
+  const ReqSignUserReceiveCopyView({super.key});
 
   @override
   Widget build(BuildContext context) {

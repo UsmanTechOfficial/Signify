@@ -21,6 +21,7 @@ class CustomTextFormField extends StatelessWidget {
   final bool filled;
   final Color? fillColor;
   final TextAlign? textAlign;
+  final Iterable<String>? autofillHints;
   final TextInputAction? textInputAction;
   final IconData? prefix;
   final int? maxLines;
@@ -58,6 +59,7 @@ class CustomTextFormField extends StatelessWidget {
     this.onFieldSubmitted,
     this.height,
     this.width,
+    this.autofillHints,
   });
 
   @override
@@ -96,6 +98,7 @@ class CustomTextFormField extends StatelessWidget {
         focusNode: focusNode,
         onChanged: onChanged,
         textInputAction: textInputAction,
+        autofillHints: autofillHints,
         enabled: enabled,
         readOnly: readOnly,
         onTap: onTap,
