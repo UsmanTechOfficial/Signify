@@ -15,4 +15,5 @@ class Routes {
   static const String REQ_SIGN_SELECTED_DOC = '/req_sign_selected_doc';
   static const String REQ_SIGN_AGREEMENT_DETAIL = '/req_sign_agreement_detail';
   static const REQ_SIGN_RECIPIENT_DETAIL = '/req_sign_recipient_detail';
+  static const REQ_SIGN_ASSIGN_FIELDS = '/req_sign_assign_fields';
 }

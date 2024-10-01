@@ -55,7 +55,7 @@ class RecipientCard extends StatelessWidget {
             // Avatar with first letter of the name
             CircleAvatar(
               radius: 20,
-              backgroundColor: color.primary,
+              backgroundColor: generateColorFromIndex(index),
               child: Text(
                 name[0].toUpperCase(),
                 style: TextStyle(
@@ -121,4 +121,13 @@ class RecipientCard extends StatelessWidget {
       ),
     );
   }
+}
+
+Color generateColorFromIndex(int index) {
+  final goldenAngle = 137.508;
+  final hue = (index * goldenAngle) % 360;
+
+  final saturation = 0.6 + ((index * 0.05) % 0.3);
+  final lightness = 0.45 + ((index * 0.03) % 0.3);
+  return HSLColor.fromAHSL(1, hue.toDouble(), saturation, lightness).toColor();
 }

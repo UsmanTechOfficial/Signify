@@ -1,7 +1,6 @@
 import 'package:dyno_sign/domain/consts/app_consts/signed_user_status.dart';
 import 'package:dyno_sign/infrastructure/dal/models/api_models/document_user_model.dart';
 import 'package:dyno_sign/infrastructure/navigation/app_routes/navigation.dart';
-import 'package:dyno_sign/presentation/pop_up/request_signature/request_sign_assign_fields/req_sign_assign_fields_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -35,7 +34,7 @@ class ReqSignAddUserDetailView extends StatelessWidget {
                 alignment: Alignment.centerRight,
                 child: CustomOutlinedTextButton(
                   onPressed: () {
-                    Go.to(const ReqSignAssignFieldsView());
+                    bloc.add(NextNavigateEvent());
                   },
                   text: 'Next',
                   borderRadius: AppStyle.outlinedBtnRadius,
@@ -55,7 +54,7 @@ class ReqSignAddUserDetailView extends StatelessWidget {
                   scale: 0.8,
                   child: BlocBuilder<ReqSignUserDetailBloc, ReqSignUserDetailState>(
                     builder: (context, state) {
-                      if (state is UserAddedState) {
+                      if (state is UserChangedState) {
                         return Switch.adaptive(
                           value: state.order,
                           onChanged: (value) {
@@ -74,19 +73,20 @@ class ReqSignAddUserDetailView extends StatelessWidget {
                   ),
                 ),
               ),
-              const SizedBox(height: 20),
-
               // Recipients List
-              const CustomText(
+
+              CustomText(
                 "Recipients List",
                 fontSize: AppFontSize.titleMSmallFont,
                 fontWeight: FontWeight.w600,
               ),
+
               const SizedBox(height: 10),
 
               BlocBuilder<ReqSignUserDetailBloc, ReqSignUserDetailState>(
+                bloc: bloc,
                 builder: (context, state) {
-                  if (state is UserAddedState) {
+                  if (state is UserChangedState) {
                     return ListView.builder(
                       physics: const NeverScrollableScrollPhysics(),
                       shrinkWrap: true,
@@ -99,7 +99,11 @@ class ReqSignAddUserDetailView extends StatelessWidget {
                           status: state.signedUser[index].status,
                           index: index + 1,
                           isMe: false,
-                          onSelected: (value) {},
+                          onSelected: (value) {
+                            if (value == 0) {
+                              bloc.add(RemoveUserEvent(index));
+                            }
+                          },
                         );
                       },
                     );
@@ -217,44 +221,48 @@ _showAdaptiveDialog(BuildContext context, ReqSignUserDetailBloc bloc) {
                       return Validation.emailValidation(emailController);
                     },
                   ),
-                  const SizedBox(height: 30),
-                  const CustomText(
-                    'Status',
-                    fontSize: AppFontSize.titleXSmallFont,
-                    fontWeight: FontWeight.w500,
-                  ),
-                  const SizedBox(height: 5),
-                  DropdownButtonFormField<SignedUserStatus>(
-                    value: selectedStatus,
-                    focusNode: dropDownFocus,
-                    hint: CustomText('Select user status'),
-                    items: SignedUserStatus.values.map((SignedUserStatus status) {
-                      return DropdownMenuItem<SignedUserStatus>(
-                        value: status,
-                        child: Text(status.status),
-                      );
-                    }).toList(),
-                    validator: (value) {
-                      return Validation.dropDownValidation(value?.status ?? '');
-                    },
-                    onSaved: (newValue) {
-                      selectedStatus = newValue!;
-                      FocusScope.of(context).unfocus();
-                    },
-                    onChanged: (SignedUserStatus? newValue) {
-                      selectedStatus = newValue ?? selectedStatus;
-                    },
-                  ),
+                  // const SizedBox(height: 30),
+                  // const CustomText(
+                  //   'Status',
+                  //   fontSize: AppFontSize.titleXSmallFont,
+                  //   fontWeight: FontWeight.w500,
+                  // ),
+                  // const SizedBox(height: 5),
+                  // DropdownButtonFormField<SignedUserStatus>(
+                  //   value: selectedStatus,
+                  //   focusNode: dropDownFocus,
+                  //   hint: CustomText('Select user status'),
+                  //   items: SignedUserStatus.values.map((SignedUserStatus status) {
+                  //     return DropdownMenuItem<SignedUserStatus>(
+                  //       value: status,
+                  //       child: Text(status.status),
+                  //     );
+                  //   }).toList(),
+                  //   validator: (value) {
+                  //     return Validation.dropDownValidation(value?.status ?? '');
+                  //   },
+                  //   onSaved: (newValue) {
+                  //     selectedStatus = newValue!;
+                  //     FocusScope.of(context).unfocus();
+                  //   },
+                  //   onChanged: (SignedUserStatus? newValue) {
+                  //     selectedStatus = newValue ?? selectedStatus;
+                  //   },
+                  // ),
                   const SizedBox(height: 40),
                   CustomElevatedTextButton(
                     width: double.maxFinite,
                     text: 'Save',
                     onPressed: () {
                       if (formKey.currentState!.validate()) {
+                        final currentState = bloc.state is UserChangedState
+                            ? bloc.state as UserChangedState
+                            : const UserChangedState([], false);
+
                         final model = DocumentUserModel(
                             email: emailController.text,
                             firstName: firstNameController.text,
-                            signingOrder: 1,
+                            signingOrder: currentState.signedUser.length + 1,
                             status: selectedStatus.status);
 
                         bloc.add(AddNewSingedUserEvent(model));
@@ -270,15 +278,4 @@ _showAdaptiveDialog(BuildContext context, ReqSignUserDetailBloc bloc) {
       );
     },
   );
-}
-
-Color generateColor(int index) {
-  // Base color (e.g., blue) with varying transparency (alpha)
-  int baseColor = 0xFF0000FF; // Fully opaque blue
-
-  // Modifying the alpha value based on index
-  int alpha = (255 - (index * 25)) % 256; // This adjusts the alpha value based on the index
-  if (alpha < 0) alpha = 0; // Ensure alpha doesn't go below 0
-
-  return Color((alpha << 24) | (baseColor & 0x00FFFFFF)); // Apply the modified alpha
 }

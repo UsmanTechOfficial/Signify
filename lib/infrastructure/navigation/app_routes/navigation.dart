@@ -3,6 +3,8 @@ import 'package:dyno_sign/presentation/Initials_manager/bloc/initials_manager_bl
 import 'package:dyno_sign/presentation/Initials_manager/initials_manager_view.dart';
 import 'package:dyno_sign/presentation/pop_up/request_signature/request_sign_agreement_detail/bloc/req_sign_agreement_detail_bloc.dart';
 import 'package:dyno_sign/presentation/pop_up/request_signature/request_sign_agreement_detail/req_sign_agreement_detail_view.dart';
+import 'package:dyno_sign/presentation/pop_up/request_signature/request_sign_assign_fields/bloc/req_sign_assign_fields_bloc.dart';
+import 'package:dyno_sign/presentation/pop_up/request_signature/request_sign_assign_fields/req_sign_assign_fields_view.dart';
 import 'package:dyno_sign/presentation/pop_up/request_signature/request_sign_user_detail/bloc/req_sign_user_detail_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -12,7 +14,6 @@ import '../../../presentation/blocs.dart';
 import '../../../presentation/pop_up/request_signature/request_sign_selected_document/bloc/req_sign_selected_doc_bloc.dart';
 import '../../../presentation/pop_up/request_signature/request_sign_selected_document/req_sign_selected_doc_view.dart';
 import '../../../presentation/pop_up/request_signature/request_sign_user_detail/role/req_sign_add_user_detail_view.dart';
-import '../../../presentation/pop_up/request_signature/request_sign_user_detail/role/req_sign_user_include_me_view.dart';
 import '../../../presentation/pop_up/request_signature/request_sign_user_detail/role/req_sign_user_only_me_view.dart';
 import '../../../presentation/pop_up/request_signature/request_sign_user_detail/role/req_sign_user_receive_copy_view.dart';
 import '../../../presentation/screens.dart';
@@ -226,6 +227,16 @@ class AppPages {
           settings: settings,
         );
 
+      case Routes.REQ_SIGN_ASSIGN_FIELDS:
+        return MaterialPageRoute(
+          builder: (context) {
+            return BlocProvider(
+              create: (context) => getIt<ReqSignAssignFieldsBloc>(),
+              child: ReqSignAssignFieldsView(),
+            );
+          },
+          settings: settings,
+        );
       default:
         return null;
     }
@@ -236,8 +247,8 @@ Widget _getRecipientRoleView(RecipientUserRole role) {
   switch (role) {
     case RecipientUserRole.addRecipient:
       return const ReqSignAddUserDetailView();
-    case RecipientUserRole.includeMe:
-      return const ReqSignUserIncludeMeView();
+    // case RecipientUserRole.includeMe:
+    //   return const ReqSignUserIncludeMeView();
     case RecipientUserRole.onlyMe:
       return const ReqSignUserOnlyMeView();
     case RecipientUserRole.receiveCopy:

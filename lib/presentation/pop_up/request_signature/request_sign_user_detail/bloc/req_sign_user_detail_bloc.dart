@@ -1,6 +1,9 @@
 import 'dart:async';
 
+import 'package:dyno_sign/domain/utils/utils.dart';
 import 'package:dyno_sign/infrastructure/dal/models/api_models/document_user_model.dart';
+import 'package:dyno_sign/infrastructure/navigation/app_routes/navigation.dart';
+import 'package:dyno_sign/infrastructure/navigation/app_routes/routes.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -13,26 +16,52 @@ class ReqSignUserDetailBloc extends Bloc<ReqSignUserDetailEvent, ReqSignUserDeta
   final ReqSignDocumentRepository dataRepository;
 
   ReqSignUserDetailBloc(this.dataRepository) : super(const ReqSignRecipientDetailInitial()) {
-    on<AddNewSingedUserEvent>(_addNewRecipient);
+    on<AddNewSingedUserEvent>(_addNewUser);
     on<UserOrderEvent>(_setOrder);
+
+    on<RemoveUserEvent>(_removeUser);
+
+    on<NextNavigateEvent>(_nextNavigation);
   }
 
-  FutureOr<void> _addNewRecipient(
-      AddNewSingedUserEvent event, Emitter<ReqSignUserDetailState> emit) {
-    final currentState =
-        state is UserAddedState ? state as UserAddedState : const UserAddedState([], false);
+  FutureOr<void> _addNewUser(
+      AddNewSingedUserEvent event, Emitter<ReqSignUserDetailState> emit) async {
+    try {
+      final currentState =
+          state is UserChangedState ? state as UserChangedState : const UserChangedState([], false);
 
-    final user = List<DocumentUserModel>.from(currentState.signedUser)..add(event.signedUser);
-
-    emit(currentState.copyWith(signedUser: user));
+      final user = List<DocumentUserModel>.from(currentState.signedUser)..add(event.signedUser);
+      emit(currentState.copyWith(signedUser: user));
+    } catch (e) {
+      emit(UserErrorState('Failed to add user: $e'));
+    }
   }
 
   FutureOr<void> _setOrder(UserOrderEvent event, Emitter<ReqSignUserDetailState> emit) {
     final currentState =
-        state is UserAddedState ? state as UserAddedState : const UserAddedState([], false);
-
-    final s = currentState.copyWith(order: event.setOrder);
+        state is UserChangedState ? state as UserChangedState : const UserChangedState([], false);
 
     emit(currentState.copyWith(order: event.setOrder));
+  }
+
+  FutureOr<void> _removeUser(RemoveUserEvent event, Emitter<ReqSignUserDetailState> emit) {
+    final currentState =
+        state is UserChangedState ? state as UserChangedState : const UserChangedState([], false);
+
+    final user = List<DocumentUserModel>.from(currentState.signedUser)..removeAt(event.index);
+    emit(currentState.copyWith(signedUser: user));
+  }
+
+  FutureOr<void> _nextNavigation(NextNavigateEvent event, Emitter<ReqSignUserDetailState> emit) {
+    final currentState =
+        state is UserChangedState ? state as UserChangedState : const UserChangedState([], false);
+
+    if (currentState.signedUser.isNotEmpty) {
+      dataRepository.updateDocumentUsers(currentState.signedUser);
+
+      Go.toNamed(Routes.REQ_SIGN_ASSIGN_FIELDS);
+    } else {
+      CSnackBar.show('No user added yet');
+    }
   }
 }

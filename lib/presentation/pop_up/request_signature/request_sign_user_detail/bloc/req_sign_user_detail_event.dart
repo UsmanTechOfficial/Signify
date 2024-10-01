@@ -24,3 +24,16 @@ class UserOrderEvent extends ReqSignUserDetailEvent {
   @override
   List<Object> get props => [setOrder];
 }
+
+class RemoveUserEvent extends ReqSignUserDetailEvent {
+  final int index;
+
+  const RemoveUserEvent(this.index);
+
+  @override
+  List<Object> get props => [index];
+}
+
+class NextNavigateEvent extends ReqSignUserDetailEvent {
+  const NextNavigateEvent();
+}
