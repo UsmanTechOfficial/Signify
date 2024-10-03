@@ -1,9 +1,7 @@
 part of '../consts.dart';
 
 enum RecipientUserRole {
-  addRecipient('Add signer'),
-  // includeMe('Include me as a signer'),
-  receiveCopy('Receives a copy'),
+  addRecipient('Add signer & Viewer'),
   onlyMe('I am the only signer');
 
   final String role;

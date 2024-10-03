@@ -1,7 +1,7 @@
 import 'package:dyno_sign/domain/consts/consts.dart';
 import 'package:flutter/material.dart';
 
-class RecipientCard extends StatelessWidget {
+class SignerCard extends StatelessWidget {
   final String name;
   final String email;
   final String status;
@@ -10,7 +10,7 @@ class RecipientCard extends StatelessWidget {
   final bool order;
   final Function(int value) onSelected;
 
-  const RecipientCard({
+  const SignerCard({
     super.key,
     required this.name,
     required this.email,
@@ -92,6 +92,94 @@ class RecipientCard extends StatelessWidget {
                   ),
                   const SizedBox(height: 4),
                   // Status text
+                  Text(
+                    status,
+                    style: const TextStyle(
+                      fontSize: AppFontSize.labelMediumFont,
+                      color: Colors.grey,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+
+            // Popup menu button for options
+            PopupMenuButton<int>(
+              icon: const Icon(Icons.more_vert_rounded),
+              onSelected: (value) {
+                onSelected(value);
+              },
+              itemBuilder: (BuildContext context) => [
+                const PopupMenuItem<int>(
+                  value: 0,
+                  child: Text('Delete'),
+                ),
+              ],
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class ViewerCard extends StatelessWidget {
+  final String email;
+  final String status;
+  final int index;
+  final Function(int value) onSelected;
+
+  const ViewerCard({
+    super.key,
+    required this.email,
+    required this.status,
+    required this.index,
+    required this.onSelected,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final color = appColorScheme(context);
+    return Card(
+      clipBehavior: Clip.hardEdge,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(AppStyle.tileBorderRadius),
+      ),
+      child: Padding(
+        padding: const EdgeInsets.all(12.0),
+        child: Row(
+          children: [
+            // Avatar with first letter of the name
+            CircleAvatar(
+              radius: 20,
+              backgroundColor: color.primary,
+              child: Text(
+                email[0].toUpperCase(),
+                style: TextStyle(
+                  color: color.surface,
+                  fontWeight: FontWeight.bold,
+                  fontSize: AppFontSize.titleMSmallFont,
+                ),
+              ),
+            ),
+            const SizedBox(width: 12),
+
+            // Name, email, and status
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  // Name and (Me) indicator if applicable
+                  Text(
+                    email,
+                    style: TextStyle(
+                      fontWeight: FontWeight.w500,
+                      fontSize: AppFontSize.titleMSmallFont,
+                      color: color.onSurface,
+                    ),
+                  ),
+                  const SizedBox(height: 4),
+                  // Email text
                   Text(
                     status,
                     style: const TextStyle(

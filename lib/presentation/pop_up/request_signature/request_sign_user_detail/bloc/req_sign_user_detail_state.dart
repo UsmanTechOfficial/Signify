@@ -11,24 +11,39 @@ final class ReqSignRecipientDetailInitial extends ReqSignUserDetailState {
   const ReqSignRecipientDetailInitial();
 }
 
-class UserChangedState extends ReqSignUserDetailState {
+class SignerChangedState extends ReqSignUserDetailState {
   final List<DocumentUserModel> signedUser;
   final bool order;
 
-  const UserChangedState(this.signedUser, this.order);
+  const SignerChangedState(this.signedUser, this.order);
 
   @override
   List<Object> get props => [signedUser, order];
 
-  UserChangedState copyWith({
+  SignerChangedState copyWith({
     List<DocumentUserModel>? signedUser,
     bool? order,
   }) {
-    return UserChangedState(
+    return SignerChangedState(
       signedUser ?? this.signedUser,
       order ?? this.order,
     );
   }
+}
+
+class ViewerChangedState extends ReqSignUserDetailState {
+  final List<RecipientModel> viewers;
+
+  const ViewerChangedState(this.viewers);
+
+  ViewerChangedState copyWith({List<RecipientModel>? viewers}) {
+    return ViewerChangedState(
+      viewers ?? this.viewers,
+    );
+  }
+
+  @override
+  List<Object> get props => [viewers];
 }
 
 class UserErrorState extends ReqSignUserDetailState {

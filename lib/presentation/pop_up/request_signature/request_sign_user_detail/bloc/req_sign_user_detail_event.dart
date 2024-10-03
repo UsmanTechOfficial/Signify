@@ -7,15 +7,6 @@ sealed class ReqSignUserDetailEvent extends Equatable {
   List<Object> get props => [];
 }
 
-class AddNewSingedUserEvent extends ReqSignUserDetailEvent {
-  final DocumentUserModel signedUser;
-
-  const AddNewSingedUserEvent(this.signedUser);
-
-  @override
-  List<Object> get props => [signedUser];
-}
-
 class UserOrderEvent extends ReqSignUserDetailEvent {
   final bool setOrder;
 
@@ -25,10 +16,37 @@ class UserOrderEvent extends ReqSignUserDetailEvent {
   List<Object> get props => [setOrder];
 }
 
-class RemoveUserEvent extends ReqSignUserDetailEvent {
+class AddNewSingerEvent extends ReqSignUserDetailEvent {
+  final DocumentUserModel signedUser;
+
+  const AddNewSingerEvent(this.signedUser);
+
+  @override
+  List<Object> get props => [signedUser];
+}
+
+class AddNewViewerEvent extends ReqSignUserDetailEvent {
+  final RecipientModel viewer;
+
+  const AddNewViewerEvent(this.viewer);
+
+  @override
+  List<Object> get props => [viewer];
+}
+
+class RemoveViewerEvent extends ReqSignUserDetailEvent {
   final int index;
 
-  const RemoveUserEvent(this.index);
+  const RemoveViewerEvent(this.index);
+
+  @override
+  List<Object> get props => [index];
+}
+
+class RemoveSignerEvent extends ReqSignUserDetailEvent {
+  final int index;
+
+  const RemoveSignerEvent(this.index);
 
   @override
   List<Object> get props => [index];

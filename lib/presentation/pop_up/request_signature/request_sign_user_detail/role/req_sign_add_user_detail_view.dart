@@ -1,5 +1,7 @@
 import 'package:dyno_sign/domain/consts/app_consts/signed_user_status.dart';
+import 'package:dyno_sign/domain/consts/app_consts/user_type.dart';
 import 'package:dyno_sign/infrastructure/dal/models/api_models/document_user_model.dart';
+import 'package:dyno_sign/infrastructure/dal/models/api_models/recipinet_model.dart';
 import 'package:dyno_sign/infrastructure/navigation/app_routes/navigation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -16,7 +18,7 @@ class ReqSignAddUserDetailView extends StatelessWidget {
   Widget build(BuildContext context) {
     final bloc = context.read<ReqSignUserDetailBloc>();
     final width = appWidth(context);
-    // final color = appColorScheme(context);
+    final color = appColorScheme(context);
 
     return Scaffold(
       appBar: AppBar(
@@ -34,7 +36,7 @@ class ReqSignAddUserDetailView extends StatelessWidget {
                 alignment: Alignment.centerRight,
                 child: CustomOutlinedTextButton(
                   onPressed: () {
-                    bloc.add(NextNavigateEvent());
+                    bloc.add(const NextNavigateEvent());
                   },
                   text: 'Next',
                   borderRadius: AppStyle.outlinedBtnRadius,
@@ -53,8 +55,10 @@ class ReqSignAddUserDetailView extends StatelessWidget {
                 trailing: Transform.scale(
                   scale: 0.8,
                   child: BlocBuilder<ReqSignUserDetailBloc, ReqSignUserDetailState>(
+                    bloc: bloc,
+                    buildWhen: (previous, current) => current is SignerChangedState,
                     builder: (context, state) {
-                      if (state is UserChangedState) {
+                      if (state is SignerChangedState) {
                         return Switch.adaptive(
                           value: state.order,
                           onChanged: (value) {
@@ -73,26 +77,27 @@ class ReqSignAddUserDetailView extends StatelessWidget {
                   ),
                 ),
               ),
-              // Recipients List
+              const SizedBox(height: 10),
 
+              // Separate BlocBuilder for Signers List
               CustomText(
                 "Recipients List",
                 fontSize: AppFontSize.titleMSmallFont,
                 fontWeight: FontWeight.w600,
               ),
-
               const SizedBox(height: 10),
 
               BlocBuilder<ReqSignUserDetailBloc, ReqSignUserDetailState>(
                 bloc: bloc,
+                buildWhen: (previous, current) => current is SignerChangedState,
                 builder: (context, state) {
-                  if (state is UserChangedState) {
+                  if (state is SignerChangedState) {
                     return ListView.builder(
                       physics: const NeverScrollableScrollPhysics(),
                       shrinkWrap: true,
                       itemCount: state.signedUser.length,
                       itemBuilder: (context, index) {
-                        return RecipientCard(
+                        return SignerCard(
                           order: state.order,
                           name: state.signedUser[index].firstName,
                           email: state.signedUser[index].email,
@@ -101,32 +106,80 @@ class ReqSignAddUserDetailView extends StatelessWidget {
                           isMe: false,
                           onSelected: (value) {
                             if (value == 0) {
-                              bloc.add(RemoveUserEvent(index));
+                              bloc.add(RemoveSignerEvent(index));
                             }
                           },
                         );
                       },
                     );
                   }
-                  return const CustomText(
-                    'No recipient added yet',
+                  return CustomText(
+                    'No signers included',
                     textAlign: TextAlign.center,
+                    color: color.outline,
                     fontSize: AppFontSize.labelMediumFont,
                   );
                 },
               ),
               const SizedBox(height: 20),
-              // Button to add another recipient
+
               CustomElevatedTextButton(
                 width: double.maxFinite,
-                text: "Add Recipient",
+                text: "Add Signer",
                 borderRadius: AppStyle.buttonBorderRadius,
                 onPressed: () {
-                  // bloc.add(const AddNewRecipientEvent(['Amir']));
-                  _showAdaptiveDialog(
-                    context,
-                    bloc,
+                  _showAdaptiveDialog(context, bloc, userType: UserType.signer);
+                },
+              ),
+              const SizedBox(height: 20),
+
+              // Separate BlocBuilder for Viewer List
+              CustomText(
+                "Viewer List",
+                fontSize: AppFontSize.titleMSmallFont,
+                fontWeight: FontWeight.w600,
+              ),
+              const SizedBox(height: 10),
+
+              BlocBuilder<ReqSignUserDetailBloc, ReqSignUserDetailState>(
+                bloc: bloc,
+                buildWhen: (previous, current) => current is ViewerChangedState,
+                builder: (context, state) {
+                  if (state is ViewerChangedState) {
+                    return ListView.builder(
+                      physics: const NeverScrollableScrollPhysics(),
+                      shrinkWrap: true,
+                      itemCount: state.viewers.length,
+                      itemBuilder: (context, index) {
+                        return ViewerCard(
+                          email: state.viewers[index].email,
+                          status: 'only can view',
+                          index: index + 1,
+                          onSelected: (value) {
+                            if (value == 0) {
+                              bloc.add(RemoveViewerEvent(index));
+                            }
+                          },
+                        );
+                      },
+                    );
+                  }
+                  return CustomText(
+                    'No viewer included',
+                    textAlign: TextAlign.center,
+                    color: color.outline,
+                    fontSize: AppFontSize.labelMediumFont,
                   );
+                },
+              ),
+              const SizedBox(height: 10),
+
+              CustomElevatedTextButton(
+                width: double.maxFinite,
+                text: "Add Viewer",
+                borderRadius: AppStyle.buttonBorderRadius,
+                onPressed: () {
+                  _showAdaptiveDialog(context, bloc, userType: UserType.recipient);
                 },
               ),
             ],
@@ -137,7 +190,8 @@ class ReqSignAddUserDetailView extends StatelessWidget {
   }
 }
 
-_showAdaptiveDialog(BuildContext context, ReqSignUserDetailBloc bloc) {
+_showAdaptiveDialog(BuildContext context, ReqSignUserDetailBloc bloc,
+    {UserType userType = UserType.signer}) {
   TextEditingController firstNameController = TextEditingController();
   TextEditingController emailController = TextEditingController();
   SignedUserStatus selectedStatus = SignedUserStatus.needTOSign;
@@ -162,120 +216,178 @@ _showAdaptiveDialog(BuildContext context, ReqSignUserDetailBloc bloc) {
       );
     },
     pageBuilder: (context, a, b) {
-      return Scaffold(
-        resizeToAvoidBottomInset: false,
-        appBar: AppBar(
-          title: CustomText('Add New User'),
-        ),
-        body: Center(
-          child: Form(
-            key: formKey,
-            child: Padding(
-              padding: EdgeInsets.symmetric(horizontal: width * .05),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  const CustomText(
-                    'Enter Name',
-                    fontSize: AppFontSize.titleXSmallFont,
-                    fontWeight: FontWeight.w500,
-                  ),
-                  const SizedBox(height: 5),
-                  CustomTextFormField(
-                    controller: firstNameController,
-                    hint: "Enter first name",
-                    borderColor: Theme.of(context).colorScheme.outlineVariant,
-                    borderRadius: AppStyle.buttonBorderRadius,
-                    focusNode: firstNameFocus,
-                    autofillHints: [AutofillHints.name],
-                    keyboardType: TextInputType.name,
-                    textInputAction: TextInputAction.next,
-                    onFieldSubmitted: (value) {
-                      FocusScope.of(context).requestFocus(emailFocus);
-                    },
-                    validator: (_) {
-                      return Validation.validate(firstNameController, 'Name');
-                    },
-                  ),
-                  const SizedBox(height: 30),
-                  const CustomText(
-                    'Enter Email',
-                    fontSize: AppFontSize.titleXSmallFont,
-                    fontWeight: FontWeight.w500,
-                  ),
-                  const SizedBox(height: 5),
-                  CustomTextFormField(
-                    controller: emailController,
-                    hint: "Enter email address",
-                    borderColor: Theme.of(context).colorScheme.outlineVariant,
-                    borderRadius: AppStyle.buttonBorderRadius,
-                    focusNode: emailFocus,
-                    autofillHints: [AutofillHints.email],
-                    keyboardType: TextInputType.emailAddress,
-                    textInputAction: TextInputAction.next,
-                    onFieldSubmitted: (value) {
-                      FocusScope.of(context).requestFocus(dropDownFocus);
-                    },
-                    validator: (_) {
-                      return Validation.emailValidation(emailController);
-                    },
-                  ),
-                  // const SizedBox(height: 30),
-                  // const CustomText(
-                  //   'Status',
-                  //   fontSize: AppFontSize.titleXSmallFont,
-                  //   fontWeight: FontWeight.w500,
-                  // ),
-                  // const SizedBox(height: 5),
-                  // DropdownButtonFormField<SignedUserStatus>(
-                  //   value: selectedStatus,
-                  //   focusNode: dropDownFocus,
-                  //   hint: CustomText('Select user status'),
-                  //   items: SignedUserStatus.values.map((SignedUserStatus status) {
-                  //     return DropdownMenuItem<SignedUserStatus>(
-                  //       value: status,
-                  //       child: Text(status.status),
-                  //     );
-                  //   }).toList(),
-                  //   validator: (value) {
-                  //     return Validation.dropDownValidation(value?.status ?? '');
-                  //   },
-                  //   onSaved: (newValue) {
-                  //     selectedStatus = newValue!;
-                  //     FocusScope.of(context).unfocus();
-                  //   },
-                  //   onChanged: (SignedUserStatus? newValue) {
-                  //     selectedStatus = newValue ?? selectedStatus;
-                  //   },
-                  // ),
-                  const SizedBox(height: 40),
-                  CustomElevatedTextButton(
-                    width: double.maxFinite,
-                    text: 'Save',
-                    onPressed: () {
-                      if (formKey.currentState!.validate()) {
-                        final currentState = bloc.state is UserChangedState
-                            ? bloc.state as UserChangedState
-                            : const UserChangedState([], false);
+      if (userType == UserType.signer) {
+        return Scaffold(
+          resizeToAvoidBottomInset: false,
+          appBar: AppBar(
+            title: CustomText('Add New Signer'),
+          ),
+          body: Center(
+            child: Form(
+              key: formKey,
+              child: Padding(
+                padding: EdgeInsets.symmetric(horizontal: width * .05),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    const CustomText(
+                      'Enter Name',
+                      fontSize: AppFontSize.titleXSmallFont,
+                      fontWeight: FontWeight.w500,
+                    ),
+                    const SizedBox(height: 5),
+                    CustomTextFormField(
+                      controller: firstNameController,
+                      hint: "Enter first name",
+                      borderColor: Theme.of(context).colorScheme.outlineVariant,
+                      borderRadius: AppStyle.buttonBorderRadius,
+                      focusNode: firstNameFocus,
+                      autofillHints: [AutofillHints.name],
+                      keyboardType: TextInputType.name,
+                      textInputAction: TextInputAction.next,
+                      onFieldSubmitted: (value) {
+                        FocusScope.of(context).requestFocus(emailFocus);
+                      },
+                      validator: (_) {
+                        return Validation.validate(firstNameController, 'Name');
+                      },
+                    ),
+                    const SizedBox(height: 30),
+                    const CustomText(
+                      'Enter Email',
+                      fontSize: AppFontSize.titleXSmallFont,
+                      fontWeight: FontWeight.w500,
+                    ),
+                    const SizedBox(height: 5),
+                    CustomTextFormField(
+                      controller: emailController,
+                      hint: "Enter email address",
+                      borderColor: Theme.of(context).colorScheme.outlineVariant,
+                      borderRadius: AppStyle.buttonBorderRadius,
+                      focusNode: emailFocus,
+                      autofillHints: [AutofillHints.email],
+                      keyboardType: TextInputType.emailAddress,
+                      textInputAction: TextInputAction.next,
+                      onFieldSubmitted: (value) {
+                        FocusScope.of(context).requestFocus(dropDownFocus);
+                      },
+                      validator: (_) {
+                        return Validation.emailValidation(emailController);
+                      },
+                    ),
+                    // const SizedBox(height: 30),
+                    // const CustomText(
+                    //   'Status',
+                    //   fontSize: AppFontSize.titleXSmallFont,
+                    //   fontWeight: FontWeight.w500,
+                    // ),
+                    // const SizedBox(height: 5),
+                    // DropdownButtonFormField<SignedUserStatus>(
+                    //   value: selectedStatus,
+                    //   focusNode: dropDownFocus,
+                    //   hint: CustomText('Select user status'),
+                    //   items: SignedUserStatus.values.map((SignedUserStatus status) {
+                    //     return DropdownMenuItem<SignedUserStatus>(
+                    //       value: status,
+                    //       child: Text(status.status),
+                    //     );
+                    //   }).toList(),
+                    //   validator: (value) {
+                    //     return Validation.dropDownValidation(value?.status ?? '');
+                    //   },
+                    //   onSaved: (newValue) {
+                    //     selectedStatus = newValue!;
+                    //     FocusScope.of(context).unfocus();
+                    //   },
+                    //   onChanged: (SignedUserStatus? newValue) {
+                    //     selectedStatus = newValue ?? selectedStatus;
+                    //   },
+                    // ),
+                    const SizedBox(height: 40),
+                    CustomElevatedTextButton(
+                      width: double.maxFinite,
+                      text: 'Save',
+                      onPressed: () {
+                        if (formKey.currentState!.validate()) {
+                          final currentState = bloc.state is SignerChangedState
+                              ? bloc.state as SignerChangedState
+                              : const SignerChangedState([], false);
 
-                        final model = DocumentUserModel(
-                            email: emailController.text,
-                            firstName: firstNameController.text,
-                            signingOrder: currentState.signedUser.length + 1,
-                            status: selectedStatus.status);
+                          final model = DocumentUserModel(
+                              email: emailController.text,
+                              firstName: firstNameController.text,
+                              signingOrder: currentState.signedUser.length + 1,
+                              status: selectedStatus.status);
 
-                        bloc.add(AddNewSingedUserEvent(model));
-                        Go.back();
-                      }
-                    },
-                  ),
-                ],
+                          bloc.add(AddNewSingerEvent(model));
+                          Go.back();
+                        }
+                      },
+                    ),
+                  ],
+                ),
               ),
             ),
           ),
-        ),
-      );
+        );
+      } else {
+        return Scaffold(
+          resizeToAvoidBottomInset: false,
+          appBar: AppBar(
+            title: CustomText('Add New Viewer'),
+          ),
+          body: Center(
+            child: Form(
+              key: formKey,
+              child: Padding(
+                padding: EdgeInsets.symmetric(horizontal: width * .05),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    const CustomText(
+                      'Enter Email',
+                      fontSize: AppFontSize.titleXSmallFont,
+                      fontWeight: FontWeight.w500,
+                    ),
+                    const SizedBox(height: 5),
+                    CustomTextFormField(
+                      controller: emailController,
+                      hint: "Enter email address",
+                      borderColor: Theme.of(context).colorScheme.outlineVariant,
+                      borderRadius: AppStyle.buttonBorderRadius,
+                      focusNode: emailFocus,
+                      autofillHints: [AutofillHints.email],
+                      keyboardType: TextInputType.emailAddress,
+                      textInputAction: TextInputAction.done,
+                      onFieldSubmitted: (value) {
+                        FocusScope.of(context).unfocus();
+                      },
+                      validator: (_) {
+                        return Validation.emailValidation(emailController);
+                      },
+                    ),
+                    const SizedBox(height: 40),
+                    CustomElevatedTextButton(
+                      width: double.maxFinite,
+                      text: 'Save',
+                      onPressed: () {
+                        if (formKey.currentState!.validate()) {
+                          final model = RecipientModel(email: emailController.text);
+
+                          bloc.add(AddNewViewerEvent(model));
+                          Go.back();
+                        }
+                      },
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+        );
+      }
     },
   );
 }
