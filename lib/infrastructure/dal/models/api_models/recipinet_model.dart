@@ -33,6 +33,10 @@ class RecipientModel extends Equatable {
     );
   }
 
+  factory RecipientModel.empty() {
+    return RecipientModel(email: '');
+  }
+
   String toJson() => json.encode(toMap());
 
   factory RecipientModel.fromJson(String source) => RecipientModel.fromMap(json.decode(source));

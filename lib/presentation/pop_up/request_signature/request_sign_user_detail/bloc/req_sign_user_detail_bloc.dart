@@ -16,69 +16,60 @@ part 'req_sign_user_detail_state.dart';
 class ReqSignUserDetailBloc extends Bloc<ReqSignUserDetailEvent, ReqSignUserDetailState> {
   final ReqSignDocumentRepository dataRepository;
 
+  List<RecipientModel> recipientList = [];
+  List<DocumentUserModel> signerList = [];
+
   ReqSignUserDetailBloc(this.dataRepository) : super(const ReqSignRecipientDetailInitial()) {
     on<AddNewSingerEvent>(_addNewUser);
-    on<UserOrderEvent>(_setOrder);
     on<RemoveSignerEvent>(_removeUser);
-
+    on<UserOrderEvent>(_setOrder);
     on<AddNewViewerEvent>(_addNewViewer);
     on<RemoveViewerEvent>(_removeViewer);
-
     on<NextNavigateEvent>(_nextNavigation);
   }
 
   FutureOr<void> _addNewUser(AddNewSingerEvent event, Emitter<ReqSignUserDetailState> emit) async {
-    try {
-      final currentState = state is SignerChangedState
-          ? state as SignerChangedState
-          : const SignerChangedState([], false);
-
-      final user = List<DocumentUserModel>.from(currentState.signedUser)..add(event.signedUser);
-      emit(currentState.copyWith(signedUser: user));
-    } catch (e) {
-      emit(UserErrorState('Failed to add user: $e'));
-    }
+    signerList = List<DocumentUserModel>.from(signerList)..add(event.signedUser);
+    emit(
+      SignerChangedState(List<DocumentUserModel>.from(signerList), false),
+    );
   }
 
   FutureOr<void> _removeUser(RemoveSignerEvent event, Emitter<ReqSignUserDetailState> emit) {
-    final currentState = state is SignerChangedState
-        ? state as SignerChangedState
-        : const SignerChangedState([], false);
-
-    final user = List<DocumentUserModel>.from(currentState.signedUser)..removeAt(event.index);
-    emit(currentState.copyWith(signedUser: user));
+    signerList = List<DocumentUserModel>.from(signerList)..removeAt(event.index);
+    emit(
+      SignerChangedState(List<DocumentUserModel>.from(signerList), false),
+    );
   }
 
   FutureOr<void> _addNewViewer(AddNewViewerEvent event, Emitter<ReqSignUserDetailState> emit) {
-    try {
-      final currentState =
-          state is ViewerChangedState ? state as ViewerChangedState : const ViewerChangedState([]);
-
-      final user = List<RecipientModel>.from(currentState.viewers)..add(event.viewer);
-      emit(currentState.copyWith(viewers: user));
-    } catch (e) {
-      emit(UserErrorState('Failed to add viewer: $e'));
-    }
+    recipientList = List<RecipientModel>.from(recipientList)..add(event.viewer);
+    emit(
+      ViewerChangedState(List<RecipientModel>.from(recipientList)),
+    );
   }
 
-  FutureOr<void> _removeViewer(RemoveViewerEvent event, Emitter<ReqSignUserDetailState> emit) {}
+  FutureOr<void> _removeViewer(RemoveViewerEvent event, Emitter<ReqSignUserDetailState> emit) {
+    recipientList = List<RecipientModel>.from(recipientList)..removeAt(event.index);
+    emit(
+      ViewerChangedState(List<RecipientModel>.from(recipientList)),
+    );
+  }
 
   FutureOr<void> _setOrder(UserOrderEvent event, Emitter<ReqSignUserDetailState> emit) {
     final currentState = state is SignerChangedState
         ? state as SignerChangedState
         : const SignerChangedState([], false);
 
-    emit(currentState.copyWith(order: event.setOrder));
+    emit(
+      SignerChangedState(currentState.signedUser, event.setOrder),
+    );
   }
 
   FutureOr<void> _nextNavigation(NextNavigateEvent event, Emitter<ReqSignUserDetailState> emit) {
-    final currentState = state is SignerChangedState
-        ? state as SignerChangedState
-        : const SignerChangedState([], false);
-
-    if (currentState.signedUser.isNotEmpty) {
-      dataRepository.updateDocumentUsers(currentState.signedUser);
-
+    if (signerList.isNotEmpty) {
+      dataRepository.updateDocumentUsers(signerList);
+      dataRepository.updateRecipients(recipientList);
       Go.toNamed(Routes.REQ_SIGN_ASSIGN_FIELDS);
     } else {
       CSnackBar.show('No signer added yet');

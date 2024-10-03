@@ -43,9 +43,9 @@ class ReqSignAddUserDetailView extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 20),
-
               // Set Signing Order with switch
               ListTile(
+                dense: true,
                 contentPadding: EdgeInsets.zero,
                 title: const CustomText(
                   "Set Signing Order",
@@ -77,7 +77,19 @@ class ReqSignAddUserDetailView extends StatelessWidget {
                   ),
                 ),
               ),
-              const SizedBox(height: 10),
+
+              Row(
+                children: [
+                  Checkbox.adaptive(
+                    value: false,
+                    onChanged: (value) {},
+                  ),
+                  CustomText(
+                    'Include me as a signer',
+                    fontSize: AppFontSize.labelMediumFont,
+                  ),
+                ],
+              ),
 
               // Separate BlocBuilder for Signers List
               CustomText(
@@ -182,6 +194,7 @@ class ReqSignAddUserDetailView extends StatelessWidget {
                   _showAdaptiveDialog(context, bloc, userType: UserType.recipient);
                 },
               ),
+              const SizedBox(height: 20),
             ],
           ),
         ),

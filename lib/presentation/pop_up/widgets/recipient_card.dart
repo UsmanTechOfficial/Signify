@@ -55,7 +55,7 @@ class SignerCard extends StatelessWidget {
             // Avatar with first letter of the name
             CircleAvatar(
               radius: 20,
-              backgroundColor: generateColorFromIndex(index),
+              backgroundColor: !isMe ? generateColorFromIndex(index) : color.primary,
               child: Text(
                 name[0].toUpperCase(),
                 style: TextStyle(
@@ -104,18 +104,20 @@ class SignerCard extends StatelessWidget {
             ),
 
             // Popup menu button for options
-            PopupMenuButton<int>(
-              icon: const Icon(Icons.more_vert_rounded),
-              onSelected: (value) {
-                onSelected(value);
-              },
-              itemBuilder: (BuildContext context) => [
-                const PopupMenuItem<int>(
-                  value: 0,
-                  child: Text('Delete'),
-                ),
-              ],
-            ),
+            !isMe
+                ? PopupMenuButton<int>(
+                    icon: const Icon(Icons.more_vert_rounded),
+                    onSelected: (value) {
+                      onSelected(value);
+                    },
+                    itemBuilder: (BuildContext context) => [
+                      const PopupMenuItem<int>(
+                        value: 0,
+                        child: Text('Delete'),
+                      ),
+                    ],
+                  )
+                : SizedBox.shrink(),
           ],
         ),
       ),
