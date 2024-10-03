@@ -25,6 +25,7 @@ class ReqSignUserDetailBloc extends Bloc<ReqSignUserDetailEvent, ReqSignUserDeta
     on<UserOrderEvent>(_setOrder);
     on<AddNewViewerEvent>(_addNewViewer);
     on<RemoveViewerEvent>(_removeViewer);
+    on<IncludeMeEvent>(_includeMe);
     on<NextNavigateEvent>(_nextNavigation);
   }
 
@@ -74,5 +75,16 @@ class ReqSignUserDetailBloc extends Bloc<ReqSignUserDetailEvent, ReqSignUserDeta
     } else {
       CSnackBar.show('No signer added yet');
     }
+  }
+
+  FutureOr<void> _includeMe(IncludeMeEvent event, Emitter<ReqSignUserDetailState> emit) {
+    emit(OnIncludeMeState(event.included));
+    signerList = List.from(signerList)
+      ..insert(
+          0,
+          DocumentUserModel(
+              email: 'email', firstName: 'firstName', signingOrder: 0, status: 'status'));
+
+    emit(SignerChangedState(List.from(signerList), false));
   }
 }

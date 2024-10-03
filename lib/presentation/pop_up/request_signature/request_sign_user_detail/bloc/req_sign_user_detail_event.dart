@@ -52,6 +52,15 @@ class RemoveSignerEvent extends ReqSignUserDetailEvent {
   List<Object> get props => [index];
 }
 
+class IncludeMeEvent extends ReqSignUserDetailEvent {
+  final bool included;
+
+  const IncludeMeEvent(this.included);
+
+  @override
+  List<Object> get props => [included];
+}
+
 class NextNavigateEvent extends ReqSignUserDetailEvent {
   const NextNavigateEvent();
 }

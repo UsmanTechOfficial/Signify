@@ -46,6 +46,15 @@ class ViewerChangedState extends ReqSignUserDetailState {
   List<Object> get props => [viewers];
 }
 
+class OnIncludeMeState extends ReqSignUserDetailState {
+  final bool isIncluded;
+
+  const OnIncludeMeState(this.isIncluded);
+
+  @override
+  List<Object> get props => [isIncluded];
+}
+
 class UserErrorState extends ReqSignUserDetailState {
   final String error;
 

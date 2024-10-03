@@ -80,9 +80,26 @@ class ReqSignAddUserDetailView extends StatelessWidget {
 
               Row(
                 children: [
-                  Checkbox.adaptive(
-                    value: false,
-                    onChanged: (value) {},
+                  BlocBuilder<ReqSignUserDetailBloc, ReqSignUserDetailState>(
+                    bloc: bloc,
+                    buildWhen: (previous, current) => current is OnIncludeMeState,
+                    builder: (context, state) {
+                      if (state is OnIncludeMeState) {
+                        return Checkbox.adaptive(
+                          value: state.isIncluded,
+                          onChanged: (value) {
+                            bloc.add(IncludeMeEvent(value!));
+                          },
+                        );
+                      } else {
+                        return Checkbox.adaptive(
+                          value: false,
+                          onChanged: (value) {
+                            bloc.add(IncludeMeEvent(value!));
+                          },
+                        );
+                      }
+                    },
                   ),
                   CustomText(
                     'Include me as a signer',
